@@ -1,0 +1,287 @@
+﻿@using PagedList.Mvc;
+@model PagedList.PagedList<Line.Data.Reservations>
+@using Line.Models
+@{
+    ViewBag.Title = "Checkin";
+
+    var search = (Line.Models.ReservationSearchModel)ViewBag.Filter;
+
+    var datefrom = search.CheckinDatefrom.ToString("dd.MM.yyyy");
+    var dateto = search.CheckinDateto.ToString("dd.MM.yyyy");
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-12">
+        <h2>
+            @T("Checkin.header")
+        </h2>
+    </div>
+    <div class="col-lg-12">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-lg-5" id="sandbox-container">
+                    <div class="input-daterange  input-group">
+                        <b>@T("Checkin.from") </b> <br />
+                        @Html.TextBox("Datefrom", datefrom, new { @class = "form-control date", name = "start" })
+                        <span class="input-group-addon" style="background-color:#fff"></span>
+                        <b>@T("checkin.to") </b> <br />
+                        @Html.TextBox("Dateto", dateto, new { @class = "form-control date", name = "end" })
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <br />
+                    @Html.Hidden("CheckinDatefrom", datefrom)
+                    @Html.Hidden("CheckinDateto", dateto)
+                    <input type="submit" class="btn  btn-info" name="name" value="@("Search")" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                @*<div class="ibox-title">
+                        <p>@T("Reservations.Today")</p>
+                    </div>*@
+                <div class="ibox-content">
+                    <table id="datatabel" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    @T("Id")
+                                </th>
+                                <th>
+                                    @T("Agency")
+                                </th>
+                                <th>
+                                    @T("customer")
+                                </th>
+                                <th>
+                                    @T("owner") / @T("Service")
+                                </th>
+                                <th>
+                                    @T("Total")
+                                </th>
+                                <th>
+                                    @T("Checkin") -  @T("Checkout")
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var res in Model)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        @{
+                                            var viewclass = "";
+                                            switch (res.status)
+                                            {
+                                                case "Request":
+                                                    viewclass = "btn-warning";
+                                                    break;
+                                                case "Confirmed":
+                                                    viewclass = "btn-info";
+                                                    break;
+                                                case "ReConfirmed":
+                                                    viewclass = "btn-success";
+                                                    break;
+                                                case "Canceled":
+                                                    viewclass = "btn-danger";
+                                                    break;
+                                                case "Completed":
+                                                    viewclass = "btn-primary";
+                                                    break;
+                                                default:
+                                                    viewclass = "btn-warning";
+                                                    break;
+                                            }
+                                        }
+                                        <a href="@Url.Action("ViewReservations", "Reservations", new { id = res.ID })"><span class="btn btn-3d btn-xs @viewclass">#@res.ID</span></a>
+
+                                    </td>
+                                    <td>
+                                        @res.Agency.AgencyName<br />
+                                        @res.Agency.Country
+                                    </td>
+                                    <td>
+                                        @res.GetCustomers()
+                                    </td>
+                                    <td width="185">
+                                        <b>@res.Visitor.GetFullName()</b> <br />
+                                        @if (res.Rhotel.Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Hotel")</span>}
+                                        @if (res.Transfers.Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Transfers")</span>}
+                                        @if (res.Flight.Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Flight")</span>}
+                                        @if (res.Tour
+                                            .Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Tour")</span>}
+                                        @if (res.ExtraService
+                                            .Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Extra")</span>}
+                                    </td>
+                                    <td>
+                                        @res.price.ToString(true) 
+                                    </td>
+                                    <td width="150">
+                                        @res.checkindate.ToShortDateString() - @res.balanceDate.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        <a target="_blank" href='@Url.Action("OpenVocher", "Reservations", new { id = res.ID })' class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-print"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+                                    @Model.Sum(d => d.price).ToString(true) 
+                                </th>
+                                <th>
+
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <div class="text-center">
+                        @Html.PagedListPager(Model, page => Url.Action("checkin", new { page, CheckinDatefrom = search.CheckinDatefrom, CheckinDateto = search.CheckinDateto }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/wizardStepsStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/nouiSliderStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/ionRangeSlider/ionRangeStyles")
+    @Styles.Render("~/plugins/imagecropperStyles")
+    @Styles.Render("~/Content/plugins/colorpicker/colorpickerStyles")
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/tagInputsStyles")
+    @Styles.Render("~/plugins/duallistStyles")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/wizardSteps")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/ionRange")
+    @Scripts.Render("~/plugins/nouiSlider")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/knob")
+    @Scripts.Render("~/plugins/imagecropper")
+    @Scripts.Render("~/plugins/colorpicker")
+    @Scripts.Render("~/plugins/clockpicker")
+    @Scripts.Render("~/plugins/dateRange")
+    @Scripts.Render("~/plugins/select2")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/tagInputs")
+    @Scripts.Render("~/plugins/duallist")
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#CheckinDatefrom").val($("#Datefrom").val());
+            $("#CheckinDateto").val($("#Dateto").val());
+
+
+            $("#Datefrom").change(function () {
+                $("#CheckinDatefrom").val($("#Datefrom").val());
+            });
+            $("#Dateto").change(function () {
+                $("#CheckinDateto").val($("#Dateto").val());
+            });
+
+            $(".touchspin1").TouchSpin({
+                buttondown_class: 'btn btn-white',
+                buttonup_class: 'btn btn-white'
+            });
+
+            $('#sandbox-container .input-daterange').datepicker({
+                format: "dd.mm.yyyy",
+                daysOfWeekHighlighted: "0,6"
+            });
+
+            //$('.date').datepicker({
+            //    todayBtn: "linked",
+            //    keyboardNavigation: false,
+            //    forceParse: false,
+            //    calendarWeeks: true,
+            //    autoclose: true,
+            //    daysOfWeekDisabled: "0,6,4,3,5",
+            //    daysOfWeekHighlighted: "1,2"
+            //});
+
+
+            $('.chosen-select').chosen({ width: "100%" });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatabel').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: false,
+                    targets: 0
+                }],
+                order: [1, 'asc'],
+            });
+        });
+
+    </script>
+}

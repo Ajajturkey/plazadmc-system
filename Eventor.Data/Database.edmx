@@ -1,0 +1,3119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Eventor.Data.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdvancePayments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ref_Agency" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Payment" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="Member" Type="varchar(max)" Nullable="false" />
+          <Property Name="Currency" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PayOut" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgencyName" Type="varchar(max)" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Market" Type="varchar(max)" />
+          <Property Name="Country" Type="varchar(max)" Nullable="false" />
+          <Property Name="City" Type="varchar(max)" Nullable="false" />
+          <Property Name="Zip" Type="varchar(max)" />
+          <Property Name="Tel" Type="varchar(max)" />
+          <Property Name="Fax" Type="varchar(max)" />
+          <Property Name="Longitude" Type="nvarchar(max)" />
+          <Property Name="Latitude" Type="nvarchar(max)" />
+          <Property Name="Adress" Type="nvarchar(max)" />
+          <Property Name="Commision" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Credit" Type="nvarchar(max)" />
+          <Property Name="CreditAmount" Type="nvarchar(max)" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" />
+          <Property Name="joindate" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" />
+          <Property Name="contact" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ChangeRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="board" Type="nchar" MaxLength="10" />
+          <Property Name="guset" Type="nvarchar(max)" />
+          <Property Name="checkin" Type="date" />
+          <Property Name="checkout" Type="date" />
+        </EntityType>
+        <EntityType Name="DataHotels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" />
+          <Property Name="city" Type="varchar" MaxLength="150" />
+          <Property Name="country" Type="varchar" MaxLength="150" />
+          <Property Name="zip" Type="nchar" MaxLength="10" />
+          <Property Name="adress" Type="varchar" MaxLength="250" />
+          <Property Name="rate" Type="int" />
+          <Property Name="minrate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="maxrate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="rank" Type="int" />
+          <Property Name="rooms" Type="int" />
+          <Property Name="map_longitude" Type="varchar" MaxLength="150" />
+          <Property Name="map_latitude" Type="varchar" MaxLength="150" />
+          <Property Name="url_booking" Type="varchar" MaxLength="150" />
+          <Property Name="photo" Type="varchar" MaxLength="150" />
+          <Property Name="desc" Type="varchar" MaxLength="1000" />
+          <Property Name="desc_ar" Type="varchar" MaxLength="1000" />
+          <Property Name="bookingID" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" />
+          <Property Name="Tel" Type="nvarchar" MaxLength="150" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="150" />
+          <Property Name="rname" Type="nchar" MaxLength="50" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataPackages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="50" />
+          <Property Name="city" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="250" />
+          <Property Name="url" Type="varchar" MaxLength="450" />
+          <Property Name="photourl" Type="varchar" MaxLength="450" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataTours">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="50" />
+          <Property Name="city" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="250" />
+          <Property Name="url" Type="varchar" MaxLength="450" />
+          <Property Name="photourl" Type="varchar" MaxLength="450" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeadLine">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ref_file" Type="int" Nullable="false" />
+          <Property Name="Expaire" Type="date" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ExtraService">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="dateout" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" />
+          <Property Name="note" Type="nvarchar" MaxLength="250" />
+          <Property Name="Pax" Type="int" />
+          <Property Name="lockbuying" Type="bit" Nullable="false" />
+          <Property Name="lockSelling" Type="bit" Nullable="false" />
+          <Property Name="ref_supplier" Type="int" Nullable="false" />
+          <Property Name="buyCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sellCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IsBuyRate" Type="bit" Nullable="false" />
+          <Property Name="IsSellRate" Type="bit" Nullable="false" />
+          <Property Name="SupplierCode" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Filelogs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ref_file" Type="int" Nullable="false" />
+          <Property Name="ref_member" Type="int" Nullable="false" />
+          <Property Name="Action" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="shortMessage" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Flights">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" />
+          <Property Name="note" Type="nvarchar" MaxLength="250" />
+          <Property Name="dateout" Type="datetime" Nullable="false" />
+          <Property Name="Pax" Type="int" />
+          <Property Name="lockbuying" Type="bit" Nullable="false" />
+          <Property Name="lockSelling" Type="bit" Nullable="false" />
+          <Property Name="ref_supplier" Type="int" Nullable="false" />
+          <Property Name="buyCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sellCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IsBuyRate" Type="bit" Nullable="false" />
+          <Property Name="IsSellRate" Type="bit" Nullable="false" />
+          <Property Name="SupplierCode" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="hotelchange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="hid" Type="int" />
+          <Property Name="checkout" Type="datetime" Nullable="false" />
+          <Property Name="checkin" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="HotelsReports">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ref_agency" Type="int" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Jan" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Feb" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Mar" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Apr" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="May" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Jun" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Jul" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Aug" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Sep" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Oct" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Nov" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Dec" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Costs" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="ref_hotel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ininvoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="no" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="curency" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="url" Type="nvarchar(max)" />
+          <Property Name="currency" Type="nvarchar" MaxLength="50" />
+          <Property Name="type" Type="int" />
+          <Property Name="typeid" Type="int" />
+        </EntityType>
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LanguageCulture" Type="nvarchar(max)" />
+          <Property Name="UniqueSeoCode" Type="nvarchar(max)" />
+          <Property Name="FlagImageFileName" Type="nvarchar(max)" />
+          <Property Name="Rtl" Type="bit" Nullable="false" />
+          <Property Name="Published" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LocaleStringResources">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LanguageId" Type="int" Nullable="false" />
+          <Property Name="ResourceName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ResourceValue" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoginLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LoginDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogLevelId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ShortMessage" Type="nvarchar(max)" />
+          <Property Name="FullMessage" Type="nvarchar(max)" />
+          <Property Name="PageUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReferrerUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOnUtc" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Marketman">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Country" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gsm" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SalingCommsion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="BuyingCommsion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="title" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="manager" Type="bit" Nullable="false" />
+          <Property Name="accountManager" Type="bit" Nullable="false" />
+          <Property Name="reservationManager" Type="bit" Nullable="false" />
+          <Property Name="reservations" Type="bit" Nullable="false" />
+          <Property Name="tel" Type="nvarchar(max)" />
+          <Property Name="emailPassword" Type="nvarchar(max)" />
+          <Property Name="IPaddress" Type="nvarchar(max)" />
+          <Property Name="lastActivityFromUtc" Type="datetime" Nullable="false" />
+          <Property Name="SenderEmail" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="languageId" Type="int" Nullable="false" />
+          <Property Name="Created_utc" Type="datetime" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="VisitorGuid" Type="uniqueidentifier" />
+          <Property Name="Country" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
+          <Property Name="State" Type="nvarchar(max)" />
+          <Property Name="RecoveryToken" Type="nvarchar(max)" />
+          <Property Name="RecoveryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OfflineRooms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hid" Type="int" />
+          <Property Name="roomtype" Type="varchar" MaxLength="250" />
+          <Property Name="board" Type="nchar" MaxLength="10" />
+          <Property Name="market" Type="nchar" MaxLength="10" />
+          <Property Name="validfrom" Type="datetime" />
+          <Property Name="validuntil" Type="datetime" />
+          <Property Name="room_ficilites" Type="varchar" MaxLength="250" />
+          <Property Name="maxpax" Type="int" Nullable="false" />
+          <Property Name="bedprice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="bedbreakfastprice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="extrabed" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="OnlineRooms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hid" Type="int" />
+          <Property Name="roomtype" Type="varchar" MaxLength="250" />
+          <Property Name="board" Type="nchar" MaxLength="10" />
+          <Property Name="market" Type="nchar" MaxLength="10" />
+          <Property Name="validfrom" Type="datetime" />
+          <Property Name="validuntil" Type="datetime" />
+          <Property Name="room_ficilites" Type="varchar" MaxLength="250" />
+          <Property Name="maxpax" Type="int" />
+          <Property Name="bedprice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="bedbreakfastprice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="extrabed" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="note" Type="varchar" MaxLength="250" />
+          <Property Name="name" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Payment" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="Member" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Currency" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PictureSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="data" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="alt" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="thumbUrl" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ref_agency" Type="int" Nullable="false" />
+          <Property Name="Country" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Jan" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Feb" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Mar" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Apr" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="May" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Jun" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Jul" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Aug" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Sep" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Oct" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Nov" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Dec" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Costs" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="JanCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="FebCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="MarCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="AprCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="MayCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="JunCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="JulCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="AugCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="SepCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="OctCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="NovCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="DecCost" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="ref_marketman" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ref_member" Type="int" Nullable="false" />
+          <Property Name="ref_agency" Type="int" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="date" Type="date" />
+          <Property Name="net" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="commision" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="discount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="discountid" Type="int" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="profit" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="priceTL" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="costTL" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="curency" Type="nchar" MaxLength="10" />
+          <Property Name="finishDate" Type="date" />
+          <Property Name="balanceDate" Type="date" Nullable="false" />
+          <Property Name="updatedate" Type="date" Nullable="false" />
+          <Property Name="updateuser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="reconfirmed" Type="bit" Nullable="false" />
+          <Property Name="vocher" Type="nvarchar" MaxLength="150" />
+          <Property Name="sendmail" Type="bit" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="agencystaff" Type="nvarchar" MaxLength="50" />
+          <Property Name="balance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="checkindate" Type="date" Nullable="false" />
+          <Property Name="IsB2B" Type="bit" Nullable="false" />
+          <Property Name="Ref_CustomerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rhotel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="hid" Type="int" />
+          <Property Name="checkout" Type="datetime" Nullable="false" />
+          <Property Name="checkin" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="SendHotel" Type="bit" Nullable="false" />
+          <Property Name="Confirmed" Type="bit" Nullable="false" />
+          <Property Name="ref_supplier" Type="int" Nullable="false" />
+          <Property Name="buyCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sellCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IsBuyRate" Type="bit" Nullable="false" />
+          <Property Name="IsSellRate" Type="bit" Nullable="false" />
+          <Property Name="SupplierCode" Type="nvarchar(max)" />
+          <Property Name="IsCash" Type="bit" Nullable="false" />
+          <Property Name="CashDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RHRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="board" Type="nvarchar" MaxLength="50" />
+          <Property Name="guset" Type="nvarchar(max)" />
+          <Property Name="checkin" Type="date" />
+          <Property Name="checkout" Type="date" />
+          <Property Name="lockbuying" Type="bit" Nullable="false" />
+          <Property Name="lockSelling" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Logo" Type="int" Nullable="false" />
+          <Property Name="InvoiceHeader" Type="int" Nullable="false" />
+          <Property Name="InvoiceFooter" Type="int" Nullable="false" />
+          <Property Name="VoucherHeader" Type="int" Nullable="false" />
+          <Property Name="VoucherFooter" Type="int" Nullable="false" />
+          <Property Name="HotelRequest" Type="int" Nullable="false" />
+          <Property Name="HotelChange" Type="int" Nullable="false" />
+          <Property Name="HotelCancel" Type="int" Nullable="false" />
+          <Property Name="HotelFooter" Type="int" Nullable="false" />
+          <Property Name="EmailSMTP" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmailPort" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmailUseSSL" Type="bit" Nullable="false" />
+          <Property Name="EmailUseCredentials" Type="bit" Nullable="false" />
+          <Property Name="EmailDefaultUser" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmailDefaultPass" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AccountingName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AccountingTitle" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BankName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BankAccount" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BankSwift" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BackIBAN" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BankAccountNo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BankAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DefaultCurrency" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplierPaymentSet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Payment" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="Member" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Currency" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SalingCommsion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="BuyingCommsion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="mobile" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="tel" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="fax" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="contactPerson" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Country" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="JoinDate" Type="datetime" Nullable="false" />
+          <Property Name="IsBuyRate" Type="bit" Nullable="false" />
+          <Property Name="IsSellRate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplierServicesSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ref_supplierkey" Type="int" Nullable="false" />
+          <Property Name="Servie" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="descreption" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="buy" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sell" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntityID" Type="int" Nullable="false" />
+          <Property Name="EntityName" Type="varchar(max)" />
+          <Property Name="Error" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="Pax" Type="int" Nullable="false" />
+          <Property Name="pickuptime" Type="nvarchar" MaxLength="100" />
+          <Property Name="pickup" Type="nvarchar" MaxLength="100" />
+          <Property Name="dropoff" Type="nvarchar" MaxLength="100" />
+          <Property Name="city" Type="nvarchar" MaxLength="100" />
+          <Property Name="car" Type="nvarchar" MaxLength="100" />
+          <Property Name="guide" Type="nvarchar(max)" />
+          <Property Name="lockbuying" Type="bit" Nullable="false" />
+          <Property Name="lockSelling" Type="bit" Nullable="false" />
+          <Property Name="ref_supplier" Type="int" Nullable="false" />
+          <Property Name="buyCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sellCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IsBuyRate" Type="bit" Nullable="false" />
+          <Property Name="IsSellRate" Type="bit" Nullable="false" />
+          <Property Name="SupplierCode" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Transfers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="pickup" Type="nvarchar" MaxLength="100" />
+          <Property Name="dropoff" Type="nvarchar" MaxLength="100" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="flightCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="flightTime" Type="nvarchar" MaxLength="100" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="pax" Type="int" Nullable="false" />
+          <Property Name="car" Type="nvarchar" MaxLength="100" />
+          <Property Name="guide" Type="nvarchar(max)" />
+          <Property Name="lockbuying" Type="bit" Nullable="false" />
+          <Property Name="lockSelling" Type="bit" Nullable="false" />
+          <Property Name="ref_supplier" Type="int" Nullable="false" />
+          <Property Name="buyCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sellCom" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IsBuyRate" Type="bit" Nullable="false" />
+          <Property Name="IsSellRate" Type="bit" Nullable="false" />
+          <Property Name="SupplierCode" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="unpaids">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ref_file" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="CheckoutDate" Type="datetime" Nullable="false" />
+          <Property Name="Paid" Type="bit" Nullable="false" />
+          <Property Name="PaymentDate" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ref_agency" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitorTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="VisitorId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AdvancePaymentAgency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
+          <End Role="AdvancePayments" Type="Self.AdvancePayments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AdvancePayments">
+              <PropertyRef Name="ref_Agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AgencyReport">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="ref_agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AgencyUnpaid">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
+          <End Role="unpaids" Type="Self.unpaids" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="unpaids">
+              <PropertyRef Name="ref_agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChangeRoom_hotelchange">
+          <End Role="hotelchange" Type="Self.hotelchange" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChangeRoom" Type="Self.ChangeRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hotelchange">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ChangeRoom">
+              <PropertyRef Name="HID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataHotelHotelsReport">
+          <End Role="DataHotels" Type="Self.DataHotels" Multiplicity="1" />
+          <End Role="HotelsReports" Type="Self.HotelsReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataHotels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelsReports">
+              <PropertyRef Name="ref_hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExtraService_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ExtraService" Type="Self.ExtraService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExtraService">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hotelchange_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hotelchange" Type="Self.hotelchange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hotelchange">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ininvoice_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ininvoice" Type="Self.ininvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ininvoice">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LanguageLocaleStringResource">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="LocaleStringResources" Type="Self.LocaleStringResources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocaleStringResources">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OfflineRooms_Hotel">
+          <End Role="DataHotels" Type="Self.DataHotels" Multiplicity="0..1" />
+          <End Role="OfflineRooms" Type="Self.OfflineRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataHotels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OfflineRooms">
+              <PropertyRef Name="hid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OnlineRooms_Hotel">
+          <End Role="DataHotels" Type="Self.DataHotels" Multiplicity="0..1" />
+          <End Role="OnlineRooms" Type="Self.OnlineRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataHotels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineRooms">
+              <PropertyRef Name="hid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservations_Agency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="ref_agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservations_Members">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="ref_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationsFilelog">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1" />
+          <End Role="Filelogs" Type="Self.Filelogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Filelogs">
+              <PropertyRef Name="ref_file" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationsFlight">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1" />
+          <End Role="Flights" Type="Self.Flights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Flights">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReservationsUnpaid">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1" />
+          <End Role="unpaids" Type="Self.unpaids" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="unpaids">
+              <PropertyRef Name="ref_file" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rhotel_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rhotel" Type="Self.Rhotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rhotel">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RHRoom_Rhotel">
+          <End Role="Rhotel" Type="Self.Rhotel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RHRoom" Type="Self.RHRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rhotel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RHRoom">
+              <PropertyRef Name="HID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierFlight">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Flights" Type="Self.Flights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Flights">
+              <PropertyRef Name="ref_supplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierSupplierPayment">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="SupplierPaymentSet" Type="Self.SupplierPaymentSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierPaymentSet">
+              <PropertyRef Name="SID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierSupplierServices">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="SupplierServicesSet" Type="Self.SupplierServicesSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierServicesSet">
+              <PropertyRef Name="ref_supplierkey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tour_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfers_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transfers" Type="Self.Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitorFilelog">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Filelogs" Type="Self.Filelogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Filelogs">
+              <PropertyRef Name="ref_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EventorDataStoreContainer">
+          <EntitySet Name="AdvancePayments" EntityType="Self.AdvancePayments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Agency" EntityType="Self.Agency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChangeRoom" EntityType="Self.ChangeRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataHotels" EntityType="Self.DataHotels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataPackages" EntityType="Self.DataPackages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataTours" EntityType="Self.DataTours" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeadLine" EntityType="Self.DeadLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExtraService" EntityType="Self.ExtraService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filelogs" EntityType="Self.Filelogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flights" EntityType="Self.Flights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hotelchange" EntityType="Self.hotelchange" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelsReports" EntityType="Self.HotelsReports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ininvoice" EntityType="Self.ininvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocaleStringResources" EntityType="Self.LocaleStringResources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marketman" EntityType="Self.Marketman" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OfflineRooms" EntityType="Self.OfflineRooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineRooms" EntityType="Self.OnlineRooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PictureSet" EntityType="Self.PictureSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rhotel" EntityType="Self.Rhotel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RHRoom" EntityType="Self.RHRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierPaymentSet" EntityType="Self.SupplierPaymentSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierServicesSet" EntityType="Self.SupplierServicesSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemLog" EntityType="Self.SystemLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tour" EntityType="Self.Tour" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transfers" EntityType="Self.Transfers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="unpaids" EntityType="Self.unpaids" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitorTypes" EntityType="Self.VisitorTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AdvancePaymentAgency" Association="Self.FK_AdvancePaymentAgency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="AdvancePayments" EntitySet="AdvancePayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AgencyReport" Association="Self.FK_AgencyReport">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AgencyUnpaid" Association="Self.FK_AgencyUnpaid">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="unpaids" EntitySet="unpaids" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChangeRoom_hotelchange" Association="Self.FK_ChangeRoom_hotelchange">
+            <End Role="hotelchange" EntitySet="hotelchange" />
+            <End Role="ChangeRoom" EntitySet="ChangeRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataHotelHotelsReport" Association="Self.FK_DataHotelHotelsReport">
+            <End Role="DataHotels" EntitySet="DataHotels" />
+            <End Role="HotelsReports" EntitySet="HotelsReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExtraService_Reservations" Association="Self.FK_ExtraService_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="ExtraService" EntitySet="ExtraService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hotelchange_Reservations" Association="Self.FK_hotelchange_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="hotelchange" EntitySet="hotelchange" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ininvoice_Reservations" Association="Self.FK_ininvoice_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="ininvoice" EntitySet="ininvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LanguageLocaleStringResource" Association="Self.FK_LanguageLocaleStringResource">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="LocaleStringResources" EntitySet="LocaleStringResources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OfflineRooms_Hotel" Association="Self.FK_OfflineRooms_Hotel">
+            <End Role="DataHotels" EntitySet="DataHotels" />
+            <End Role="OfflineRooms" EntitySet="OfflineRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OnlineRooms_Hotel" Association="Self.FK_OnlineRooms_Hotel">
+            <End Role="DataHotels" EntitySet="DataHotels" />
+            <End Role="OnlineRooms" EntitySet="OnlineRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Reservations" Association="Self.FK_Payments_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservations_Agency" Association="Self.FK_Reservations_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservations_Members" Association="Self.FK_Reservations_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationsFilelog" Association="Self.FK_ReservationsFilelog">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Filelogs" EntitySet="Filelogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationsFlight" Association="Self.FK_ReservationsFlight">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Flights" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReservationsUnpaid" Association="Self.FK_ReservationsUnpaid">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="unpaids" EntitySet="unpaids" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rhotel_Reservations" Association="Self.FK_Rhotel_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Rhotel" EntitySet="Rhotel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RHRoom_Rhotel" Association="Self.FK_RHRoom_Rhotel">
+            <End Role="Rhotel" EntitySet="Rhotel" />
+            <End Role="RHRoom" EntitySet="RHRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierFlight" Association="Self.FK_SupplierFlight">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Flights" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierSupplierPayment" Association="Self.FK_SupplierSupplierPayment">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="SupplierPaymentSet" EntitySet="SupplierPaymentSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierSupplierServices" Association="Self.FK_SupplierSupplierServices">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="SupplierServicesSet" EntitySet="SupplierServicesSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tour_Reservations" Association="Self.FK_Tour_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfers_Reservations" Association="Self.FK_Transfers_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitorFilelog" Association="Self.FK_VisitorFilelog">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Filelogs" EntitySet="Filelogs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Eventor.Data" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Languages" EntityType="Eventor.Data.Language" />
+          <EntitySet Name="LocaleStringResources" EntityType="Eventor.Data.LocaleStringResource" />
+          <EntitySet Name="Logs" EntityType="Eventor.Data.Log" />
+          <EntitySet Name="Members" EntityType="Eventor.Data.Members" />
+          <EntitySet Name="VisitorTypes" EntityType="Eventor.Data.VisitorTypes" />
+          <EntitySet Name="PictureSet" EntityType="Eventor.Data.Picture" />
+          <EntitySet Name="SystemLog" EntityType="Eventor.Data.SystemLog" />
+          <AssociationSet Name="FK_LanguageLocaleStringResource" Association="Eventor.Data.FK_LanguageLocaleStringResource">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="LocaleStringResource" EntitySet="LocaleStringResources" />
+          </AssociationSet>
+          <AssociationSet Name="VisitorVisitorTypes" Association="Eventor.Data.VisitorVisitorTypes">
+            <End Role="Visitor" EntitySet="Members" />
+            <End Role="VisitorTypes" EntitySet="VisitorTypes" />
+          </AssociationSet>
+          <EntitySet Name="Agency" EntityType="Eventor.Data.Agency" />
+          <EntitySet Name="ExtraService" EntityType="Eventor.Data.ExtraService" />
+          <EntitySet Name="Rhotel" EntityType="Eventor.Data.Rhotel" />
+          <EntitySet Name="RHRoom" EntityType="Eventor.Data.RHRoom" />
+          <EntitySet Name="Tour" EntityType="Eventor.Data.Tour" />
+          <EntitySet Name="Transfers" EntityType="Eventor.Data.Transfers" />
+          <EntitySet Name="DeadLine" EntityType="Eventor.Data.DeadLine" />
+          <EntitySet Name="Marketman" EntityType="Eventor.Data.Marketman" />
+          <EntitySet Name="ChangeRoom" EntityType="Eventor.Data.ChangeRoom" />
+          <EntitySet Name="hotelchange" EntityType="Eventor.Data.hotelchange" />
+          <EntitySet Name="ininvoice" EntityType="Eventor.Data.ininvoice" />
+          <EntitySet Name="Reservations" EntityType="Eventor.Data.Reservations" />
+          <EntitySet Name="Payments" EntityType="Eventor.Data.Payments" />
+          <EntitySet Name="Suppliers" EntityType="Eventor.Data.Supplier" />
+          <EntitySet Name="SupplierServicesSet" EntityType="Eventor.Data.SupplierServices" />
+          <EntitySet Name="Flights" EntityType="Eventor.Data.Flight" />
+          <EntitySet Name="SupplierPaymentSet" EntityType="Eventor.Data.SupplierPayment" />
+          <AssociationSet Name="FK_Reservations_Agency" Association="Eventor.Data.FK_Reservations_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExtraService_Reservations" Association="Eventor.Data.FK_ExtraService_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="ExtraService" EntitySet="ExtraService" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierExtraService" Association="Eventor.Data.SupplierExtraService">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="ExtraService" EntitySet="ExtraService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RHRoom_Rhotel" Association="Eventor.Data.FK_RHRoom_Rhotel">
+            <End Role="Rhotel" EntitySet="Rhotel" />
+            <End Role="RHRoom" EntitySet="RHRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rhotel_Reservations" Association="Eventor.Data.FK_Rhotel_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Rhotel" EntitySet="Rhotel" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierRhotel" Association="Eventor.Data.SupplierRhotel">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Rhotel" EntitySet="Rhotel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tour_Reservations" Association="Eventor.Data.FK_Tour_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierTour" Association="Eventor.Data.SupplierTour">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfers_Reservations" Association="Eventor.Data.FK_Transfers_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierTransfers" Association="Eventor.Data.SupplierTransfers">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChangeRoom_hotelchange" Association="Eventor.Data.FK_ChangeRoom_hotelchange">
+            <End Role="hotelchange" EntitySet="hotelchange" />
+            <End Role="ChangeRoom" EntitySet="ChangeRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ininvoice_Reservations" Association="Eventor.Data.FK_ininvoice_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="ininvoice" EntitySet="ininvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Reservations" Association="Eventor.Data.FK_Payments_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierSupplierServices" Association="Eventor.Data.SupplierSupplierServices">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="SupplierServices" EntitySet="SupplierServicesSet" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierFlight" Association="Eventor.Data.SupplierFlight">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Flight" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="ReservationsFlight" Association="Eventor.Data.ReservationsFlight">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Flight" EntitySet="Flights" />
+          </AssociationSet>
+          <AssociationSet Name="SupplierSupplierPayment" Association="Eventor.Data.SupplierSupplierPayment">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="SupplierPayment" EntitySet="SupplierPaymentSet" />
+          </AssociationSet>
+          <AssociationSet Name="VisitorReservations" Association="Eventor.Data.VisitorReservations">
+            <End Role="Visitor" EntitySet="Members" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <EntitySet Name="DataTours" EntityType="Eventor.Data.DataTour" />
+          <EntitySet Name="DataPackages" EntityType="Eventor.Data.DataPackage" />
+          <EntitySet Name="DataHotels" EntityType="Eventor.Data.DataHotel" />
+          <EntitySet Name="OfflineRooms" EntityType="Eventor.Data.OfflineRooms" />
+          <EntitySet Name="OnlineRooms" EntityType="Eventor.Data.OnlineRooms" />
+          <AssociationSet Name="FK_OfflineRooms_Hotel" Association="Eventor.Data.FK_OfflineRooms_Hotel">
+            <End Role="Hotel" EntitySet="DataHotels" />
+            <End Role="OfflineRooms" EntitySet="OfflineRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OnlineRooms_Hotel" Association="Eventor.Data.FK_OnlineRooms_Hotel">
+            <End Role="Hotel" EntitySet="DataHotels" />
+            <End Role="OnlineRooms" EntitySet="OnlineRooms" />
+          </AssociationSet>
+          <EntitySet Name="Reports" EntityType="Eventor.Data.Report" />
+          <EntitySet Name="unpaids" EntityType="Eventor.Data.Unpaid" />
+          <EntitySet Name="Filelogs" EntityType="Eventor.Data.Filelog" />
+          <AssociationSet Name="VisitorFilelog" Association="Eventor.Data.VisitorFilelog">
+            <End Role="Visitor" EntitySet="Members" />
+            <End Role="Filelog" EntitySet="Filelogs" />
+          </AssociationSet>
+          <AssociationSet Name="ReservationsFilelog" Association="Eventor.Data.ReservationsFilelog">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Filelog" EntitySet="Filelogs" />
+          </AssociationSet>
+          <AssociationSet Name="ReservationsUnpaid" Association="Eventor.Data.ReservationsUnpaid">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Unpaid" EntitySet="unpaids" />
+          </AssociationSet>
+          <AssociationSet Name="AgencyReport" Association="Eventor.Data.AgencyReport">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="AgencyUnpaid" Association="Eventor.Data.AgencyUnpaid">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Unpaid" EntitySet="unpaids" />
+          </AssociationSet>
+          <EntitySet Name="HotelsReports" EntityType="Eventor.Data.HotelsReport" />
+          <AssociationSet Name="DataHotelHotelsReport" Association="Eventor.Data.DataHotelHotelsReport">
+            <End Role="DataHotel" EntitySet="DataHotels" />
+            <End Role="HotelsReport" EntitySet="HotelsReports" />
+          </AssociationSet>
+          <AssociationSet Name="Reservationshotelchange" Association="Eventor.Data.Reservationshotelchange">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="hotelchange" EntitySet="hotelchange" />
+          </AssociationSet>
+          <EntitySet Name="Settings" EntityType="Eventor.Data.Settings" />
+          <AssociationSet Name="DataHotelRhotel" Association="Eventor.Data.DataHotelRhotel">
+            <End Role="DataHotel" EntitySet="DataHotels" />
+            <End Role="Rhotel" EntitySet="Rhotel" />
+          </AssociationSet>
+          <EntitySet Name="AdvancePayments" EntityType="Eventor.Data.AdvancePayments" />
+          <AssociationSet Name="FK_AdvancePaymentAgency" Association="Eventor.Data.FK_AdvancePaymentAgency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="AdvancePayments" EntitySet="AdvancePayments" />
+          </AssociationSet>
+          <EntitySet Name="LoginLog" EntityType="Eventor.Data.LoginLog" />
+          </EntityContainer>
+        <EnumType Name="OrganizerRole" >
+          <Member Name="Main" Value="0" />
+          <Member Name="Support" Value="1" />
+        </EnumType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LanguageCulture" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UniqueSeoCode" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FlagImageFileName" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rtl" Type="Boolean" Nullable="false" />
+          <Property Name="Published" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="LocaleStringResources" Relationship="Eventor.Data.FK_LanguageLocaleStringResource" FromRole="Language" ToRole="LocaleStringResource" />
+        </EntityType>
+        <EntityType Name="LocaleStringResource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LanguageId" Type="Int32" Nullable="false" />
+          <Property Name="ResourceName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ResourceValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Language" Relationship="Eventor.Data.FK_LanguageLocaleStringResource" FromRole="LocaleStringResource" ToRole="Language" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogLevelId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShortMessage" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullMessage" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReferrerUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOnUtc" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IPaddress" Type="String" Nullable="true" DefaultValue="" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lastActivityFromUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SenderEmail" Type="String" Nullable="true" DefaultValue="" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Nullable="true" DefaultValue="" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="LastName" Nullable="true" DefaultValue="" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="languageId" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Created_utc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="VisitorGuid" Type="Guid" Nullable="true" />
+          <Property Name="Country" Type="String" Nullable="true" DefaultValue="" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="true" DefaultValue="" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="true" DefaultValue="" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecoveryToken" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecoveryDate" Type="DateTime" Nullable="true" Precision="3" />
+          <NavigationProperty Name="VisitorTypes" Relationship="Eventor.Data.VisitorVisitorTypes" FromRole="Visitor" ToRole="VisitorTypes" />
+          <NavigationProperty Name="MReservations" Relationship="Eventor.Data.VisitorReservations" FromRole="Visitor" ToRole="Reservations" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="manager" Type="Boolean" Nullable="false" />
+          <Property Name="accountManager" Type="Boolean" Nullable="false" />
+          <Property Name="reservationManager" Type="Boolean" Nullable="false" />
+          <Property Name="tel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="emailPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="reservations" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitorTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VisitorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Visitor" Relationship="Eventor.Data.VisitorVisitorTypes" FromRole="VisitorTypes" ToRole="Visitor" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="data" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="alt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="thumbUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityID" Type="Int32" Nullable="false" />
+          <Property Name="EntityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_LanguageLocaleStringResource">
+          <End Type="Eventor.Data.Language" Role="Language" Multiplicity="1" />
+          <End Type="Eventor.Data.LocaleStringResource" Role="LocaleStringResource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocaleStringResource">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VisitorVisitorTypes">
+          <End Type="Eventor.Data.Members" Role="Visitor" Multiplicity="1" />
+          <End Type="Eventor.Data.VisitorTypes" Role="VisitorTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitorTypes">
+              <PropertyRef Name="VisitorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgencyName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Market" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Commision" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Credit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreditAmount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="joindate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.FK_Reservations_Agency" FromRole="Agency" ToRole="Reservations" />
+          <NavigationProperty Name="Report" Relationship="Eventor.Data.AgencyReport" FromRole="Agency" ToRole="Report" />
+          <NavigationProperty Name="Unpaid" Relationship="Eventor.Data.AgencyUnpaid" FromRole="Agency" ToRole="Unpaid" />
+          <Property Name="username" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="contact" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="AdvancePayment" Relationship="Eventor.Data.FK_AdvancePaymentAgency" FromRole="Agency" ToRole="AdvancePayments" />
+        </EntityType>
+        <EntityType Name="ExtraService">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="customer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dateout" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Pax" Type="Int32" />
+          <Property Name="lockbuying" Type="Boolean" Nullable="false" />
+          <Property Name="lockSelling" Type="Boolean" Nullable="false" />
+          <Property Name="ref_supplier" Type="Int32" Nullable="false" />
+          <Property Name="buyCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="sellCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IsBuyRate" Type="Boolean" Nullable="false" />
+          <Property Name="IsSellRate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.FK_ExtraService_Reservations" FromRole="ExtraService" ToRole="Reservations" />
+          <NavigationProperty Name="Supplier" Relationship="Eventor.Data.SupplierExtraService" FromRole="ExtraService" ToRole="Supplier" />
+          <Property Name="SupplierCode" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Rhotel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hid" Type="Int32" />
+          <Property Name="checkout" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="checkin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="customer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Confirmed" Type="Boolean" Nullable="false" />
+          <Property Name="SendHotel" Type="Boolean" Nullable="false" />
+          <Property Name="ref_supplier" Type="Int32" Nullable="false" />
+          <Property Name="buyCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="sellCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IsBuyRate" Type="Boolean" Nullable="false" />
+          <Property Name="IsSellRate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RHRoom" Relationship="Eventor.Data.FK_RHRoom_Rhotel" FromRole="Rhotel" ToRole="RHRoom" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.FK_Rhotel_Reservations" FromRole="Rhotel" ToRole="Reservations" />
+          <NavigationProperty Name="Supplier" Relationship="Eventor.Data.SupplierRhotel" FromRole="Rhotel" ToRole="Supplier" />
+          <Property Name="SupplierCode" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="DataHotel" Relationship="Eventor.Data.DataHotelRhotel" FromRole="Rhotel" ToRole="DataHotel" />
+          <Property Name="IsCash" Type="Boolean" Nullable="false" />
+          <Property Name="CashDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="RHRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="board" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="guset" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="checkin" Type="DateTime" Precision="0" />
+          <Property Name="checkout" Type="DateTime" Precision="0" />
+          <Property Name="lockbuying" Type="Boolean" Nullable="false" />
+          <Property Name="lockSelling" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Rhotel" Relationship="Eventor.Data.FK_RHRoom_Rhotel" FromRole="RHRoom" ToRole="Rhotel" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="customer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Pax" Type="Int32" Nullable="false" />
+          <Property Name="pickuptime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="pickup" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dropoff" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="car" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="guide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lockbuying" Type="Boolean" Nullable="false" />
+          <Property Name="lockSelling" Type="Boolean" Nullable="false" />
+          <Property Name="ref_supplier" Type="Int32" Nullable="false" />
+          <Property Name="buyCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="sellCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IsBuyRate" Type="Boolean" Nullable="false" />
+          <Property Name="IsSellRate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.FK_Tour_Reservations" FromRole="Tour" ToRole="Reservations" />
+          <NavigationProperty Name="Supplier" Relationship="Eventor.Data.SupplierTour" FromRole="Tour" ToRole="Supplier" />
+          <Property Name="SupplierCode" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Transfers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="customer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pax" Type="Int32" Nullable="false" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="pickup" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dropoff" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="flightCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="flightTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="car" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="guide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lockbuying" Type="Boolean" Nullable="false" />
+          <Property Name="lockSelling" Type="Boolean" Nullable="false" />
+          <Property Name="ref_supplier" Type="Int32" Nullable="false" />
+          <Property Name="buyCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="sellCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IsBuyRate" Type="Boolean" Nullable="false" />
+          <Property Name="IsSellRate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.FK_Transfers_Reservations" FromRole="Transfers" ToRole="Reservations" />
+          <NavigationProperty Name="Supplier" Relationship="Eventor.Data.SupplierTransfers" FromRole="Transfers" ToRole="Supplier" />
+          <Property Name="SupplierCode" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="DeadLine">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ref_file" Type="Int32" Nullable="false" />
+          <Property Name="Expaire" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Marketman">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gsm" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SalingCommsion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="BuyingCommsion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="ChangeRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="board" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="guset" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="checkin" Type="DateTime" Precision="0" />
+          <Property Name="checkout" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="hotelchange" Relationship="Eventor.Data.FK_ChangeRoom_hotelchange" FromRole="ChangeRoom" ToRole="hotelchange" />
+        </EntityType>
+        <EntityType Name="hotelchange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="hid" Type="Int32" />
+          <Property Name="checkout" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="checkin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="customer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChangeRoom" Relationship="Eventor.Data.FK_ChangeRoom_hotelchange" FromRole="hotelchange" ToRole="ChangeRoom" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.Reservationshotelchange" FromRole="hotelchange" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="ininvoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="no" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="curency" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="customer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="typeid" Type="Int32" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.FK_ininvoice_Reservations" FromRole="ininvoice" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ref_marketman" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ref_member" Type="Int32" Nullable="false" />
+          <Property Name="ref_agency" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="net" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="commision" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="discount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="discountid" Type="Int32" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="profit" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="priceTL" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="costTL" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="curency" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="finishDate" Type="DateTime" Precision="0" />
+          <Property Name="balanceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updatedate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updateuser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="reconfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="vocher" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="sendmail" Type="Boolean" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="agencystaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="balance" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="checkindate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Agency" Relationship="Eventor.Data.FK_Reservations_Agency" FromRole="Reservations" ToRole="Agency" />
+          <NavigationProperty Name="ExtraService" Relationship="Eventor.Data.FK_ExtraService_Reservations" FromRole="Reservations" ToRole="ExtraService" />
+          <NavigationProperty Name="Rhotel" Relationship="Eventor.Data.FK_Rhotel_Reservations" FromRole="Reservations" ToRole="Rhotel" />
+          <NavigationProperty Name="Tour" Relationship="Eventor.Data.FK_Tour_Reservations" FromRole="Reservations" ToRole="Tour" />
+          <NavigationProperty Name="Transfers" Relationship="Eventor.Data.FK_Transfers_Reservations" FromRole="Reservations" ToRole="Transfers" />
+          <NavigationProperty Name="ininvoice" Relationship="Eventor.Data.FK_ininvoice_Reservations" FromRole="Reservations" ToRole="ininvoice" />
+          <NavigationProperty Name="Payments" Relationship="Eventor.Data.FK_Payments_Reservations" FromRole="Reservations" ToRole="Payments" />
+          <NavigationProperty Name="Flight" Relationship="Eventor.Data.ReservationsFlight" FromRole="Reservations" ToRole="Flight" />
+          <NavigationProperty Name="Visitor" Relationship="Eventor.Data.VisitorReservations" FromRole="Reservations" ToRole="Visitor" />
+          <NavigationProperty Name="Filelog" Relationship="Eventor.Data.ReservationsFilelog" FromRole="Reservations" ToRole="Filelog" />
+          <NavigationProperty Name="Unpaid" Relationship="Eventor.Data.ReservationsUnpaid" FromRole="Reservations" ToRole="Unpaid" />
+          <Property Name="IsB2B" Type="Boolean" Nullable="false" />
+          <Property Name="Ref_CustomerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="hotelchange" Relationship="Eventor.Data.Reservationshotelchange" FromRole="Reservations" ToRole="hotelchange" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Payment" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Member" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.FK_Payments_Reservations" FromRole="Payments" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SalingCommsion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="BuyingCommsion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="mobile" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="tel" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="fax" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="contactPerson" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="JoinDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsBuyRate" Type="Boolean" Nullable="false" />
+          <Property Name="IsSellRate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ExtraService" Relationship="Eventor.Data.SupplierExtraService" FromRole="Supplier" ToRole="ExtraService" />
+          <NavigationProperty Name="Rhotel" Relationship="Eventor.Data.SupplierRhotel" FromRole="Supplier" ToRole="Rhotel" />
+          <NavigationProperty Name="Tour" Relationship="Eventor.Data.SupplierTour" FromRole="Supplier" ToRole="Tour" />
+          <NavigationProperty Name="Transfers" Relationship="Eventor.Data.SupplierTransfers" FromRole="Supplier" ToRole="Transfers" />
+          <NavigationProperty Name="SupplierServices" Relationship="Eventor.Data.SupplierSupplierServices" FromRole="Supplier" ToRole="SupplierServices" />
+          <NavigationProperty Name="Flight" Relationship="Eventor.Data.SupplierFlight" FromRole="Supplier" ToRole="Flight" />
+          <NavigationProperty Name="SupplierPayments" Relationship="Eventor.Data.SupplierSupplierPayment" FromRole="Supplier" ToRole="SupplierPayment" />
+        </EntityType>
+        <EntityType Name="SupplierServices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ref_supplierkey" Type="Int32" Nullable="false" />
+          <Property Name="Servie" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="descreption" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="buy" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="sell" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Supplier" Relationship="Eventor.Data.SupplierSupplierServices" FromRole="SupplierServices" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="customer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dateout" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Pax" Type="Int32" />
+          <Property Name="lockbuying" Type="Boolean" Nullable="false" />
+          <Property Name="lockSelling" Type="Boolean" Nullable="false" />
+          <Property Name="ref_supplier" Type="Int32" Nullable="false" />
+          <Property Name="buyCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="sellCom" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IsBuyRate" Type="Boolean" Nullable="false" />
+          <Property Name="IsSellRate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="Eventor.Data.SupplierFlight" FromRole="Flight" ToRole="Supplier" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.ReservationsFlight" FromRole="Flight" ToRole="Reservations" />
+          <Property Name="SupplierCode" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="SupplierPayment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Payment" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Member" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="Eventor.Data.SupplierSupplierPayment" FromRole="SupplierPayment" ToRole="Supplier" />
+        </EntityType>
+        <Association Name="FK_Reservations_Agency">
+          <End Type="Eventor.Data.Agency" Role="Agency" Multiplicity="0..1" />
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="ref_agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExtraService_Reservations">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.ExtraService" Role="ExtraService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExtraService">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierExtraService">
+          <End Type="Eventor.Data.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Eventor.Data.ExtraService" Role="ExtraService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExtraService">
+              <PropertyRef Name="ref_supplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RHRoom_Rhotel">
+          <End Type="Eventor.Data.Rhotel" Role="Rhotel" Multiplicity="1" />
+          <End Type="Eventor.Data.RHRoom" Role="RHRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rhotel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RHRoom">
+              <PropertyRef Name="HID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rhotel_Reservations">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.Rhotel" Role="Rhotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rhotel">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierRhotel">
+          <End Type="Eventor.Data.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Eventor.Data.Rhotel" Role="Rhotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rhotel">
+              <PropertyRef Name="ref_supplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tour_Reservations">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.Tour" Role="Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierTour">
+          <End Type="Eventor.Data.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Eventor.Data.Tour" Role="Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="ref_supplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfers_Reservations">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.Transfers" Role="Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierTransfers">
+          <End Type="Eventor.Data.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Eventor.Data.Transfers" Role="Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="ref_supplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChangeRoom_hotelchange">
+          <End Type="Eventor.Data.hotelchange" Role="hotelchange" Multiplicity="1" />
+          <End Type="Eventor.Data.ChangeRoom" Role="ChangeRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hotelchange">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ChangeRoom">
+              <PropertyRef Name="HID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ininvoice_Reservations">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.ininvoice" Role="ininvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ininvoice">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Reservations">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.Payments" Role="Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierSupplierServices">
+          <End Type="Eventor.Data.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Eventor.Data.SupplierServices" Role="SupplierServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierServices">
+              <PropertyRef Name="ref_supplierkey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierFlight">
+          <End Type="Eventor.Data.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Eventor.Data.Flight" Role="Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="ref_supplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReservationsFlight">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.Flight" Role="Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Flight">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SupplierSupplierPayment">
+          <End Type="Eventor.Data.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Eventor.Data.SupplierPayment" Role="SupplierPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierPayment">
+              <PropertyRef Name="SID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VisitorReservations">
+          <End Type="Eventor.Data.Members" Role="Visitor" Multiplicity="1" />
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="ref_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DataTour">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
+          <Property Name="photourl" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataPackage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
+          <Property Name="photourl" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataHotel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="adress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="rate" Type="Int32" />
+          <Property Name="minrate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="maxrate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="rank" Type="Int32" />
+          <Property Name="rooms" Type="Int32" />
+          <Property Name="map_longitude" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="map_latitude" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="url_booking" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="photo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_ar" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="bookingID" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Tel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="rname" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="OfflineRooms" Relationship="Eventor.Data.FK_OfflineRooms_Hotel" FromRole="Hotel" ToRole="OfflineRooms" />
+          <NavigationProperty Name="OnlineRooms" Relationship="Eventor.Data.FK_OnlineRooms_Hotel" FromRole="Hotel" ToRole="OnlineRooms" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="HotelsReport" Relationship="Eventor.Data.DataHotelHotelsReport" FromRole="DataHotel" ToRole="HotelsReport" />
+          <NavigationProperty Name="Rhotel" Relationship="Eventor.Data.DataHotelRhotel" FromRole="DataHotel" ToRole="Rhotel" />
+        </EntityType>
+        <EntityType Name="OfflineRooms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hid" Type="Int32" />
+          <Property Name="roomtype" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="board" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="market" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="validfrom" Type="DateTime" Precision="3" />
+          <Property Name="validuntil" Type="DateTime" Precision="3" />
+          <Property Name="room_ficilites" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="maxpax" Type="Int32" Nullable="false" />
+          <Property Name="bedprice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="bedbreakfastprice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="extrabed" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hotel" Relationship="Eventor.Data.FK_OfflineRooms_Hotel" FromRole="OfflineRooms" ToRole="Hotel" />
+        </EntityType>
+        <EntityType Name="OnlineRooms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hid" Type="Int32" />
+          <Property Name="roomtype" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="board" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="market" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="validfrom" Type="DateTime" Precision="3" />
+          <Property Name="validuntil" Type="DateTime" Precision="3" />
+          <Property Name="room_ficilites" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="maxpax" Type="Int32" />
+          <Property Name="bedprice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="bedbreakfastprice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="extrabed" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="note" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Hotel" Relationship="Eventor.Data.FK_OnlineRooms_Hotel" FromRole="OnlineRooms" ToRole="Hotel" />
+        </EntityType>
+        <Association Name="FK_OfflineRooms_Hotel">
+          <End Type="Eventor.Data.DataHotel" Role="Hotel" Multiplicity="0..1" />
+          <End Type="Eventor.Data.OfflineRooms" Role="OfflineRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OfflineRooms">
+              <PropertyRef Name="hid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OnlineRooms_Hotel">
+          <End Type="Eventor.Data.DataHotel" Role="Hotel" Multiplicity="0..1" />
+          <End Type="Eventor.Data.OnlineRooms" Role="OnlineRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineRooms">
+              <PropertyRef Name="hid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ref_agency" Type="Int32" Nullable="false" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Jan" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Feb" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Mar" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Apr" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="May" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Jun" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Jul" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Aug" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Sep" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Oct" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Nov" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Dec" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="16" Scale="2" DefaultValue="0" />
+          <Property Name="Costs" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <NavigationProperty Name="Agency" Relationship="Eventor.Data.AgencyReport" FromRole="Report" ToRole="Agency" />
+          <Property Name="JanCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="FebCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="MarCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="AprCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="MayCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="JunCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="JulCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="AugCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="SepCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="OctCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="NovCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="DecCost" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+        </EntityType>
+        <EntityType Name="Unpaid">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ref_file" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Nullable="false" Precision="16" Scale="2" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CheckoutDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Paid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.ReservationsUnpaid" FromRole="Unpaid" ToRole="Reservations" />
+          <Property Name="PaymentDate" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ref_agency" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Agency" Relationship="Eventor.Data.AgencyUnpaid" FromRole="Unpaid" ToRole="Agency" />
+        </EntityType>
+        <EntityType Name="Filelog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ref_file" Type="Int32" Nullable="false" />
+          <Property Name="ref_member" Type="Int32" Nullable="false" />
+          <Property Name="Action" Type="String" Nullable="false" DefaultValue="&quot;&quot;" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="shortMessage" Type="String" Nullable="false" DefaultValue="&quot;&quot;" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Visitor" Relationship="Eventor.Data.VisitorFilelog" FromRole="Filelog" ToRole="Visitor" />
+          <NavigationProperty Name="Reservations" Relationship="Eventor.Data.ReservationsFilelog" FromRole="Filelog" ToRole="Reservations" />
+        </EntityType>
+        <Association Name="VisitorFilelog">
+          <End Type="Eventor.Data.Members" Role="Visitor" Multiplicity="1" />
+          <End Type="Eventor.Data.Filelog" Role="Filelog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filelog">
+              <PropertyRef Name="ref_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReservationsFilelog">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.Filelog" Role="Filelog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Filelog">
+              <PropertyRef Name="ref_file" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReservationsUnpaid">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.Unpaid" Role="Unpaid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Unpaid">
+              <PropertyRef Name="ref_file" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AgencyReport">
+          <End Type="Eventor.Data.Agency" Role="Agency" Multiplicity="1" />
+          <End Type="Eventor.Data.Report" Role="Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="ref_agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AgencyUnpaid">
+          <End Type="Eventor.Data.Agency" Role="Agency" Multiplicity="1" />
+          <End Type="Eventor.Data.Unpaid" Role="Unpaid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Unpaid">
+              <PropertyRef Name="ref_agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="HotelsReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ref_agency" Type="Int32" Nullable="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Jan" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Feb" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Mar" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Apr" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="May" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Jun" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Jul" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Aug" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Sep" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Oct" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Nov" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Dec" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <Property Name="Costs" Type="Decimal" Nullable="false" DefaultValue="0" Precision="16" Scale="2" />
+          <NavigationProperty Name="DataHotel" Relationship="Eventor.Data.DataHotelHotelsReport" FromRole="HotelsReport" ToRole="DataHotel" />
+          <Property Name="ref_hotel" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="DataHotelHotelsReport">
+          <End Type="Eventor.Data.DataHotel" Role="DataHotel" Multiplicity="1" />
+          <End Type="Eventor.Data.HotelsReport" Role="HotelsReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataHotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelsReport">
+              <PropertyRef Name="ref_hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reservationshotelchange">
+          <End Type="Eventor.Data.Reservations" Role="Reservations" Multiplicity="1" />
+          <End Type="Eventor.Data.hotelchange" Role="hotelchange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hotelchange">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Logo" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceHeader" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceFooter" Type="Int32" Nullable="false" />
+          <Property Name="VoucherHeader" Type="Int32" Nullable="false" />
+          <Property Name="VoucherFooter" Type="Int32" Nullable="false" />
+          <Property Name="HotelRequest" Type="Int32" Nullable="false" />
+          <Property Name="HotelChange" Type="Int32" Nullable="false" />
+          <Property Name="HotelCancel" Type="Int32" Nullable="false" />
+          <Property Name="HotelFooter" Type="Int32" Nullable="false" />
+          <Property Name="EmailSMTP" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailPort" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailUseSSL" Type="Boolean" Nullable="false" />
+          <Property Name="EmailUseCredentials" Type="Boolean" Nullable="false" />
+          <Property Name="EmailDefaultUser" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailDefaultPass" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AccountingName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AccountingTitle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BankAccount" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BankSwift" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BackIBAN" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BankAccountNo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BankAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultCurrency" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="DataHotelRhotel">
+          <End Type="Eventor.Data.DataHotel" Role="DataHotel" Multiplicity="0..1" />
+          <End Type="Eventor.Data.Rhotel" Role="Rhotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataHotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rhotel">
+              <PropertyRef Name="hid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AdvancePayments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ref_Agency" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Payment" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Member" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PayOut" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Agency" Relationship="Eventor.Data.FK_AdvancePaymentAgency" FromRole="AdvancePayments" ToRole="Agency" />
+        </EntityType>
+        <Association Name="FK_AdvancePaymentAgency">
+          <End Type="Eventor.Data.Agency" Role="Agency" Multiplicity="1" />
+          <End Type="Eventor.Data.AdvancePayments" Role="AdvancePayments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AdvancePayments">
+              <PropertyRef Name="ref_Agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LoginLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LoginDate" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EventorDataStoreContainer" CdmEntityContainer="DBEntities">
+    <EntitySetMapping Name="Languages">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Language)">
+        <MappingFragment StoreEntitySet="Languages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LanguageCulture" ColumnName="LanguageCulture" />
+          <ScalarProperty Name="UniqueSeoCode" ColumnName="UniqueSeoCode" />
+          <ScalarProperty Name="FlagImageFileName" ColumnName="FlagImageFileName" />
+          <ScalarProperty Name="Rtl" ColumnName="Rtl" />
+          <ScalarProperty Name="Published" ColumnName="Published" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocaleStringResources">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.LocaleStringResource)">
+        <MappingFragment StoreEntitySet="LocaleStringResources">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+          <ScalarProperty Name="ResourceValue" ColumnName="ResourceValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Log)">
+        <MappingFragment StoreEntitySet="Logs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LogLevelId" ColumnName="LogLevelId" />
+          <ScalarProperty Name="ShortMessage" ColumnName="ShortMessage" />
+          <ScalarProperty Name="FullMessage" ColumnName="FullMessage" />
+          <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+          <ScalarProperty Name="ReferrerUrl" ColumnName="ReferrerUrl" />
+          <ScalarProperty Name="CreatedOnUtc" ColumnName="CreatedOnUtc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Members">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Members)">
+        <MappingFragment StoreEntitySet="Members">
+          <ScalarProperty Name="Id" ColumnName="ID" />
+                <ScalarProperty Name="reservations" ColumnName="reservations" />
+                <ScalarProperty Name="IPaddress" ColumnName="IPaddress" />
+          <ScalarProperty Name="lastActivityFromUtc" ColumnName="lastActivityFromUtc" />
+          <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="languageId" ColumnName="languageId" />
+          <ScalarProperty Name="Created_utc" ColumnName="Created_utc" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="VisitorGuid" ColumnName="VisitorGuid" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="RecoveryToken" ColumnName="RecoveryToken" />
+          <ScalarProperty Name="RecoveryDate" ColumnName="RecoveryDate" />
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="manager" ColumnName="manager" />
+          <ScalarProperty Name="accountManager" ColumnName="accountManager" />
+          <ScalarProperty Name="reservationManager" ColumnName="reservationManager" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="emailPassword" ColumnName="emailPassword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisitorTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.VisitorTypes)">
+        <MappingFragment StoreEntitySet="VisitorTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="VisitorId" ColumnName="VisitorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PictureSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Picture)">
+        <MappingFragment StoreEntitySet="PictureSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="alt" ColumnName="alt" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="thumbUrl" ColumnName="thumbUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemLog">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.SystemLog)">
+        <MappingFragment StoreEntitySet="SystemLog">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EntityID" ColumnName="EntityID" />
+          <ScalarProperty Name="EntityName" ColumnName="EntityName" />
+          <ScalarProperty Name="Error" ColumnName="Error" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Agency">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Agency)">
+        <MappingFragment StoreEntitySet="Agency">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Market" ColumnName="Market" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+          <ScalarProperty Name="Commision" ColumnName="Commision" />
+          <ScalarProperty Name="Credit" ColumnName="Credit" />
+          <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="joindate" ColumnName="joindate" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="contact" ColumnName="contact" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExtraService">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.ExtraService)">
+        <MappingFragment StoreEntitySet="ExtraService">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="dateout" ColumnName="dateout" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="lockbuying" ColumnName="lockbuying" />
+          <ScalarProperty Name="lockSelling" ColumnName="lockSelling" />
+          <ScalarProperty Name="ref_supplier" ColumnName="ref_supplier" />
+          <ScalarProperty Name="buyCom" ColumnName="buyCom" />
+          <ScalarProperty Name="sellCom" ColumnName="sellCom" />
+          <ScalarProperty Name="IsBuyRate" ColumnName="IsBuyRate" />
+          <ScalarProperty Name="IsSellRate" ColumnName="IsSellRate" />
+          <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rhotel">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Rhotel)">
+        <MappingFragment StoreEntitySet="Rhotel">
+          <ScalarProperty Name="CashDate" ColumnName="CashDate" />
+                <ScalarProperty Name="IsCash" ColumnName="IsCash" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="hid" ColumnName="hid" />
+          <ScalarProperty Name="checkout" ColumnName="checkout" />
+          <ScalarProperty Name="checkin" ColumnName="checkin" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="SendHotel" ColumnName="SendHotel" />
+          <ScalarProperty Name="ref_supplier" ColumnName="ref_supplier" />
+          <ScalarProperty Name="buyCom" ColumnName="buyCom" />
+          <ScalarProperty Name="sellCom" ColumnName="sellCom" />
+          <ScalarProperty Name="IsBuyRate" ColumnName="IsBuyRate" />
+          <ScalarProperty Name="IsSellRate" ColumnName="IsSellRate" />
+          <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RHRoom">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.RHRoom)">
+        <MappingFragment StoreEntitySet="RHRoom">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HID" ColumnName="HID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="board" ColumnName="board" />
+          <ScalarProperty Name="guset" ColumnName="guset" />
+          <ScalarProperty Name="checkin" ColumnName="checkin" />
+          <ScalarProperty Name="checkout" ColumnName="checkout" />
+          <ScalarProperty Name="lockbuying" ColumnName="lockbuying" />
+          <ScalarProperty Name="lockSelling" ColumnName="lockSelling" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tour">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Tour)">
+        <MappingFragment StoreEntitySet="Tour">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="pickuptime" ColumnName="pickuptime" />
+          <ScalarProperty Name="pickup" ColumnName="pickup" />
+          <ScalarProperty Name="dropoff" ColumnName="dropoff" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="car" ColumnName="car" />
+          <ScalarProperty Name="guide" ColumnName="guide" />
+          <ScalarProperty Name="lockbuying" ColumnName="lockbuying" />
+          <ScalarProperty Name="lockSelling" ColumnName="lockSelling" />
+          <ScalarProperty Name="ref_supplier" ColumnName="ref_supplier" />
+          <ScalarProperty Name="buyCom" ColumnName="buyCom" />
+          <ScalarProperty Name="sellCom" ColumnName="sellCom" />
+          <ScalarProperty Name="IsBuyRate" ColumnName="IsBuyRate" />
+          <ScalarProperty Name="IsSellRate" ColumnName="IsSellRate" />
+          <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transfers">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Transfers)">
+        <MappingFragment StoreEntitySet="Transfers">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="pax" ColumnName="pax" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="pickup" ColumnName="pickup" />
+          <ScalarProperty Name="dropoff" ColumnName="dropoff" />
+          <ScalarProperty Name="flightCode" ColumnName="flightCode" />
+          <ScalarProperty Name="flightTime" ColumnName="flightTime" />
+          <ScalarProperty Name="car" ColumnName="car" />
+          <ScalarProperty Name="guide" ColumnName="guide" />
+          <ScalarProperty Name="lockbuying" ColumnName="lockbuying" />
+          <ScalarProperty Name="lockSelling" ColumnName="lockSelling" />
+          <ScalarProperty Name="ref_supplier" ColumnName="ref_supplier" />
+          <ScalarProperty Name="buyCom" ColumnName="buyCom" />
+          <ScalarProperty Name="sellCom" ColumnName="sellCom" />
+          <ScalarProperty Name="IsBuyRate" ColumnName="IsBuyRate" />
+          <ScalarProperty Name="IsSellRate" ColumnName="IsSellRate" />
+          <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeadLine">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.DeadLine)">
+        <MappingFragment StoreEntitySet="DeadLine">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Ref_file" ColumnName="Ref_file" />
+          <ScalarProperty Name="Expaire" ColumnName="Expaire" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Marketman">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Marketman)">
+        <MappingFragment StoreEntitySet="Marketman">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Gsm" ColumnName="Gsm" />
+          <ScalarProperty Name="SalingCommsion" ColumnName="SalingCommsion" />
+          <ScalarProperty Name="BuyingCommsion" ColumnName="BuyingCommsion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChangeRoom">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.ChangeRoom)">
+        <MappingFragment StoreEntitySet="ChangeRoom">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HID" ColumnName="HID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="board" ColumnName="board" />
+          <ScalarProperty Name="guset" ColumnName="guset" />
+          <ScalarProperty Name="checkin" ColumnName="checkin" />
+          <ScalarProperty Name="checkout" ColumnName="checkout" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hotelchange">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.hotelchange)">
+        <MappingFragment StoreEntitySet="hotelchange">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="hid" ColumnName="hid" />
+          <ScalarProperty Name="checkout" ColumnName="checkout" />
+          <ScalarProperty Name="checkin" ColumnName="checkin" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ininvoice">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.ininvoice)">
+        <MappingFragment StoreEntitySet="ininvoice">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="no" ColumnName="no" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="curency" ColumnName="curency" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="currency" ColumnName="currency" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="typeid" ColumnName="typeid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservations">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Reservations)">
+        <MappingFragment StoreEntitySet="Reservations">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ref_marketman" ColumnName="ref_marketman" />
+          <ScalarProperty Name="ref_member" ColumnName="ref_member" />
+          <ScalarProperty Name="ref_agency" ColumnName="ref_agency" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="net" ColumnName="net" />
+          <ScalarProperty Name="commision" ColumnName="commision" />
+          <ScalarProperty Name="discount" ColumnName="discount" />
+          <ScalarProperty Name="discountid" ColumnName="discountid" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="profit" ColumnName="profit" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="priceTL" ColumnName="priceTL" />
+          <ScalarProperty Name="costTL" ColumnName="costTL" />
+          <ScalarProperty Name="curency" ColumnName="curency" />
+          <ScalarProperty Name="finishDate" ColumnName="finishDate" />
+          <ScalarProperty Name="balanceDate" ColumnName="balanceDate" />
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="updateuser" ColumnName="updateuser" />
+          <ScalarProperty Name="reconfirmed" ColumnName="reconfirmed" />
+          <ScalarProperty Name="vocher" ColumnName="vocher" />
+          <ScalarProperty Name="sendmail" ColumnName="sendmail" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="agencystaff" ColumnName="agencystaff" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+          <ScalarProperty Name="checkindate" ColumnName="checkindate" />
+          <ScalarProperty Name="IsB2B" ColumnName="IsB2B" />
+          <ScalarProperty Name="Ref_CustomerId" ColumnName="Ref_CustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payments">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Payments)">
+        <MappingFragment StoreEntitySet="Payments">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="Member" ColumnName="Member" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Suppliers">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Supplier)">
+        <MappingFragment StoreEntitySet="Suppliers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="SalingCommsion" ColumnName="SalingCommsion" />
+          <ScalarProperty Name="BuyingCommsion" ColumnName="BuyingCommsion" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="contactPerson" ColumnName="contactPerson" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+          <ScalarProperty Name="IsBuyRate" ColumnName="IsBuyRate" />
+          <ScalarProperty Name="IsSellRate" ColumnName="IsSellRate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SupplierServicesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.SupplierServices)">
+        <MappingFragment StoreEntitySet="SupplierServicesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ref_supplierkey" ColumnName="ref_supplierkey" />
+          <ScalarProperty Name="Servie" ColumnName="Servie" />
+          <ScalarProperty Name="descreption" ColumnName="descreption" />
+          <ScalarProperty Name="buy" ColumnName="buy" />
+          <ScalarProperty Name="sell" ColumnName="sell" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Flights">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Flight)">
+        <MappingFragment StoreEntitySet="Flights">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="dateout" ColumnName="dateout" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="lockbuying" ColumnName="lockbuying" />
+          <ScalarProperty Name="lockSelling" ColumnName="lockSelling" />
+          <ScalarProperty Name="ref_supplier" ColumnName="ref_supplier" />
+          <ScalarProperty Name="buyCom" ColumnName="buyCom" />
+          <ScalarProperty Name="sellCom" ColumnName="sellCom" />
+          <ScalarProperty Name="IsBuyRate" ColumnName="IsBuyRate" />
+          <ScalarProperty Name="IsSellRate" ColumnName="IsSellRate" />
+          <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SupplierPaymentSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.SupplierPayment)">
+        <MappingFragment StoreEntitySet="SupplierPaymentSet">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SID" ColumnName="SID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="Member" ColumnName="Member" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataTours">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.DataTour)">
+        <MappingFragment StoreEntitySet="DataTours">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="photourl" ColumnName="photourl" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataPackages">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.DataPackage)">
+        <MappingFragment StoreEntitySet="DataPackages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="photourl" ColumnName="photourl" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataHotels">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.DataHotel)">
+        <MappingFragment StoreEntitySet="DataHotels">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="zip" ColumnName="zip" />
+          <ScalarProperty Name="adress" ColumnName="adress" />
+          <ScalarProperty Name="rate" ColumnName="rate" />
+          <ScalarProperty Name="minrate" ColumnName="minrate" />
+          <ScalarProperty Name="maxrate" ColumnName="maxrate" />
+          <ScalarProperty Name="rank" ColumnName="rank" />
+          <ScalarProperty Name="rooms" ColumnName="rooms" />
+          <ScalarProperty Name="map_longitude" ColumnName="map_longitude" />
+          <ScalarProperty Name="map_latitude" ColumnName="map_latitude" />
+          <ScalarProperty Name="url_booking" ColumnName="url_booking" />
+          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="desc_ar" ColumnName="desc_ar" />
+          <ScalarProperty Name="bookingID" ColumnName="bookingID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="rname" ColumnName="rname" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OfflineRooms">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.OfflineRooms)">
+        <MappingFragment StoreEntitySet="OfflineRooms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="hid" ColumnName="hid" />
+          <ScalarProperty Name="roomtype" ColumnName="roomtype" />
+          <ScalarProperty Name="board" ColumnName="board" />
+          <ScalarProperty Name="market" ColumnName="market" />
+          <ScalarProperty Name="validfrom" ColumnName="validfrom" />
+          <ScalarProperty Name="validuntil" ColumnName="validuntil" />
+          <ScalarProperty Name="room_ficilites" ColumnName="room_ficilites" />
+          <ScalarProperty Name="maxpax" ColumnName="maxpax" />
+          <ScalarProperty Name="bedprice" ColumnName="bedprice" />
+          <ScalarProperty Name="bedbreakfastprice" ColumnName="bedbreakfastprice" />
+          <ScalarProperty Name="extrabed" ColumnName="extrabed" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OnlineRooms">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.OnlineRooms)">
+        <MappingFragment StoreEntitySet="OnlineRooms">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="hid" ColumnName="hid" />
+          <ScalarProperty Name="roomtype" ColumnName="roomtype" />
+          <ScalarProperty Name="board" ColumnName="board" />
+          <ScalarProperty Name="market" ColumnName="market" />
+          <ScalarProperty Name="validfrom" ColumnName="validfrom" />
+          <ScalarProperty Name="validuntil" ColumnName="validuntil" />
+          <ScalarProperty Name="room_ficilites" ColumnName="room_ficilites" />
+          <ScalarProperty Name="maxpax" ColumnName="maxpax" />
+          <ScalarProperty Name="bedprice" ColumnName="bedprice" />
+          <ScalarProperty Name="bedbreakfastprice" ColumnName="bedbreakfastprice" />
+          <ScalarProperty Name="extrabed" ColumnName="extrabed" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reports">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Report)">
+        <MappingFragment StoreEntitySet="Reports">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ref_agency" ColumnName="ref_agency" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Jan" ColumnName="Jan" />
+          <ScalarProperty Name="Feb" ColumnName="Feb" />
+          <ScalarProperty Name="Mar" ColumnName="Mar" />
+          <ScalarProperty Name="Apr" ColumnName="Apr" />
+          <ScalarProperty Name="May" ColumnName="May" />
+          <ScalarProperty Name="Jun" ColumnName="Jun" />
+          <ScalarProperty Name="Jul" ColumnName="Jul" />
+          <ScalarProperty Name="Aug" ColumnName="Aug" />
+          <ScalarProperty Name="Sep" ColumnName="Sep" />
+          <ScalarProperty Name="Oct" ColumnName="Oct" />
+          <ScalarProperty Name="Nov" ColumnName="Nov" />
+          <ScalarProperty Name="Dec" ColumnName="Dec" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Costs" ColumnName="Costs" />
+          <ScalarProperty Name="JanCost" ColumnName="JanCost" />
+          <ScalarProperty Name="FebCost" ColumnName="FebCost" />
+          <ScalarProperty Name="MarCost" ColumnName="MarCost" />
+          <ScalarProperty Name="AprCost" ColumnName="AprCost" />
+          <ScalarProperty Name="MayCost" ColumnName="MayCost" />
+          <ScalarProperty Name="JunCost" ColumnName="JunCost" />
+          <ScalarProperty Name="JulCost" ColumnName="JulCost" />
+          <ScalarProperty Name="AugCost" ColumnName="AugCost" />
+          <ScalarProperty Name="SepCost" ColumnName="SepCost" />
+          <ScalarProperty Name="OctCost" ColumnName="OctCost" />
+          <ScalarProperty Name="NovCost" ColumnName="NovCost" />
+          <ScalarProperty Name="DecCost" ColumnName="DecCost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="unpaids">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Unpaid)">
+        <MappingFragment StoreEntitySet="unpaids">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ref_file" ColumnName="ref_file" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+          <ScalarProperty Name="CheckoutDate" ColumnName="CheckoutDate" />
+          <ScalarProperty Name="Paid" ColumnName="Paid" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="ref_agency" ColumnName="ref_agency" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Filelogs">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Filelog)">
+        <MappingFragment StoreEntitySet="Filelogs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ref_file" ColumnName="ref_file" />
+          <ScalarProperty Name="ref_member" ColumnName="ref_member" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="shortMessage" ColumnName="shortMessage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelsReports">
+      <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.HotelsReport)">
+        <MappingFragment StoreEntitySet="HotelsReports">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ref_agency" ColumnName="ref_agency" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Jan" ColumnName="Jan" />
+          <ScalarProperty Name="Feb" ColumnName="Feb" />
+          <ScalarProperty Name="Mar" ColumnName="Mar" />
+          <ScalarProperty Name="Apr" ColumnName="Apr" />
+          <ScalarProperty Name="May" ColumnName="May" />
+          <ScalarProperty Name="Jun" ColumnName="Jun" />
+          <ScalarProperty Name="Jul" ColumnName="Jul" />
+          <ScalarProperty Name="Aug" ColumnName="Aug" />
+          <ScalarProperty Name="Sep" ColumnName="Sep" />
+          <ScalarProperty Name="Oct" ColumnName="Oct" />
+          <ScalarProperty Name="Nov" ColumnName="Nov" />
+          <ScalarProperty Name="Dec" ColumnName="Dec" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Costs" ColumnName="Costs" />
+          <ScalarProperty Name="ref_hotel" ColumnName="ref_hotel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="Eventor.Data.Settings">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="DefaultCurrency" ColumnName="DefaultCurrency" />
+                <ScalarProperty Name="BankAddress" ColumnName="BankAddress" />
+                <ScalarProperty Name="BankAccountNo" ColumnName="BankAccountNo" />
+                <ScalarProperty Name="BackIBAN" ColumnName="BackIBAN" />
+                <ScalarProperty Name="BankSwift" ColumnName="BankSwift" />
+                <ScalarProperty Name="BankAccount" ColumnName="BankAccount" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="AccountingTitle" ColumnName="AccountingTitle" />
+                <ScalarProperty Name="AccountingName" ColumnName="AccountingName" />
+                <ScalarProperty Name="EmailDefaultPass" ColumnName="EmailDefaultPass" />
+                <ScalarProperty Name="EmailDefaultUser" ColumnName="EmailDefaultUser" />
+                <ScalarProperty Name="EmailUseCredentials" ColumnName="EmailUseCredentials" />
+                <ScalarProperty Name="EmailUseSSL" ColumnName="EmailUseSSL" />
+                <ScalarProperty Name="EmailPort" ColumnName="EmailPort" />
+                <ScalarProperty Name="EmailSMTP" ColumnName="EmailSMTP" />
+                <ScalarProperty Name="HotelFooter" ColumnName="HotelFooter" />
+                <ScalarProperty Name="HotelCancel" ColumnName="HotelCancel" />
+                <ScalarProperty Name="HotelChange" ColumnName="HotelChange" />
+                <ScalarProperty Name="HotelRequest" ColumnName="HotelRequest" />
+                <ScalarProperty Name="VoucherFooter" ColumnName="VoucherFooter" />
+                <ScalarProperty Name="VoucherHeader" ColumnName="VoucherHeader" />
+                <ScalarProperty Name="InvoiceFooter" ColumnName="InvoiceFooter" />
+                <ScalarProperty Name="InvoiceHeader" ColumnName="InvoiceHeader" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdvancePayments">
+            <EntityTypeMapping TypeName="Eventor.Data.AdvancePayments">
+              <MappingFragment StoreEntitySet="AdvancePayments">
+                <ScalarProperty Name="PayOut" ColumnName="PayOut" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Member" ColumnName="Member" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="ref_Agency" ColumnName="ref_Agency" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginLog">
+            <EntityTypeMapping TypeName="Eventor.Data.LoginLog">
+              <MappingFragment StoreEntitySet="LoginLog">
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

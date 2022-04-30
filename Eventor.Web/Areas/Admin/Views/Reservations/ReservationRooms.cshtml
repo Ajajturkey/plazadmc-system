@@ -1,0 +1,474 @@
+﻿@model Line.Models.RoomsViewModel
+@{
+    ViewBag.Title = "ReservationRooms";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+    string datetoshow = Model.Hotel.CashDate.HasValue ? Model.Hotel.CashDate.Value.ToShortDateString() : DateTime.Now.ToShortDateString() ; 
+}
+<style>
+    .modal-dialog {
+        width: 1000px;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    <div class="row white-bg p-xs">
+        <div class="col-lg-2 col-xs-6">
+            <b>@T("hotel")</b>
+            <p>@Model.Hotel.name</p>
+            <b>@T("Location")</b>
+            <p>@Model.Location </p>
+        </div>
+        @*<div class="col-lg-2 col-xs-6">
+                <b>Total</b>
+                <p class="text-danger">@Model.Total</p>
+            </div>*@
+        <div class="col-lg-2 col-sm-12">
+            <b>@T("Contact")</b>
+            <p>@Model.Contact</p>
+            <b>@T("Email")</b>
+            <p>@Model.Email </p>
+        </div>
+        <div class="col-lg-2 col-sm-12">
+            <b>@T("Reservation Owner")</b>
+            <p> @Model.Owner </p>
+            <b>@T("Reservation Date")</b>
+            <p>@Model.ReservationDate</p>
+        </div>
+        <div class="col-lg-2 col-sm-12">
+            <b>@T("Hotel Payment")</b>
+            <p>
+                <label class="radio-inline">@Html.RadioButtonFor(d => d.Hotel.IsCash, "Credit", new { @class = "radio-inline"})Credit</label>
+                <label class="radio-inline">@Html.RadioButtonFor(d => d.Hotel.IsCash, "Cash", new { @class = "radio-inline" }) Cash</label>
+            </p>
+            <div class="">
+                <b>@T("Cash Date")</b>
+                <p>
+                    <div class="input-group">
+                        @Html.TextBoxFor(d => d.Hotel.CashDate, datetoshow, new { @class = "form-control date cashdate", required = "required", autocomplete = "off", style ="display:none" })
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="submit">@T("Set")</button>
+                        </span>
+                    </div>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-sm-12">
+            <b>@T("Reservation Id")</b>
+            <p>
+                <a href='@Url.Action("OpenReservations", "Reservations", new { id = Model.RID })' class="btn btn-primary btn-xs">
+                    # @Model.RID
+                </a>
+            </p>
+            <b>@T("Agency name")</b>
+            <p>@Model.Agency</p>
+        </div>
+    </div>
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <input type="button" tabindex="1" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#Create" value="@T("Add.Rooms")">
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @if (Model.Rooms.Count > 0)
+                            {
+                                <table id="datatabel" class="table white-bg table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th width="40"></th>
+                                            <th> </th>
+                                            <th>@T("Room.info")</th>
+                                            <th>@T("Count")</th>
+                                            <th>@T("Checkin")</th>
+                                            <th>@T("Checkout")</th>
+                                            <th>@T("sell")</th>
+                                            <th>@T("buy")</th>
+                                            <th>@T("Nights")</th>
+                                            <th>@T("Total")</th>
+                                            <th>@T("Customer")</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Rooms)
+                                        {
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-danger btn-xs" onclick="deleteitem(@item.ID)"><i class="fa fa-trash"></i></a>
+                                                    <a href="#" class="btn btn-info btn-xs" onclick="edit(@item.ID)"><i class="fa fa-pencil"></i></a>
+                                                </td>
+                                                <td>@item.name @item.type [@item.board] </td>
+                                                <td>
+                                                    @item.count @T("Rooms")
+                                                </td>
+                                                <td>
+                                                    @item.checkin.Value.ToString("dd.MM.yyyy")
+                                                </td>
+                                                <td>
+                                                    @item.checkout.Value.ToString("dd.MM.yyyy")
+                                                </td>
+
+                                                <td>
+                                                    @item.price.ToString(true)
+                                                </td>
+                                                <td>
+                                                    @item.cost.ToString(true)
+                                                </td>
+
+                                                <td>
+                                                    @{int nights = (item.checkout.Value - item.checkin.Value).Days;} @nights
+                                                </td>
+                                                <td>
+                                                    @((item.price * nights * item.count).ToString(true))
+                                                </td>
+                                                <td>
+                                                    @item.guset
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="text-center">
+                                    <a href='@Url.Action("OpenReservations", "Reservations", new { id = Model.RID })' class="btn btn-info btn-sm">
+                                        @T("Save.To.File")
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center">
+                                    @T("create.new.rooms")
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="Create" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("Create.Room")</h4>
+            </div>
+            @using (Html.BeginForm("CreateRoom", "Reservations"))
+            {
+                <div class="modal-body">
+
+                    @Html.HiddenFor(d => d.Room.HID)
+                    @Html.HiddenFor(d => d.Room.lockbuying)
+                    @Html.HiddenFor(d => d.Room.lockSelling)
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="Room.name">@T("room.info")</label>
+                            @Html.TextBoxFor(d => d.Room.name, "Standard", new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="Room.type">@T("room.type")</label>
+                            @Html.DropDownListFor(d => d.Room.type, (SelectList)ViewBag.RoomTypes, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="Room.type">@T("room.board")</label>
+                            @Html.TextBoxFor(d => d.Room.board, new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="oom.price">@T("sell")</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBoxFor(d => d.Room.price, new { @class = "form-control", required = "required", value = "0", min = "0", @type = "Number" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Room.cost">@T("Buy")</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBoxFor(d => d.Room.cost, new { @class = "form-control", required = "required", value = "0", min = "0", @type = "Number" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="ex3">@T("Rooms")</label>
+                            @Html.TextBoxFor(d => d.Room.count, "1", new { @class = "form-control", required = "required", @type = "Number", value = "1", min = "1" })
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" id="datepicker">
+                                <label>@T("range.select")</label>
+                                <div class="input-daterange  input-group">
+                                    @Html.TextBoxFor(d => d.Room.checkin, new { @class = "form-control-sm form-control date", autocomplete = "off", required = "required", name = "start" })
+                                    <span class="input-group-addon">@T("To")</span>
+                                    @Html.TextBoxFor(d => d.Room.checkout, new { @class = "form-control-sm form-control date", autocomplete = "off", required = "required", name = "end" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>@T("names")</label>
+                                @Html.TextBoxFor(d => d.Room.guset, new { @class = "form-control", placeholder = "Guests Names", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="@T("Add.reservation")">
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<div id="Update" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("Update.Room")</h4>
+            </div>
+            @using (Html.BeginForm("EditRoom", "Reservations"))
+            {
+                <div class="modal-body">
+
+                    @Html.Hidden("uID")
+                    @Html.Hidden("uHID")
+                    @Html.Hidden("ulockbuying")
+                    @Html.Hidden("ulockSelling")
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="Room.name">@T("room.info")</label>
+                            @Html.TextBox("uname", "Standard", new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="Room.type">@T("room.type")</label>
+                            @Html.DropDownList("utype", (SelectList)ViewBag.RoomTypes, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="Room.type">@T("room.board")</label>
+                            @Html.TextBox("uboard", "BB", new { @class = "form-control"})
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="oom.price">@T("sell")</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBox("uprice", "", new { @class = "form-control", required = "required", min = "0", @type = "Number" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Room.cost">@T("Buy")</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBox("ucost", "", new { @class = "form-control", required = "required", min = "0", @type = "Number" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">@T("Rooms")</label>
+                            @Html.TextBox("ucount", "1", "", new { @class = "form-control", required = "required", @type = "Number", value = "1", min = "1" })
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" id="data_5">
+                                <label>@T("range.select")</label>
+                                <div class="input-daterange  input-group" id="datepicker">
+                                    @Html.TextBox("ucheckin", "", new { @class = " form-control date", required = "required", autocomplete = "off" })
+                                    <span class="input-group-addon">@T("To")</span>
+                                    @Html.TextBox("ucheckout", "", new { @class = " form-control date", required = "required", autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>@T("names")</label>
+                                @Html.TextBox("uguset", "", new { @class = "form-control", placeholder = "Guests Names", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="@T("Update.reservation")">
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+@Html.Partial("_ConfirmDelete", "deletedialog")
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/wizardStepsStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/nouiSliderStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/ionRangeSlider/ionRangeStyles")
+    @Styles.Render("~/plugins/imagecropperStyles")
+    @Styles.Render("~/Content/plugins/colorpicker/colorpickerStyles")
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/tagInputsStyles")
+    @Styles.Render("~/plugins/duallistStyles")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/colorpicker")
+    @Scripts.Render("~/plugins/clockpicker")
+    @Scripts.Render("~/plugins/dateRange")
+    @Scripts.Render("~/plugins/select2")
+    @Scripts.Render("~/plugins/touchSpin")
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".touchspin1").TouchSpin({
+                buttondown_class: 'btn btn-white',
+                buttonup_class: 'btn btn-white'
+            });
+            $('.date').datepicker({
+                todayBtn: "linked",
+                format: "dd.mm.yyyy",
+                startView: 1,
+                daysOfWeekHighlighted: "0,6"
+            });
+            $('.input-daterange').datepicker({
+                todayBtn: "linked",
+                format: "dd.mm.yyyy",
+                startView: 1,
+                daysOfWeekHighlighted: "0,6"
+            });
+
+            $('.chosen-select').chosen({ width: "100%" });
+        });
+    </script>
+    <script>
+        function edit(id) {
+            $.ajax({
+                url: "@Url.Action("PrepareRoom", "Reservations", new { Area = "Admin" })",
+                type: "Post",
+                data: JSON.stringify({ 'id': id }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    //assign all values
+
+                    $("#uID").val(data.ID);
+                    $("#uHID").val(data.HID);
+                    $("#uname").val(data.name);
+                    $("#utype").val(data.type);
+                    $("#uprice").val(data.price);
+                    $("#ucost").val(data.cost);
+                    $("#ucheckin").val(data.checkin).change();
+                    $("#ucheckout").val(data.checkout).change();
+                    $("#uboard").val(data.board);
+                    $("#ucount").val(data.count);
+                    $("#uguset").val(data.guset);
+
+                    $('#Update').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+    }
+
+        function deleteitem(id) {
+            $('#deletedialog').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+                .one('click', '#delete', function (e) {
+                    $.ajax({
+                        url: "@Url.Action("DeleteRoom", "Reservations", new { Area = "Admin" })",
+                        type: "Post",
+                        data: JSON.stringify({ 'id': id }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            toastr.info("@T("deleted")")
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("An error has occured!!!");
+                        }
+                    });
+                });
+                }
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            var checkbox = '@Model.Hotel.IsCash';
+
+            $('input[type=radio][name="Hotel.IsCash"]').change(function () {
+                if (this.value == 'Cash') {
+                    $(".cashdate").show()
+                }
+                else {
+                    $(".cashdate").hide()
+                }
+            });
+
+
+            $(function () {
+                var $radios = $('input:radio[name="Hotel.IsCash"]');
+                if ($radios.is(':checked') === false) {
+                    if (checkbox == "False") {
+                        $radios.filter('[value=Credit]').prop('checked', true);
+                    }
+                    else {
+                        $radios.filter('[value=Cash]').prop('checked', true);
+                        $radios.change();
+                    }
+                   
+                }
+            });
+          
+        });
+
+    </script>
+}

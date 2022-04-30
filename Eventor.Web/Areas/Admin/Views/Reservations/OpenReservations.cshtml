@@ -1,0 +1,785 @@
+﻿@model Line.Data.Reservations
+@{
+    ViewBag.Title = "Edit Reservations";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutReservation.cshtml";
+}
+@{
+    var viewclass = "";
+    switch (Model.status)
+    {
+        case "Request":
+            viewclass = "btn-warning";
+            break;
+        case "Confirmed":
+            viewclass = "btn-info";
+            break;
+        case "ReConfirmed":
+            viewclass = "btn-success";
+            break;
+        case "Canceled":
+            viewclass = "btn-danger";
+            break;
+        case "Completed":
+            viewclass = "btn-primary";
+            break;
+        default:
+            viewclass = "btn-warning";
+            break;
+    }
+}
+<!-- Top Navbar -->
+@Html.Partial("_TopReservationbar", Model.ID)
+
+<div class="row white-bg p-xs">
+    <div class="col-lg-2 hidden-print col-xs-6 ">
+        <b>@T("status")</b>
+        <p>
+
+            <a href="#" class="btn btn-xs @viewclass">@T(Model.status)</a>
+        </p>
+        <b class="hidden-print">@T("change Request")</b>
+        <p class="hidden-print">
+
+            @if (Model.status == "Confirmed")
+            {
+                <button type="button" data-toggle="modal" data-target="#reconfirm" class="btn btn-xs btn-success">
+                    @T("ReConfirm")
+                </button>
+            }
+            else
+            {
+                <button type="button" data-toggle="modal" data-target="#confirm" class="btn btn-xs btn-info">@T("Confirm")</button>
+            }
+        </p>
+    </div>
+    <div class="col-lg-2 col-md-2 col-xs-6">
+        <b>@T("Reservation Owner")</b>
+        <p> @Model.Visitor.FirstName @Model.Visitor.LastName </p>
+        <b>@T("Reservation Date")</b>
+        <p>@Model.date.Value.ToShortDateString()</p>
+    </div>
+    <div class="col-lg-3 col-md-3 col-xs-6">
+        <b>@T("Reservation Id")</b>
+        <p># @Model.ID </p>
+        <b>@T("Agency name")</b>
+        <p>@Model.Agency.AgencyName</p>
+    </div>
+    <div class="col-lg-5 col-xs-12 hidden-print">
+        <b>@T("Add items To Reservation")</b>
+        <p>
+            <div class="resitem">
+                <a href="@Url.Action("ReservationHotels",new { id = Model.ID})">
+                    <img src="~/Images/steps/icon2.png" width="100%" />
+                </a>
+            </div>
+            <div class="resitem">
+                <a href="@Url.Action("ReservationTransfers",new { id = Model.ID})">
+                    <img src="~/Images/steps/icon1.png" width="100%" />
+                </a>
+            </div>
+            <div class="resitem">
+                <a href="@Url.Action("ReservationTours",new { id = Model.ID})">
+                    <img src="~/Images/steps/icon3.png" width="100%" />
+                </a>
+            </div>
+            <div class="resitem">
+                <a href="@Url.Action("ReservationPackages",new { id = Model.ID})">
+                    <img src="~/Images/steps/icon4.png" width="100%" />
+                </a>
+            </div>
+            @*<div class="resitem">
+                    <a href="@Url.Action("ReservationFlights",new { id = Model.ID})">
+                        <img src="~/Images/steps/icon5.png" width="100%" />
+                    </a>
+                </div>*@
+
+        </p>
+    </div>
+</div>
+<br />
+<div class="row">
+
+    <div class="col-lg-9">
+        @if (Model.price == 0)
+        {
+
+            <div class="col-lg-12  p-md white-bg hidden-print hidden-xs ">
+                <p><b class="m-b-md">@T("Add items To Reservation")</b></p>
+                <div class="resitem">
+                    <a href="@Url.Action("ReservationHotels",new { id = Model.ID})">
+                        <img src="~/Images/steps/icon2.png" width="100%" />
+                    </a>
+                </div>
+                <div class="resitem">
+                    <a href="@Url.Action("ReservationTransfers",new { id = Model.ID})">
+                        <img src="~/Images/steps/icon1.png" width="100%" />
+                    </a>
+                </div>
+                <div class="resitem">
+                    <a href="@Url.Action("ReservationTours",new { id = Model.ID})">
+                        <img src="~/Images/steps/icon3.png" width="100%" />
+                    </a>
+                </div>
+                <div class="resitem">
+                    <a href="@Url.Action("ReservationPackages",new { id = Model.ID})">
+                        <img src="~/Images/steps/icon4.png" width="100%" />
+                    </a>
+                </div>
+                @*<div class="resitem">
+                        <a href="@Url.Action("ReservationFlights",new { id = Model.ID})">
+                            <img src="~/Images/steps/icon5.png" width="100%" />
+                        </a>
+                    </div>*@
+            </div>
+        }
+
+        @Html.Action("Deadlines", Model.ID)
+
+        @if (Model.Rhotel.Count > 0)
+        {
+            <div class="white-bg ">
+                @foreach (var hotel in Model.Rhotel)
+                {
+                    <div class="row p-sm">
+                        <div class="col-lg-10">
+                            <b>
+                             
+                                @hotel.name   <span>
+                                    <a href="#" class="btn btn-danger btn-xs" onclick="deleteHotel(@hotel.ID)"><i class="fa fa-trash"></i></a>
+                                </span> @*@item.Bursa, Turkey*@
+                            </b>
+                            <table style="font-size: 12px" class=" active table-bordered  table-striped table table-hover table-condensed panel-heading panel-info">
+                                <tbody>
+                                    <tr class="">
+                                        <th>
+                                            <a href="@Url.Action("ReservationRooms",new {Id= hotel.ID })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                                            Rooms
+                                        </th>
+                                        <th class="text-center" width="80">Checkin </th>
+                                        <th class="text-center" width="80">Checkout </th>
+                                        <th width="60">Rate</th>
+                                        <th width="90">Total Price</th>
+                                        <th width="90">Total Cost</th>
+                                    </tr>
+                              
+                                        @foreach (var room in hotel.RHRoom)
+                                        {
+                                            var nights = ((room.checkout.Value - room.checkin.Value).Days);
+                                            <tr>
+                                                <td>
+
+                                                    @if (hotel.IsCash)
+                                                    {
+
+                                                        <b> [Cash : @(hotel.CashDate.HasValue ? hotel.CashDate.Value.ToShortDateString() : "?") ]</b>
+                                                    }
+
+                                                    <b>  @room.count x @room.type (@room.name) - @room.board (@nights Nights) </b>
+                                                    <br />@room.guset
+                                                </td>
+                                                <td class="text-center">@room.checkin.Value.ToShortDateString()</td>
+                                                <td class="text-center">  @room.checkout.Value.ToShortDateString()</td>
+                                                <td class="text-center">@room.price.ToString(true)</td>
+                                                <td class="text-center">@((room.price * room.count * @nights).ToString(true))  </td>
+                                                <td class="text-center">@((room.cost * room.count * @nights).ToString(true))</td>
+                                            </tr>
+                                        }
+                                  
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-2 hidden-print">
+           
+                          
+                            <b>@T("Status")</b>
+                            @if (hotel.Confirmed)
+                            {
+                                <p><a class="btn btn-xs btn-success">@T("Confirmed")</a></p>
+                            }
+                            else
+                            {
+                                <p><a onclick="Confirmhotel(@hotel.ID)" class="btn btn-xs btn-warning">@T("Confirm.hotel")</a></p>
+                            }
+
+                            <b>@T("Message")</b>
+                            @if (hotel.SendHotel)
+                            {
+                                <p><a class="btn btn-xs btn-primary" onclick="preparehotel(@hotel.hid,@hotel.ID)">@T("Message.resend")</a></p>
+                            }
+                            else
+                            {
+                                <p><a class="btn btn-xs btn-warning" onclick="preparehotel(@hotel.hid,@hotel.ID)">@T("Message.send")</a></p>
+                            }
+                        </div>
+                    </div>
+                }
+                <hr class="hidden-print" />
+            </div>
+        }
+        <hr class="hidden-print" />
+        @if (Model.Transfers.Count > 0)
+        {
+            <div class="white-bg">
+                <div class="row p-sm">
+                    <div class="col-lg-12">
+    
+                        <table style="font-size: 12px" class=" active table-bordered  table-striped table table-hover table-condensed panel-heading panel-info">
+                            <tbody>
+                                <tr class="">
+                                    <th><a href="@Url.Action("ReservationTransfers", new { Id = Model.ID})" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a> Transfers</th>
+                                    <th class="text-center" width="80">Checkin </th>
+                                    <th class="text-center" width="80">pax </th>
+                                    <th width="60">Rate</th>
+                                    <th width="90">Total Price</th>
+                                    <th width="90">Total Cost</th>
+                                </tr>
+                                @foreach (var item in Model.Transfers)
+                                {
+                                    <tr>
+                                        <td> <b>@item.city - @item.pickup</b> <br /> @item.dropoff</td>
+                                        <td class="text-center">@item.date.ToShortDateString()</td>
+                                        <td class="text-center">  @item.pax</td>
+                                        <td class="text-center">@item.Total.ToString(true)</td>
+                                        <td class="text-center">@((item.Total).ToString(true))  </td>
+                                        <td class="text-center">@((item.Cost).ToString(true))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr class="hidden-print" />
+        }
+        @if (Model.Tour.Count > 0)
+        {
+            <div class="white-bg">
+                <div class="row p-sm">
+                    <div class="col-lg-12">
+       
+                        <table style="font-size: 12px" class=" active table-bordered  table-striped table table-hover table-condensed panel-heading panel-info">
+                            <tbody>
+                                <tr class="">
+                                    <th>Tours</th>
+                                    <th class="text-center" width="80">Checkin </th>
+                                    <th class="text-center" width="80">pax </th>
+                                    <th width="60">Rate</th>
+                                    <th width="90">Total Price</th>
+                                    <th width="90">Total Cost</th>
+                                </tr>
+                                @foreach (var item in Model.Tour)
+                                {
+                                    <tr>
+                                        <td> <a href="@Url.Action("ReservationTours", new { Id = Model.ID})" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a> <b>@item.name</b> @*<br />@item.pickup  -  @item.dropoff*@ </td>
+                                        <td class="text-center">@item.date.ToShortDateString()</td>
+                                        <td class="text-center">  @item.Pax</td>
+                                        <td class="text-center">@item.Total.ToString(true)</td>
+                                        <td class="text-center">@((item.Total * item.Pax).ToString(true))  </td>
+                                        <td class="text-center">@((item.Cost * item.Pax).ToString(true))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                  
+                </div>
+            </div>
+            <hr class="hidden-print" />
+        }
+        @if (Model.ExtraService.Count > 0)
+        {
+            <div class="white-bg">
+                <div class="row p-sm">
+                    <div class="col-lg-12">
+    
+                        <table style="font-size: 12px" class=" active table-bordered  table-striped table table-hover table-condensed panel-heading panel-info">
+                            <tbody>
+                                <tr class="">
+                                    <th><a href="@Url.Action("ReservationPackages", new { Id = Model.ID})" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a> Package / Extra Services</th>
+                                    <th class="text-center" width="80">Checkin </th>
+                                    <th class="text-center" width="80">Checkout </th>
+                                    <th width="60">Rate</th>
+                                    <th width="90">Total Price</th>
+                                    <th width="90">Total Cost</th>
+                                </tr>
+                                @foreach (var item in Model.ExtraService)
+                                {
+
+                                    <tr>
+                                        <td> <b>@item.name </b></td>
+                                        <td class="text-center">@item.date.ToShortDateString()</td>
+                                        <td class="text-center">@item.date.ToShortDateString()</td>
+                                        <td class="text-center">@item.Total.ToString(true)</td>
+                                        <td class="text-center">@((item.Total * item.Pax).Value.ToString(true))  </td>
+                                        <td class="text-center">@((item.Cost * item.Pax).Value.ToString(true))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                   
+                </div>
+            </div>
+            <hr class="hidden-print" />
+        }
+
+        @if (Model.Flight.Count > 0)
+        {
+            <div class="white-bg">
+                <div class="row p-sm">
+                    <div class="col-lg-12">
+                      
+                        <table class="table">
+                            @foreach (var item in Model.Flight)
+                            {
+                                <tr>
+                                    <td>
+                                        <b>
+                                            @item.Pax Pax @if (!string.IsNullOrEmpty(item.name))
+                                            {<text>[@item.name]</text>} [@item.date.ToShortDateString()] - [@item.date.ToShortDateString()]
+                                        </b>
+                                    </td>
+                                    <td width="100">
+                                        <b>@item.Total.ToString(true)</b>
+                                        <p>@((item.Total * item.Pax).Value.ToString(true)) </p>
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <p>@(Model.Flight.Sum(d => d.Total * d.Pax).Value.ToString(true)) </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+            
+                </div>
+            </div>
+            <hr class="hidden-print" />
+        }
+    </div>
+
+    <div class="col-lg-3">
+        <div class="white-bg row p-sm">
+
+            <table class="table table-striped table-total">
+                <tr>
+                    <td>@T("Service")</td>
+                    <td>@T("Price")</td>
+                    <td>@T("Cost")</td>
+                </tr>
+                <tr class="hidden-print">
+                    <td>@T("hotel")</td>
+                    <td>@Model.Rhotel.Sum(d => d.Total).ToString(true) </td>
+                    <td>@Model.Rhotel.Sum(d => d.Cost).ToString(true) </td>
+                </tr>
+                <tr class="hidden-print">
+                    <td>@T("Tours")</td>
+                    <td>@Model.Tour.Sum(d => d.Total * d.Pax).ToString(true) </td>
+                    <td>@Model.Tour.Sum(d => d.Cost * d.Pax).ToString(true) </td>
+                </tr>
+                @*<tr class="hidden-print">
+                <td>@T("Flights")</td>
+                <td>@Model.Flight.Sum(d => d.Total * d.Pax).Value.ToString(true) </td>
+                <td>@Model.Flight.Sum(d => d.Cost * d.Pax).Value.ToString(true) </td>
+            </tr>*@
+                <tr class="hidden-print">
+                    <td>@T("Packages")</td>
+                    <td>@Model.ExtraService.Sum(d => d.Total * d.Pax).Value.ToString(true) </td>
+                    <td>@Model.ExtraService.Sum(d => d.Cost * d.Pax).Value.ToString(true) </td>
+                </tr>
+                <tr class="hidden-print">
+                    <td>@T("Transfers")</td>
+                    <td>@Model.Transfers.Sum(d => d.Total).ToString(true) </td>
+                    <td>@Model.Transfers.Sum(d => d.Cost).ToString(true) </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><b>@Model.price.ToString(true) </b></td>
+                    <td><b>@Model.cost.Value.ToString(true) </b></td>
+                </tr>
+                @{
+                    var profit = (Model.price - Model.cost).Value;
+                }
+                <tr class="danger">
+                    <td>@T("profit")</td>
+                    <td><b>@((Model.price - Model.cost).Value.ToString(true)) </b></td>
+                    @if (Model.cost.HasValue && Model.cost.Value > 0)
+                    {
+                        <td><b>@(((profit / Model.cost).Value *100).ToString("0.00")) % </b></td>
+                    }
+                    else
+                    {
+                        <td><b>@((0).ToString("0.00")) % </b></td>
+                    }
+                </tr>
+            </table>
+            <div class=" text-capitalize text-center hidden-print" style="font-size: larger">
+                <span id="ContentPlaceHolder1_invoice">
+                    <a class="btn btn-xs btn-primary" href="@Url.Action("Settings",new {Id= Model.ID })" target="_blank"> [ @T("Settings") ]</a>
+                    <a class="btn btn-xs btn-primary" href="@Url.Action("ViewReservations",new { Id= Model.ID})"> [ @T("View") ]</a><br>
+                </span>
+            </div>
+        </div>
+        <br />
+        @if (Model.Payments.Count > 0)
+        {
+            int counter = 1;
+            <div class="white-bg row p-sm text-center">
+                <b>@T("File.payments")</b> <br />
+                <table class="table table-striped table-total">
+                    <tr>
+                        <td></td>
+                        <td>@T("Payment")</td>
+                        <td>@T("Type")</td>
+                    </tr>
+                    @foreach (var item in Model.Payments)
+                    {
+                        <tr>
+                            <td>#@counter</td>
+                            <td>@item.Payment.ToString(true) </td>
+                            <td>@item.type</td>
+                        </tr>
+                        counter++;
+                    }
+
+                    <tr>
+                        <td></td>
+                        <td><b>@Model.Payments.Sum(d => d.Payment).ToString(true) </b></td>
+                        <td><b> </b></td>
+                    </tr>
+
+                </table>
+            </div>
+            <br />
+        }
+        @if (!string.IsNullOrEmpty(Model.note))
+        {
+            <div class="white-bg row p-sm text-center">
+                <b>@T("File.note")</b> <br />
+                <p>
+                    @Model.note
+                </p>
+            </div>
+            <br />
+        }
+
+        <div class="white-bg row p-sm text-center hidden-print">
+
+            <p>
+                <button data-target="#Cancel" data-toggle="modal" class="btn btn-sm btn-danger"> @T("Cancel Reservation") </button>
+            </p>
+            <br />
+        </div>
+    </div>
+</div>
+
+<div id="confirm" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            @using (Html.BeginForm("ConfirmReservations", "Reservations", new { cId = Model.ID }))
+            {
+                <div class="modal-header btn-info">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"> <span class="glyphicon glyphicon-send"></span> @T("Confirm.Reservation")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Email: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="email" id="cemail" name="cemail" class="form-control" required value="@Model.Agency.email" />
+                            </div>
+                            <label>CC: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="cemailcc" class="form-control " name="cemailcc" value="" />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Send email </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" checked="checked" id="cSend" class="" name="cSend" />
+                                </span>
+                                <input type="text" class="form-control" disabled="disabled" value="@T("send.confirmation.email.to.agency")" />
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <label>@T("Note.To.include.in.email"):  </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <textarea rows="4" cols="20" name="cNote" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <input type="submit" class="btn btn-info" name="confirm" value="@T("Confirm")" />
+                    <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Close")" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="reconfirm" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            @using (Html.BeginForm("ReConfirmReservations", "Reservations", new { crid = Model.ID }))
+            {
+                <div class="modal-header btn-success">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"> <span class="glyphicon glyphicon-send"></span> @T("ReConfirm.Reservation")</h4>
+                </div>
+
+                <div class="modal-body">
+                    @Html.Hidden("rcId", Model.ID)
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Email: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="email" id="rcemail" name="rcemail" class="form-control" required value="@Model.Agency.email" />
+                            </div>
+                            <label>CC: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="rcemailcc" class="form-control " name="rcemailcc" value="" />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Send email </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" checked="checked" id="rcSend" class="" name="rcSend" />
+                                </span>
+                                <input type="text" class="form-control" disabled="disabled" value="@T("send.reconfirmation.email.to.agency")" />
+                            </div>
+
+                            <label>@T("voucher"): </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="rcvocher" class="form-control" required name="rcvocher" value="" />
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <label>@T("Note.To.include.in.email"):  </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <textarea rows="4" cols="20" name="rcNote" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <input type="submit" class="btn btn-success" name="confirm" value="@T("ReConfirm")" />
+                    <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Close")" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="Cancel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            @using (Html.BeginForm("CancelReservations", "Reservations", new { Id = Model.ID }))
+            {
+                <div class="modal-header btn-danger">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"> <span class="glyphicon glyphicon-send"></span> @T("Cancel.Reservation")</h4>
+                </div>
+
+                <div class="modal-body text-center">
+                    <h4>@T("Are.you.Sure")</h4>
+                </div>
+                <div class="modal-footer text-center">
+                    <input type="submit" class="btn btn-danger" name="confirm" value="@T("Cancel")" />
+                    <input type="button" class="btn btn-info" name="cancel" data-dismiss="modal" value="@T("dont.cancel")" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="Confirmhotel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+
+            <input type="hidden" name="hid" value="" />
+            <div class="modal-header btn-primary">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> <span class="glyphicon glyphicon-send"></span> @T("hotel.Confirm")</h4>
+            </div>
+
+            <div class="modal-body text-center">
+                <h4>@T("Are.you.Sure.hotel.confirm")</h4>
+            </div>
+            <div class="modal-footer text-center">
+                <input type="submit" class="btn btn-primary" id="confirmit" value="@T("Confirm.hotel")" />
+                <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Cancel")" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="sendhotel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            @using (Html.BeginForm("SendHotel", "Reservations"))
+            {
+                @Html.Hidden("shid")
+                @Html.Hidden("hname")
+                <div class="modal-header btn-info">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"> <span class="glyphicon glyphicon-send"></span> @T("Send.hotel.Requests")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Name: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="hcontact" class="form-control " name="hcontact" value="" />
+                            </div>
+                            <label>Email: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="email" id="hemail" class="form-control " name="hemail" value="" />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Telephone: </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="htel" class="form-control " name="htel" value="" />
+                            </div>
+                            <label>Fax: </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="hfax" class="form-control " name="hfax" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <label>Note to hotel:  </label>
+                    <div class="input-group input-group">
+                        <span class="input-group-addon"></span>
+                        <textarea rows="5" cols="20" id="hnote" class="form-control " name="hnote" value=""></textarea>
+                    </div>
+
+                    <label>Request Type:  </label>
+                    <div class="input-group input-group">
+                        <span class="input-group-addon "></span>
+                        <select class=" form-control" name="request">
+                            <option value="0">@T("reservation.request")</option>
+                            <option value="2">@T("reservation.Change.request")</option>
+                            <option value="1">@T("reservation.Cancel")</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <input type="submit" class="btn btn-primary" name="updateconfirm" value="@T("update.Send.Message")" />
+                    <input type="submit" class="btn btn-info" name="confirm" value="@T("Send.Message")" />
+                    <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Close")" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("_ConfirmDelete", "deletedialog")
+
+<script>
+
+            function preparehotel(id, rhid) {
+            $.ajax({
+                url: "@Url.Action("Preparehotel", "Reservations", new { Area = "Admin" })",
+                type: "Post",
+                data: JSON.stringify({ 'id': id }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    //assign all values
+                    $("#shid").val(rhid);
+                    $("#hname").val(data.hname);
+                    $("#hemail").val(data.hemail);
+                    $("#htel").val(data.htel);
+                    $("#hcontact").val(data.hcontact);
+                    $("#hfax").val(data.hfax);
+
+                    $('#sendhotel').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+        }
+            function Confirmhotel(id) {
+                $('#Confirmhotel').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+                    .one('click', '#confirmit', function (e) {
+                    $.ajax({
+                        url: "@Url.Action("ConfirmHotel", "Reservations", new { Area = "Admin" })",
+                        type: "Post",
+                        data: JSON.stringify({ 'Id': id }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            toastr.info("@T("Confirmed")")
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("An error has occured!!!");
+                        }
+                    });
+                });
+    }
+
+
+
+    function deleteHotel(Id) {
+        $('#deletedialog').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+                .one('click', '#delete', function (e) {
+                    $.ajax({
+                        url: "@Url.Action("DeleteHotel", "Reservations", new { Area = "Admin" })",
+                        type: "Post",
+                        data: JSON.stringify({ 'Id': Id }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            toastr.info("@T("Confirmed")")
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("An error has occured!!!");
+                        }
+                    });
+                });
+    }
+
+</script>

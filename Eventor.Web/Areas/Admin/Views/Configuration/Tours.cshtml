@@ -1,0 +1,135 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<Line.Data.DataTour>
+@{
+    ViewBag.Title = "Tours";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>
+            @T("Tours.header")
+        </h2>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <button type="button" onclick="location.href='@Url.Action("Tour", "Configuration", new { id = 0 })'" class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-plus-sign"> </span> @T("Admin.add")
+                    </button>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-striped">
+                        <tr>
+
+                            <th>
+                                @T("name")
+                            </th>
+                            <th>
+                                @T("Country")
+                            </th>
+                            <th>
+                                @T("email")
+                            </th>
+                            <th>
+                                @T("Tel")
+                            </th>
+
+                            <th class="table-inputs"></th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+
+
+                            <tr>
+
+                                <td>
+                                    @item.name
+                                </td>
+
+
+                                <td>
+                                    @item.city, @item.country
+                                </td>
+
+
+                                <td>
+                                    @item.description
+                                </td>
+
+
+                                <td>
+                                    <button type="button" onclick="location.href='@Url.Action("Tour", "Configuration", new { id = item.Id })'" id="deleteit" name="deleteit" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+
+                                    <button type="button" onclick="deleteEvent(@item.Id)" class="btn btn-danger btn-sm">
+                                        <span class="glyphicon glyphicon-trash"> </span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </table>
+                    <div class="text-center">
+                        @Html.PagedListPager(Model, page => Url.Action("Tours", new { page }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+
+    @Html.Partial("_ConfirmDelete", "deletedialog")
+
+    @if (ViewBag.error != null)
+    {
+        <script>
+            toastr.error('@T(ViewBag.error)');
+        </script>
+    }
+
+    <script>
+   function deleteEvent(id) {
+
+        $('#deletedialog').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+            .one('click', '#delete', function (e) {
+                $.ajax({
+                    url: "@Url.Action("DeletAgency", "Configuration", new { Area = "Admin" })",
+                    type: "Post",
+                    data: JSON.stringify({ 'id': id }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                              swal('@T("item.removed")')
+                            location.reload();
+                        } else {
+                            alert("Error occurs on the Database level!");
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+            });
+    }
+
+
+    </script>
+
+}
+

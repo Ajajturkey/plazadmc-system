@@ -1,0 +1,478 @@
+﻿
+@{
+    ViewBag.Title = "Operations";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .input-date, .search-date {
+        width: 150px;
+        float: left;
+        margin: 0px 5px;
+    }
+    .text-center.search-box {
+        width: 500px;
+        margin: auto;
+        margin:10px auto;
+    }
+
+    .search-date .btn.btn-success.btn-sm {
+        width: 100%;
+        margin: 0px 5px;
+    }
+
+</style>
+<div class="container">
+    <div class="row">
+        <div class="text-center search-box">
+            <div class="input-date" id="data_1">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="03/04/2018">
+                </div>
+            </div>
+            <div class="input-date" id="data_1">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="03/04/2018">
+                </div>
+            </div>
+            <div class="search-date">
+                <button class="btn btn-success btn-sm">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span>@T("Reservations.Tours")</span>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-bordered table-striped text-center">
+                        <tr>
+                            <th>
+                                @T("Id")
+                            </th>
+                            <th>
+                                @T("Agency")
+                            </th>
+                            <th>
+                                @T("pax")
+                            </th>
+                            <th>
+                                @T("Hotel")
+                            </th>
+                            <th>
+                                @T("İs-Extra")
+                            </th>
+                            <th>
+                                @T("Tour")
+                            </th>
+                            <th>
+                                @T("Transport")
+                            </th>
+                            <th>
+                                @T("Circuito")
+                            </th>
+                            <th>
+                                @T("Guide")
+                            </th>
+                            <th>
+                                @T("T/L")
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Mondo
+                            </td>
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                Ramada
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                Nesim <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Albender Agency
+                            </td>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                All Season
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Albender Agency
+                            </td>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                All Season
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+                <hr />
+                <div class="ibox-title">
+                    <span>@T("Reservations.Arrivales")</span>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-bordered table-striped text-center">
+                        <tr>
+                            <th>
+                                @T("Id")
+                            </th>
+                            <th>
+                                @T("Agency")
+                            </th>
+                            <th>
+                                @T("pax")
+                            </th>
+                            <th>
+                                @T("Hotel")
+                            </th>
+                            <th>
+                                @T("İs-Extra")
+                            </th>
+                            <th>
+                                @T("Tour")
+                            </th>
+                            <th>
+                                @T("Transport")
+                            </th>
+                            <th>
+                                @T("Circuito")
+                            </th>
+                            <th>
+                                @T("Guide")
+                            </th>
+                            <th>
+                                @T("T/L")
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Mondo
+                            </td>
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                Ramada
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                Nesim <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Albender Agency
+                            </td>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                All Season
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Albender Agency
+                            </td>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                All Season
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+
+                <hr />
+                <div class="ibox-title">
+                    <span>@T("Reservations.Arrivales")</span>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-bordered table-striped text-center">
+                        <tr>
+                            <th>
+                                @T("Id")
+                            </th>
+                            <th>
+                                @T("Agency")
+                            </th>
+                            <th>
+                                @T("pax")
+                            </th>
+                            <th>
+                                @T("Hotel")
+                            </th>
+                            <th>
+                                @T("İs-Extra")
+                            </th>
+                            <th>
+                                @T("Tour")
+                            </th>
+                            <th>
+                                @T("Transport")
+                            </th>
+                            <th>
+                                @T("Circuito")
+                            </th>
+                            <th>
+                                @T("Guide")
+                            </th>
+                            <th>
+                                @T("T/L")
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Mondo
+                            </td>
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                Ramada
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                Nesim <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Albender Agency
+                            </td>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                All Season
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#"><span class="btn btn-xs btn-3d btn-info">011102</span></a>
+                            </td>
+                            <td>
+                                Albender Agency
+                            </td>
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                All Season
+                            </td>
+                            <td>
+                                INC
+                            </td>
+                            <td>
+                                IST TUR
+                            </td>
+                            <td>
+                                FEHMI <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                02.01.2019
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+                            <td>
+                                Adnan  <a class="btn btn-xs btn-success"> ? </a>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+                <hr />
+                <div class="ibox float-e-margins text-center">
+                    <button class="btn btn-info">@T("Print")</button>
+                    <button class="btn btn-success">@T("Excel")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+

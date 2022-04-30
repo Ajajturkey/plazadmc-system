@@ -1,0 +1,142 @@
+﻿@model string
+@{
+    ViewBag.Title = "Track";
+
+    bool error = false;
+    if (ViewBag.error != null)
+    {
+        error = (bool)ViewBag.error;
+    }
+
+    Shippo.Track res = null;
+    if (ViewBag.result != null)
+    {
+        res = (Shippo.Track)ViewBag.result;
+    }
+
+
+    bool found = false;
+    if (ViewBag.found != null)
+    {
+        found = (bool)ViewBag.found;
+    }
+
+
+    Line.Data.Database.Shipment Shipment = null;
+    if (found)
+    {
+        Shipment = (Line.Data.Database.Shipment)ViewBag.Shipment;
+    }
+}
+
+<!-- MAIN TITLE -->
+<div class="main-title">
+    <div class="container">
+        <h1 class="main-title__primary">@T("track.title")</h1>
+        <h3 class="main-title__secondary">@T("track.subtitle")</h3>
+    </div>
+</div><!-- /.main-title -->
+<!-- BREADCRUMBS -->
+<div class="breadcrumbs margin-bottom-0">
+    <div class="container">
+        <span>
+            <a class="home" href="/" title="Go to Homepage." rel="v:url">@T("home")</a>
+        </span>
+        <span>
+            <span>@T("track.title")</span>
+        </span>
+    </div>
+</div><!-- /.breadcrumbs -->
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-sm-8 col-sm-offset-2 margin-top-15 margin-bottom-60">
+
+            <p>
+                @T("Track.Description")
+                @*Enter your tracking code below and click the "Track" button to find out exactly where your cargo is right now and when it will arrive at its final destination.*@
+            </p>
+
+            <form method="post" class="trackForm clearfix">
+                <input type="text" name="trackingNo" placeholder="@T("track.title")" id="trackingNo">
+                <button type="submit" class="btn btn-info">@T("track.title")</button>
+            </form>
+
+     
+    @*@if (found)
+        {
+            <hr />
+            <table class="table table-condensed table-hover table-striped">
+                <tr>
+                    <th>@T("shipment.created")</th>
+                    <th>@T("shipment.Location")</th>
+                    <th>@T("shipment.StatusDate")</th>
+                    <th>@T("shipment.ReciverName")</th>
+                    <th>@T("shipment.Status")</th>
+                    <th>@T("shipment.ReciverPhone")</th>
+
+                </tr>
+                <tr>
+                    <td>@Shipment.date</td>
+                    <td>@Shipment.ReciverCountry</td>
+                    <td>@Shipment.StatusDate</td>
+                    <td>@Shipment.ReciverName</td>
+                    <td>@T(Shipment.LastStatus)</td>
+                    <td>@Shipment.ReciverPhone</td>
+                </tr>
+            </table>
+        }*@
+        <hr />
+    @if (!error && res != null)
+    {
+       
+        <table class="table table-condensed table-hover table-striped">
+            <tr>
+                <th>@T("shipment.created")</th>
+                <th>@T("shipment.Location")</th>
+                <th>@T("shipment.Status")</th>
+                <th>@T("shipment.StatusDetails")</th>
+                <th>@T("shipment.StatusDate")</th>
+            </tr>
+            <tr>
+                <td>@res.TrackingStatus.ObjectCreated</td>
+                <td>@res.TrackingStatus.Location.City , @res.TrackingStatus.Location.Country</td>
+                <td>@res.TrackingStatus.Status</td>
+                <td>@res.TrackingStatus.StatusDetails</td>
+                <td>@res.TrackingStatus.StatusDate</td>
+            </tr>
+        </table>
+
+        <hr />
+        <table class="table table-condensed table-hover table-striped">
+            <tr>
+                <th>@T("shipment.Location")</th>
+                <th>@T("shipment.Status")</th>
+                <th>@T("shipment.StatusDetails")</th>
+                <th>@T("shipment.StatusDate")</th>
+            </tr>
+            @foreach (var item in res.TrackingHistory)
+            {
+                <tr>
+                    <td>@item.Location.City, @item.Location.Country</td>
+                    <td>@item.Status</td>
+                    <td>@item.StatusDetails</td>
+                    <td>@item.StatusDate</td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        if (IsPost)
+        {
+            @T("shipment.notfound")
+        }
+
+    }
+</div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.container -->

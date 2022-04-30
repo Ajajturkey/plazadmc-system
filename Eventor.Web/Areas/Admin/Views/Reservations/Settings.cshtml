@@ -1,0 +1,307 @@
+﻿@model Line.Data.Reservations
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutReservation.cshtml";
+}
+@{
+    var viewclass = "";
+    switch (Model.status)
+    {
+        case "Request":
+            viewclass = "btn-warning";
+            break;
+        case "Confirmed":
+            viewclass = "btn-info";
+            break;
+        case "ReConfirmed":
+            viewclass = "btn-success";
+            break;
+        case "Canceled":
+            viewclass = "btn-danger";
+            break;
+        case "Completed":
+            viewclass = "btn-primary";
+            break;
+        default:
+            viewclass = "btn-warning";
+            break;
+    }
+}
+<!-- Top Navbar -->
+@Html.Partial("_TopReservationbar", Model.ID)
+
+<div class="row white-bg p-xs">
+    <div class="col-lg-2">
+        <b>@T("status")</b>
+        <p>
+
+            <a href="#" class="btn btn-xs @viewclass">@Model.status</a>
+        </p>
+        <b>@T("change Request")</b>
+        <p>
+
+            @if (Model.status == "Confirmed")
+            {
+                <button type="button" data-toggle="modal" data-target="#reconfirm" class="btn btn-xs btn-success">ReConfirm</button>
+            }
+            else
+            {
+                <button type="button" data-toggle="modal" data-target="#confirm" class="btn btn-xs btn-info">Confirm</button>
+            }
+        </p>
+    </div>
+    <div class="col-lg-3">
+        <b>@T("Reservation Id")</b>
+        <p># @Model.ID </p>
+        <b>@T("Agency name")</b>
+        <p>@Model.Agency.AgencyName</p>
+    </div>
+    <div class="col-lg-2">
+        <b>@T("Reservation Owner")</b>
+        <p> @Model.Visitor.FirstName @Model.Visitor.LastName </p>
+        <b>@T("Reservation Date")</b>
+        <p>@Model.date.Value.ToShortDateString()</p>
+    </div>
+    <div class="col-lg-5">
+        <b>@T("Back To Reservation")</b>
+        <p>
+            <div class="resitem">
+                <a href="@Url.Action("ViewReservations",new { id = Model.ID})">
+                    <i class="fa fa-file fa-4x"></i>
+                </a>
+            </div>
+        </p>
+    </div>
+</div>
+
+<br />
+<div class="row white-bg">
+    <div class="col-lg-12">
+        <div class="">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#log">Log</a></li>
+                <li ><a data-toggle="tab" href="#Deadline">Deadline Date</a></li>
+                <li><a data-toggle="tab" href="#Note">File Note </a></li>
+                <li><a data-toggle="tab" href="#Agency">Who to Contact </a></li>
+                <li><a data-toggle="tab" href="#Fowner">File Owner</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div  id="log" class="tab-pane fade in active">
+                    <div class="col-lg-12">
+                        @foreach (var item in Model.Filelog)
+                        {
+                            <p><b class="text-danger">  @item.Action</b><br /><b>@Html.Raw(item.shortMessage)</b> - @item.Visitor.FirstName @item.Visitor.LastName</p> <hr />
+                        }
+                    </div>
+                </div>
+                <div id="Deadline" class="tab-pane fade in">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("InsertDeadline", "Reservations", new { Area = "admin", Id = Model.ID }, FormMethod.Post))
+                        {
+                            <label>@T("Deadline date:") </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <div id="sandbox-container">
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <input type="text" class="input-sm form-control date" name="dldate" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <label>@T("Category:") </label>
+                            <div class="input-group input-group">
+                                <select class="form-control" name="dtype">
+                                    <option value="Confirmation">@T("Confirmation")</option>
+                                    <option value="ReConfirmation">@T("ReConfirmation")</option>
+                                    <option value="Payment">@T("Payment")</option>
+                                    <option value="Cancelation">@T("Cancelation")</option>
+                                </select>
+                                <span class="input-group-addon"></span>
+                            </div>
+                            <label>@T("Note:")  </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <textarea rows="5" class="form-control" name="dnote"></textarea>
+                            </div>
+                            <hr />
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-info" name="name" value="@T("Add.deadline")" />
+                            </div>
+                            <br />
+                        }
+                    </div>
+
+                </div>
+                <div id="Note" class="tab-pane fade">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("UpdateNote", "Reservations", new { Area = "admin", Id = Model.ID }, FormMethod.Post))
+                        {
+                            <label>@T("File note:") </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                @Html.TextAreaFor(d => d.note, new { @rows = "5", @class = "form-control" })
+                            </div>
+                            <hr />
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-info" name="name" value="@T("Update.Note")" />
+                            </div>
+                            <br />
+                        }
+                    </div>
+                </div>
+                <div id="Agency" class="tab-pane fade">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("ChangeAgency", "Reservations", new { Area = "admin", Id = Model.ID }, FormMethod.Post))
+                        {
+                            <label></label>
+                            <h5>Here you can save this file Agency staff name that you comunicate with. </h5>
+                            <h5>On file creation its recommended to add it. </h5>
+                            <h5>The system will use this name when confirm and reconfirm file. </h5>
+
+                            <div class="input-group">
+                                <span class="input-group-addon">Staff Name</span>
+                                @Html.TextBoxFor(d => d.agencystaff, new { @class = "form-control", placeholder = @T("Agency contact Name") })
+                            </div>
+
+                            <hr />
+                            <div class="input-group" runat="server" id="AgencyOwnerdialog" visible="false">
+                                <span class="input-group-addon">File Agency</span>
+                                @Html.DropDownListFor(d => d.ref_agency, (SelectList)ViewBag.Agencies, new { @class = " form-control txtowner" })
+                            </div>
+                            <hr />
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-info" name="name" value="@T("UpdateAgency")" />
+                            </div>
+                            <br />
+                        }
+                    </div>
+
+                </div>
+                <div id="Fowner" class="tab-pane fade">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("ChangeOwner", "Reservations", new { Area = "admin", Id = Model.ID }, FormMethod.Post))
+                        {
+                            <label></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">File Owner</span>
+                                @Html.DropDownList("owner", (SelectList)ViewBag.Members, new { @class = " form-control txtowner" })
+                            </div>
+                            <div id="Needpass" runat="server">
+                                <h5>After change the Owner. You will need to enter <span runat="server">@Model.Visitor.FirstName @Model.Visitor.LastName</span> password. </h5>
+
+                                <div class="input-group">
+                                    <span class="input-group-addon">Password</span>
+                                    <input type="password" class="input-sm form-control" runat="server" name="opass" />
+
+                                </div>
+                            </div>
+                            <h5>On success you can see the new file owner in reservation page. </h5>
+
+                            <hr />
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-info" name="name" value="@T("Change.owner")" />
+                            </div>
+                            <br />
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr />
+
+</div>
+
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+}
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/clockpicker")
+
+
+    <script>
+        $(document).ready(function () {
+
+            $('#sandbox-container .input-daterange').datepicker({
+                format: "dd.mm.yyyy",
+                startDate: "-",
+                daysOfWeekHighlighted: "0,6",
+                todayHighlight: true
+            });
+        });
+    </script>
+
+    <script>
+        function edit(id) {
+            $.ajax({
+                url: "@Url.Action("PreparePackage", "Reservations", new { Area = "Admin" })",
+                type: "Post",
+                data: JSON.stringify({ 'id': id }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    //assign all values
+                    $("#TID").val(data.TID);
+                    $("#code").val(data.code);
+                    $("#pax").val(data.pax);
+                    $("#date").val(data.date).change();
+                    $("#dateout").val(data.dateout).change();
+                    $("#buy").val(data.buy);
+                    $("#Sell").val(data.sell);
+                    $("#names").val(data.names);
+                    $("#note").val(data.note);
+
+                    $('#Update').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+    }
+
+        function deleteitem(id) {
+            $('#deletedialog').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+                .one('click', '#delete', function (e) {
+                    $.ajax({
+                        url: "@Url.Action("DeletePackage", "Reservations", new { Area = "Admin" })",
+                        type: "Post",
+                        data: JSON.stringify({ 'id': id }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            toastr.info("@T("deleted")")
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("An error has occured!!!");
+                        }
+                    });
+                });
+                }
+    </script>
+
+
+
+
+}

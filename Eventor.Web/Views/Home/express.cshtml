@@ -1,0 +1,152 @@
+﻿@model Line.Models.ExpressModel
+@{
+    ViewBag.Title = T("express").ToString();
+}
+<!-- MAIN TITLE -->
+<div class="main-title">
+    <div class="container">
+        <h1 class="main-title__primary">@T("express")</h1>
+        <h3 class="main-title__secondary">@T("express.subtitle")</h3>
+    </div>
+</div><!-- /.main-title -->
+<!-- BREADCRUMBS -->
+<div class="breadcrumbs margin-bottom-0">
+    <div class="container">
+        <span>
+            <a class="home" href="/" title="Go to Homepage." rel="v:url">@T("home")</a>
+        </span>
+        <span>
+            <span>@T("express")</span>
+        </span>
+    </div>
+</div><!-- /.breadcrumbs -->
+
+<div class="container">
+
+    <div class="row margin-top-15 margin-bottom-30">
+
+        <div class="col-sm-6">
+            <p>@T("express.desc1")</p>
+            <p>@T("express.desc2")</p>
+            <p>@T("express.desc3")</p>
+            <h3>@T("express.calculate")</h3>
+            <form id="myform" class="validateDontSubmit">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            @Html.DropDownListFor(d => d.Country, (List<SelectListItem>)ViewBag.countries, new { })
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <input type="text" placeholder="@T("express.weight")" aria-invalid="false" aria-required="true" size="40" value="" id="@Html.IdFor(d=> d.wight)" required>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <input type="text" placeholder="@T("express.width")" aria-invalid="false" aria-required="true" size="40" value="" id="@Html.IdFor(d=> d.width)" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <input type="text" placeholder="@T("express.hieght")" aria-invalid="false" aria-required="true" size="40" value="" id="@Html.IdFor(d=> d.height)" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <input type="text" placeholder="@T("express.zindex")" aria-invalid="false" aria-required="true" size="40" value="" id="@Html.IdFor(d=> d.longz)" required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <input type="button" class="btn btn-primary" onclick="
+        getprice();" value="@T("express.calculate")">
+                        <input type="submit" hidden />
+                        <img class="ajax-loader" id="loader" src="images/ajax-loader.gif" alt="Sending ..." style="display: none;">
+                    </div>
+                </div>
+                <div class="success" id="result" style="display:none"><span id="resulttext"></span> </div>
+                <div class="response error">@T("express.fail")</div>
+            </form>
+
+
+
+
+        </div><!-- /.col -->
+
+        <div class="col-sm-6">
+
+            <p>
+                <a href="/cargopress/html/images/contents/23.jpg">
+                    <img alt="placeholder" src="/cargopress/html/images/contents/23.jpg" class="alignnone">
+                </a>
+            </p>
+            <p>
+                <a href="/cargopress/html/images/contents/36.jpg">
+                    <img alt="placeholder" src="/cargopress/html/images/contents/36.jpg" class="alignnone">
+                </a>
+            </p>
+
+        </div><!-- /.col -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<script>
+
+    function getprice() {
+
+        var x = $('#myform')[0];
+
+        if (x.checkValidity()) {
+             var width = $("#@Html.IdFor(d=>d.width)").val();
+               var hieght = $("#@Html.IdFor(d => d.height)").val();
+               var zindex = $("#@Html.IdFor(d => d.longz)").val();
+               var kg = $("#@Html.IdFor(d => d.wight)").val();
+               var country = $("#@Html.IdFor(d => d.Country)").val();
+                $.ajax({
+                    url: "@Url.Action("Express", "Home")",
+                    type: "Post",
+                    data: JSON.stringify({
+                        'x': width,
+                        'y': hieght,
+                        'z': zindex,
+                        'k': kg,
+                        'country': country,
+                    }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                            $("#resulttext").text(data.responseText + " USD")
+                            $("#result").show();
+                        } else {
+                         $("#resulttext").text("@T("check.error")")
+                            $("#result").show();
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+        }
+        else {
+            $('#myform').find(':submit').click();
+        }
+
+    };
+
+
+</script>

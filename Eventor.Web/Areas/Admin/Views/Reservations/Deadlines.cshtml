@@ -1,0 +1,19 @@
+﻿@model List<Line.Data.DeadLine>
+@if (Model.Count > 0)
+{
+<div class="p-sm col-lg-12 white-bg">
+
+    @foreach (var item in Model)
+    {
+
+    <div class="alert alert-danger">
+        <div>
+            <a class="btn btn-danger btn-xs" onclick="deleteDeadline(@item.id)"><i class="fa fa-trash"></i></a>  <b> @item.Category</b> - @item.Expaire.ToShortDateString()  
+            <b> @item.Description</b>
+        </div>
+    </div>
+            }
+        </div>
+
+}
+    

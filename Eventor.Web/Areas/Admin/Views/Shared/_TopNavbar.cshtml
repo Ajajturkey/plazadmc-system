@@ -1,0 +1,35 @@
+﻿@using Autofac;
+@using Line.Services;
+@{
+    /**/
+
+    var workContext = DependencyManager.Scope.Resolve<IWorkContext>();
+}
+                <div class="row border-bottom">
+                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+
+                            @if (workContext.IsReservation)
+                            {
+                                <ul class="nav navbar-top-links Side-nav">
+                                    <li>
+                                        <a  href="@Url.Action("CreateReservations", "Reservations")">@T("Create.Reservations")</a>
+                                    </li>
+                                </ul>
+                             }
+
+                                        @*@Html.Action("eventControls", "Configuration", new { Area = "admin"})*@
+                            </div>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                @Html.Action("LanguageSelector", "Common")
+                            </li>
+                            <li class=""><a href="@Url.Action("logout", "account")"><i class="fa fa-lock"></i></a></li>
+
+                         
+                        </ul>
+
+
+                    </nav>
+                </div>

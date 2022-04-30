@@ -1,0 +1,186 @@
+﻿@model Line.Models.VisitorModel
+@{
+    ViewBag.Title = @T("Users.header");
+
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+    <style>
+        .validation-summary-errors {
+            color: #ed5565;
+        }
+
+        .input-validation-error {
+            border: #ed5565 1px solid;
+        }
+    </style>
+
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>
+            @T("Users.header")
+        </h2>
+        @Html.ValidationSummary()
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+
+            <div class="ibox-content">
+                <div class="row">
+
+                    @using (Html.BeginForm("CreateUser", "Configuration", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(d => d.Id)
+                        <div class="col-lg-12">
+
+                            <div class="form-group">
+                                <label for="Active">@T("User.Active")</label>
+                                @Html.CheckBoxFor(d => d.Active, new { @class = "", @placeholder = @T("User.Active") })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.HiddenFor(d => d.Id)
+
+                            <div class="form-group">
+                                <label>@T("User.FirstName")</label>
+                                @Html.TextBoxFor(d => d.FirstName, new { @class = "form-control", @placeholder = @T("User.FirstName") })
+                            </div>
+                            <div class="form-group">
+                                <label>@T("User.LastName")</label>
+                                @Html.TextBoxFor(d => d.LastName, new { @class = "form-control", @placeholder = @T("User.LastName") })
+                            </div>
+                            <div class="form-group">
+                                <label>@T("User.Phone")</label>
+                                @Html.TextBoxFor(d => d.Phone, new { @class = "form-control", @placeholder = @T("User.Phone") })
+                            </div>
+                            <div class="form-group">
+                                <label>@T("User.possition")</label>
+                                @Html.TextBoxFor(d => d.Title, new { @class = "form-control", @placeholder = @T("User.Phone") })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+
+                            @if (Model.Id > 0)
+                            {
+                                <div class="form-group">
+                                    <label>@T("Username")</label>
+                                    @Html.TextBoxFor(d => d.username, new { @class = "form-control", @readonly = @T("@readonly") })
+                                    @Html.ValidationMessageFor(d => d.username, "username must be unique");
+                                </div>
+                                <div class="form-group">
+                                    <label>@T("New Password")</label>
+                                    @Html.PasswordFor(d => d.Password, new { @class = "form-control", @placeholder = @T("Password") })
+                                </div>
+                               
+                                <input type="submit" name="updatepassword" class="btn btn-sm btn-success" value="@T("Change.Password")" />
+                                <hr />
+                            }
+                            else
+                            {
+                                <div class="form-group">
+                                    <label>@T("Username")</label>
+                                    @Html.TextBoxFor(d => d.username, new { @class = "form-control", @placeholder = @T("Username") })
+                                </div>
+                                <div class="form-group">
+                                    <label>@T("Password")</label>
+                                    @Html.PasswordFor(d => d.Password, new { @class = "form-control", @placeholder = @T("Password") })
+                                </div>
+                            }
+
+                            <div class="ibox-title">
+                                @T("email.integration")
+                            </div>
+                            <div class="form-group">
+                                <label>@T("Email")</label>
+                                @Html.TextBoxFor(d => d.Email, new { @class = "form-control", @placeholder = @T("Email") })
+                            </div>
+                            <div class="form-group">
+                                <label>@T("Email.Password")</label>
+                                @Html.PasswordFor(d => d.EmailPassword, new { @class = "form-control", @placeholder = @T("Email.Password") })
+                            </div>
+                            @if (Model.Id > 0)
+                            {
+                                <input type="submit" name="UpdateEpass" class="btn btn-sm btn-success" value="@T("Change.email.Password")" />
+                            }
+                            <hr />
+                        </div>
+                        <div class="col-lg-12">
+                            <h2>
+                                @T("Roles")
+                            </h2>
+                            <hr />
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="IsReservation">@T("User.Reservation")</label>
+                                    @Html.CheckBoxFor(d => d.IsReservation, new { @class = "" })
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="IsOperation">@T("User.Operation")</label>
+                                    @Html.CheckBoxFor(d => d.IsOperation, new { @class = "" })
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="IsAccounting">@T("User.Accounting")</label>
+                                    @Html.CheckBoxFor(d => d.IsAccounting, new { @class = "" })
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="IsManager">@T("User.Managing")</label>
+                                    @Html.CheckBoxFor(d => d.IsManager, new { @class = "" })
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="IsAdmin">@T("User.Admin")</label>
+                                    @Html.CheckBoxFor(d => d.IsAdmin, new { @class = "" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <hr />
+
+                        </div>
+                        if (Model.Id <= 0)
+                        {
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-success" value="@T("button.create")" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-success" value="@T("button.update")" />
+                            </div>
+                        }
+
+
+                    }
+
+                </div>
+            </div>
+            
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+   
+
+
+
+
+

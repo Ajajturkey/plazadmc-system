@@ -1,0 +1,31 @@
+﻿@model int
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+
+            <ul class="nav navbar-top-links navbar-left">
+                <li>
+                    <a target="_blank" href="@Url.Action("OpenInvoice","Reservations", new { area = "Admin" , Id = Model})"><i class="fa fa-usd">Invoice</i> </a>
+                </li>
+                <li>
+                    <a target="_blank" href="@Url.Action("OpenVocher","Reservations", new { area = "Admin" , Id = Model})"><i class="fa fa-print">Voucher</i></a>
+                </li>
+                <li>
+                    <a  href="@Url.Action("Settings","Reservations", new { area = "Admin" , Id = Model})" >
+                        <i class="fa fa-gears"></i> 
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                @Html.Action("LanguageSelector", "Common")
+            </li>
+          @*  <li class=""><a href="@Url.Action("logout", "account")">@T("Logoff")</a></li>*@
+          
+        </ul>
+      
+
+    </nav>
+</div>

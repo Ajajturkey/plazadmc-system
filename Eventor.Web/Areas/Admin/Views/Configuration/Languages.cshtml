@@ -1,0 +1,133 @@
+﻿@model IEnumerable<Line.Data.Language>
+
+
+@{
+    ViewBag.Title = T("Languages");
+
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+               
+                    <div class="ibox-tools">
+                        <button type="button" onclick="location.href='@Url.Action("LanguageAddOrUpdate", "Configuration", new { id = 0 })'" class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-plus-sign"> </span> @T("Admin.add")
+                        </button>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+<table class="table table-striped">
+    <tr>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.LanguageCulture)
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.UniqueSeoCode)
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.FlagImageFileName)
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Rtl)
+        </th>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Published)
+        </th>
+
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.LanguageCulture)
+        </td>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.UniqueSeoCode)
+        </td>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.FlagImageFileName)
+        </td>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Rtl)
+        </td>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Published)
+        </td>
+
+
+        <td>
+            @Html.ActionLink("Language Recurces", "LanguageRecurces", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+            @Html.ActionLink("Edit", "LanguageAddOrUpdate", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+            @Html.ActionLink("Delete", "Languagedelete", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+            @using (Html.BeginForm("ImportResourcesToXml", "Configuration", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <input type="hidden" name="id" value="@item.Id" style="float:left" />
+        <input type="file" required name="file" class="btn btn-file float-e-margins" />
+        <input type="submit" class="btn btn-success" value="@T("import")" />
+        @Html.ActionLink("Export", "ExportResourcesToXml", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+
+}
+        </td>
+
+    </tr>
+}
+
+</table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
+
+
+

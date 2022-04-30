@@ -1,0 +1,285 @@
+﻿@model Line.Models.ReservationSearchModel
+@using Line.Models
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+    var results = (List<Line.Data.Reservations>)ViewBag.Reseult;
+    
+}
+
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-12">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>@T("Reservations.Status")</label>
+                                @Html.ListBoxFor(d => d.Status, new MultiSelectList(Enum.GetNames(typeof(ReservationStatus)), Model.Status), new { @class = "form-control chosen-select-members", @multiple = "multiple", @data_placeholder = @T("select.FileType") })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>@T("Reservations.FileDate")</label>
+                                @Html.DropDownList("FileDate", (SelectList)ViewBag.FileDate, new { @class = "form-control chosen-select-members", @data_placeholder = @T("select.datetype") })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label><strong>@T("date.from")</strong></label>
+                                <div class="form-group" id="data_5">
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        @Html.TextBoxFor(d => d.CreateDate, DateTime.Now.AddMonths(-1).ToShortDateString(), new { @class = "form-control", autocomplete = "off" })
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label><strong>@T("date.to")</strong></label>
+                                <div class="form-group" id="data_5">
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        @Html.TextBoxFor(d => d.CreateDateTo, DateTime.Now.ToShortDateString(), new { @class = "form-control", autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div style="margin-top:20px">
+                                <input type="submit" class="btn btn-success" value="@T("Reservation.search")" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span>@T("Reservations.Results")</span>
+                    @*<div class="ibox-tools">
+                            <button type="button" class="btn btn-danger  btn-xs" data-toggle="modal" data-target=".bd-example-modal-lg">@T("Search")</button>
+                        </div>*@
+                </div>
+                <div class="ibox-content">
+                    <table id="datatabel" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    @T("Id")
+                                </th>
+                                <th>
+                                    @T("Agency")
+                                </th>
+                                <th>
+                                    @T("Country")
+                                </th>
+                                <th>
+                                    @T("Service") / @T("Owner")
+                                </th>
+                                <th>
+                                    @T("Total")
+                                </th>
+                                <th>
+                                    @T("Checkin") -  @T("Checkout")
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var res in results)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        @{
+                                            var viewclass = "";
+                                            switch (res.status)
+                                            {
+                                                case "Request":
+                                                    viewclass = "btn-warning";
+                                                    break;
+                                                case "Confirmed":
+                                                    viewclass = "btn-info";
+                                                    break;
+                                                case "ReConfirmed":
+                                                    viewclass = "btn-success";
+                                                    break;
+                                                case "Canceled":
+                                                    viewclass = "btn-danger";
+                                                    break;
+                                                case "Completed":
+                                                    viewclass = "btn-primary";
+                                                    break;
+                                                default:
+                                                    viewclass = "btn-warning";
+                                                    break;
+                                            }
+                                        }
+                                        <a href="@Url.Action("ViewReservations", "Reservations", new { id = res.ID })"><span class="btn btn-3d btn-xs @viewclass">#@res.ID</span></a>
+
+                                    </td>
+                                    <td>
+                                        @res.Agency.AgencyName<br />
+                                        @res.GetCustomers()
+                                    </td>
+                                    <td>
+                                        @res.Agency.Country
+                                    </td>
+                                    <td>
+                                        @res.Visitor.GetFullName() <br />
+                                        @if (res.Rhotel.Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Hotel")</span>}
+                                        @if (res.Transfers.Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Transfers")</span>}
+                                        @if (res.Flight.Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Flight")</span>}
+                                        @if (res.Tour
+                                            .Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Tour")</span>}
+                                        @if (res.ExtraService
+                                            .Count > 0)
+                                        {<span class="btn btn-primary btn-xs">@T("Extra")</span>}
+                                    </td>
+                                    <td>
+                                        @res.price.ToString(true)
+                                    </td>
+                                    <td>
+                                        @res.checkindate.ToShortDateString() - @res.balanceDate.ToShortDateString()
+                                    </td>
+                                    <td>
+
+                                        <a target="_blank" href='@Url.Action("OpenVocher", "Reservations", new { id = res.ID })' class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-print"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+                                    @results.Sum(d => d.price).ToString(true)
+                                </th>
+                                <th>
+
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/select2")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/dateRange")
+
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+
+    <script type="text/javascript">
+        $('.input-daterange').datepicker({
+            todayBtn: "linked",
+            format: "dd.mm.yyyy",
+            startView: 1,
+            daysOfWeekHighlighted: "0,6"
+        });
+
+        $('.chosen-select-members').chosen({ width: "100%" });
+
+        $('.js-data-example-ajax').select2({
+            minimumInputLength: 3,
+            ajax: {
+                url: '/Admin/Reservations/GetAgencies',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (obj) {
+                            return { id: obj.Value, text: obj.Text };
+                        })
+                    };
+                }
+            }
+        });
+    </script>
+    <script type="text/javascript">
+
+          $(document).ready(function () {
+                $('#datatabel').DataTable({
+                    responsive: {
+                        details: {
+                            type: 'column',
+                            target: 'tr'
+                        }
+                    },
+                    columnDefs: [{
+                        className: 'control',
+                        orderable: false,
+                        targets: 0
+                    }],
+                    order: [1, 'asc'],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print', 'excel', 'pdf'
+                    ]
+                });
+            });
+
+    </script>
+
+}

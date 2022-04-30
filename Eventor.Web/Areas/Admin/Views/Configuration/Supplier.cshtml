@@ -1,0 +1,210 @@
+﻿@model Line.Data.Supplier
+@{
+    ViewBag.Title = "supplier";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>
+            @T("Create.supplier.header")
+        </h2>
+    </div>
+</div>
+
+
+@using (Html.BeginForm())
+{
+  
+
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        @T("supplier.Info")
+                        @Html.HiddenFor(d => d.Id)
+                        @Html.HiddenFor(d => d.JoinDate)
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="supplierName">@T("supplier.active")</label>
+                                    @Html.CheckBoxFor(d => d.Active, new { @class = "form-control", style = "width:30px" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="supplierName">@T("supplier.name")</label>
+                                    @Html.TextBoxFor(d => d.name, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+            <label for="supplierName">@T("supplier.email")</label>
+            @Html.TextBoxFor(d => d.Email, new { @class = "form-control" })
+
+        </div>
+        <div class="form-group">
+            <label for="supplierName">@T("supplier.Contact")</label>
+            @Html.TextBoxFor(d => d.contactPerson, new { @class = "form-control" })
+
+        </div>
+
+                                <div class="form-group">
+                                    <label for="Tel">@T("supplier.tel")</label>
+                                    @Html.TextBoxFor(d => d.tel, new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="Fax">@T("supplier.fax")</label>
+                                    @Html.TextBoxFor(d => d.fax, new { @class = "form-control" })
+                                </div>
+
+                               
+
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        @T("supplier.Settings")
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="Fax">@T("supplier.type")</label>
+                                    @Html.TextBoxFor(d => d.type, new { @class = "form-control" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Contact">@T("supplier.IsSellRate")</label>
+                                    @Html.CheckBoxFor(d => d.IsSellRate, new { @class = "form-control", style = "width:30px" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Contact">@T("supplier.SalingCommsion")</label>
+                                    @Html.TextBoxFor(d => d.SalingCommsion, new { @class = "form-control", type = "Number" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Contact">@T("supplier.IsBuyRate")</label>
+                                    @Html.CheckBoxFor(d => d.IsBuyRate, new { @class = "form-control", style = "width:30px" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Contact">@T("supplier.BuyingCommsion")</label>
+                                    @Html.TextBoxFor(d => d.BuyingCommsion, new { @class = "form-control", type = "Number" })
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        @T("Address.Info")
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    @Html.DropDownListFor(d => d.Country, (SelectList)ViewBag.Countries, new { @class = "chosen-select" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="City">@T("supplier.city")</label>
+                                    @Html.TextBoxFor(d => d.City, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="ibox-content">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group text-center">
+
+                            @if (Model.Id == 0)
+                            {
+                                <button type="submit" class="btn btn-success">@T("SaveChanges")</button>
+                            }
+                            else
+                            {
+                                if (Model.Active)
+                                {
+                                    <button type="button" class="btn btn-danger">@T("deactivate")</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-info">@T("activate")</button>
+                                }
+
+                                <button type="submit" class="btn btn-success">@T("Update")</button>
+                            }
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+
+}
+@section Scripts {
+
+    @Scripts.Render("~/plugins/chosen")
+
+
+    @if (ViewBag.error != null)
+    {
+        <script>
+            toastr.error('@T(ViewBag.error)');
+        </script>
+    }
+    else
+    {
+        if (IsPost)
+        {
+            <script>
+            toastr.success('@T("changed.saved")');
+            </script>
+        }
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.chosen-select').chosen({ width: "100%" });
+             //Swal('@ViewBag.error')
+        });
+
+
+
+    </script>
+
+}

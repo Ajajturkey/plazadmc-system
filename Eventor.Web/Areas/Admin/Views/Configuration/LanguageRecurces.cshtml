@@ -1,0 +1,238 @@
+﻿@model Line.Models.LocaleStringResourcesModel
+
+
+@{
+    ViewBag.Title = "LanguageRecurces";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-10">
+        <h2>@T("Resources.title")</h2>
+    </div>
+    <div class="col-lg-2">
+        <div class="sidesave">
+            <a data-toggle="modal" data-target="#createnew" class="btn btn-primary">@T("admin.create")</a>
+
+        </div>
+       
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>@T("Resources.title") - @T("Resources.search")</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-sm-6 b-r">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.HiddenFor(d => d.LanguageId);
+                            <div class="form-group">
+                                    @T("name")
+                                @Html.TextBoxFor(d => d.Name, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                @T("value")
+                                @Html.TextBoxFor(d => d.Value, new { @class = "form-control" })
+                            </div>
+
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                    <strong>@T("Search")</strong>
+                                </button>
+                            }
+                        </div>
+                        <div class="col-sm-6">
+                          
+                        </div>
+
+                    </div>
+                   
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal inmodal" id="createnew" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+        @using (Html.BeginForm("LanguageRecurcesCreate", "configuration", FormMethod.Post))
+        {
+                <div class="modal-content animated fadeIn">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                        <h4 class="modal-title">@T("resources.create")</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                       
+                                @Html.HiddenFor(d => d.LanguageId)
+                                @Html.HiddenFor(d => d.RecourceId)
+                                <div class="form-group">
+                                    @Html.LabelFor(d => d.Name)
+                                    @Html.TextBoxFor(d => d.Name, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(d => d.Value)
+                                    @Html.TextBoxFor(d => d.Value, new { @class = "form-control" })
+                                </div>
+
+                           
+                      
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">@T("Close")</button>
+                        <button class="btn btn-primary pull-right " name="create" type="submit">
+                            <strong>@T("Create")</strong>
+                        </button>
+                   
+                    </div>
+                </div>
+        }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    <table class="table table-striped">
+                        <tr>
+
+                            <th>
+                                @T("name")
+                            </th>
+
+                            <th>
+                                @T("value")
+                            </th>
+
+                            
+                            <th></th>
+                        </tr>
+                       
+                        @foreach (var item in Model.Resources)
+                        {
+                            <tr>
+
+                                <td>
+                                    @Html.TextBox("res-name-"+item.Id, item.ResourceName,new { @class = "form-control" })
+                                </td>
+
+                                <td>
+                                    @Html.TextBox("res-value-" + item.Id,item.ResourceValue, new { @class = "form-control" })
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm" onclick="updateRecord(@item.Id)">@T("update")</button>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteRecord(@item.Id)" >@T("delete")</button>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                       
+                          
+                  
+                 
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+<div class="modal inmodal" id="confirm" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-body">
+                <div class="row">
+                    <h3 class="text-center">@T("Confirm.delete")</h3>
+                    <hr />
+                    <div  class="text-center">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">@T("Close")</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger" id="delete">@T("delete")</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        function updateRecord(id) {
+            var name = $("#res-name-"+id).val();
+            var val = $("#res-value-"+id).val();
+            $.ajax({
+                url: "/Admin/configuration/LanguageRecurcesUpdate",
+                type: "POST",
+                data: JSON.stringify({ 'id': id ,'name':name, 'value' : val}),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        alert("Done");
+                    } else {
+                        alert("Error occurs on the Database level!");
+                    }
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+        };
+
+        function deleteRecord(id) {
+
+            $('#confirm').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+            .one('click', '#delete', function (e) {
+                $.ajax({
+                    url: "/Admin/configuration/LanguageRecurcesDelete",
+                    type: "POST",
+                    data: JSON.stringify({ 'id': id }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                            $("#res-name-" + id).parent().parent.remove
+                            alert("Done");
+                        } else {
+                            alert("Error occurs on the Database level!");
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+            });
+     }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

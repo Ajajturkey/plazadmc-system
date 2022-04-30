@@ -1,0 +1,104 @@
+﻿@model Line.Models.ReservationControl
+@using Line.Models
+@{
+    ViewBag.Title = "CreateReservations";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+    var HasErrors = ViewBag.warning != null ? (ViewErrors)ViewBag.warning : new ViewErrors();
+}
+@*<div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-12 text-center">
+            <img src="~/Images/steps/s1.png" width="500" alt="Alternate Text" />
+        </div>
+    </div>*@
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.HiddenFor(d => d.RID)
+                        <div class="row">
+                            <div class="ccol-md-12 text-center">
+                                <h2 class="">Agencies</h2>
+                                <p>Select the Agency you need to create the file with</p>
+                                <hr />
+                                <div class="form-group">
+                                    @Html.DropDownListFor(d => d.AID, (List<SelectListItem>)ViewBag.Agencies, @T("choose.agency").ToString(), new { @class = "js-data-example-ajax form-control", required = "required" })
+                                </div>
+
+                                @if (HasErrors.Errors.Count > 0)
+                                {
+                                    foreach (var item in HasErrors.Errors)
+                                    {
+                                        <p class="text-danger">@item</p>
+                                    }
+                                    <div class="form-group">
+                                        @Html.CheckBoxFor(d => d.CreateApproved, new { required = "required" })
+                                        <label for="CreateApproved">@T("Continue.aprove")</label>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                        <hr />
+
+                        <div class="next-stet-btns text-center">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">@T("Create.reservation")</button>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/select2Styles")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/select2")
+
+
+    <script type="text/javascript">
+
+        $('.js-data-example-ajax').select2({
+            minimumInputLength: 3,
+            ajax: {
+                url: '/Admin/Reservations/GetAgencies',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (obj) {
+                            return { id: obj.Value, text: obj.Text };
+                        })
+                    };
+                }
+            }
+        });
+
+    </script>
+}

@@ -1,0 +1,79 @@
+﻿@model Line.Data.Language
+
+
+@{
+    ViewBag.Title = T("language.addorupdate");
+
+
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    @using (Html.BeginForm())
+    {
+
+                <div class="form-group">
+                    @T("language.name")
+                    @Html.TextBoxFor(d => d.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @T("language.UniqueSeoCode")
+                    @Html.TextBoxFor(d => d.UniqueSeoCode, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @T("language.LanguageCulture")
+                    @Html.TextBoxFor(d => d.LanguageCulture, new { @class = "form-control", @placeholder = "en-Us" })
+                </div>
+                <div class="form-group">
+                    @T("language.Rtl")
+                    @Html.CheckBoxFor(d => d.Rtl, new { @class = "" })
+                </div>
+                <div class="form-group">
+                    @T("language.Published")
+                    @Html.CheckBoxFor(d => d.Published, new { @class = "" })
+                </div>
+                <div class="form-group">
+                    @T("language.FlagImageFileName")
+                    @Html.TextBoxFor(d => d.FlagImageFileName, new { @class = "form-control" })
+                </div>
+                if (Model.Id > 0)
+{
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                    <strong>@T("button.update")</strong>
+                </button>
+}
+else
+{
+                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                    <strong>@T("button.create")</strong>
+                </button>
+}
+
+}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

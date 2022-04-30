@@ -1,0 +1,203 @@
+﻿@model Line.Models.HotelsviewModel
+@{
+    ViewBag.Title = "ReservationHotels";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .modal-dialog {
+        width: 1000px;
+    }
+</style>
+
+    <div class="row white-bg p-xs">
+        <div class="col-lg-2">
+            <b>@T("Reservation Id")</b>
+            <p>
+                <a href='@Url.Action("OpenReservations", "Reservations", new { id = Model.RID })' class="btn btn-primary btn-xs">
+                    # @Model.RID
+                </a>
+            </p>
+        </div>
+        <div class="col-lg-2">
+            <b>@T("Reservation Owner")</b>
+            <p> @Model.Owner </p>
+        </div>
+        <div class="col-lg-2">
+                <b>@T("Agency name")</b>
+                <p>@Model.Agency</p>
+        </div>
+        <div class="col-lg-2">
+            <b>Total</b>
+            <p class="text-danger">@Model.Total</p>
+        </div>
+        <div class="col-lg-4">
+            <b>@T("hotels")</b>
+            <p>
+                @T("hotels.reservation.new")
+            </p>
+        </div>
+
+    </div>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(d => d.RID)
+    <div class="row white-bg p-xs">
+        <div class="col-lg-6">
+            <p><b>@T("hotel.Search")</b></p>
+            <div class="form-group">
+                @Html.DropDownListFor(d => d.hotel, (List<SelectListItem>)ViewBag.Hotels, new { @class = "form-control js-data-example-ajax ", required="required" })
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <p><b></b></p><br />
+            <input type="submit" class="btn btn-sm btn-info" name="name" value="@T("hotel.select")" />
+        </div>
+    </div>
+}
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table id="datatabel" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="40"></th>
+                                        <th></th>
+                                        <th>@T("Hotel")</th>
+                                        <th>@T("Checkin-Checkout")</th>
+                                        <th>@T("Rooms")</th>
+                                        <th>@T("Status")</th>
+                                        <th>@T("Total")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    @foreach (var item in Model.Hotles)
+                                    {
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <a href="#" class="btn btn-danger btn-xs" onclick="deleteHotel(@item.ID)"><i class="fa fa-trash"></i></a>
+                                                <a href="@Url.Action("ReservationRooms",new {Id= item.ID })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i></a>
+                                            </td>
+                                            <td>
+                                                @item.name @*(@item.rate @T("Stars"))*@
+                                            </td>
+                                            <td>@item.checkin.ToShortDateString() - @item.checkout.ToShortDateString()</td>
+                                            <td>@item.RHRoom.Count</td>
+                                            <td>@item.Confirmed</td>
+                                            <td>
+                                                @item.Total.ToString(true) 
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@Html.Partial("_ConfirmDelete", "deletedialog")
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/select2Styles")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/select2")
+
+
+    <script type="text/javascript">
+
+        $('.js-data-example-ajax').select2({
+            minimumInputLength: 3,
+            ajax: {
+                url: '/Admin/Reservations/GetHotels',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (obj) {
+                            return { id: obj.Value, text: obj.Text };
+                        })
+                    };
+                }
+            }
+        });
+
+        function deleteHotel(Id) {
+        $('#deletedialog').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+            .one('click', '#delete', function (e) {
+
+                    $.ajax({
+                        url: "@Url.Action("DeleteHotel", "Reservations", new { Area = "Admin" })",
+                        type: "Post",
+                        data: JSON.stringify({ 'Id': Id }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            toastr.info("@T("Confirmed")")
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("An error has occured!!!");
+                        }
+                    });
+                });
+    }
+
+
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatabel').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: false,
+                    targets: 0
+                }],
+                order: [1, 'asc'],
+            });
+        });
+
+    </script>
+}

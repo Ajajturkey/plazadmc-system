@@ -1,0 +1,179 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Line.Models;
+@model IPagedList<Line.Data.Reservations>
+@{
+    ViewBag.Title = "Reservations";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+    var query = Request.QueryString["query"];
+
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>
+            @T("My.Reservation")
+        </h2>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <table class="datatabel2 table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    @T("Id")
+                                </th>
+                                <th>
+                                    @T("Agency")
+                                </th>
+                                <th>
+                                    @T("Customer")
+                                </th>
+                                <th>
+                                    @T("Country")
+                                </th>
+                                <th>
+                                    @T("hotel")
+                                </th>
+                                <th>
+                                    @T("transfer")
+                                </th>
+                                <th>
+                                    @T("tour")
+                                </th>
+                                <th>
+                                    @T("Total")
+                                </th>
+                                <th>
+                                    @T("Checkin") -  @T("Checkout")
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+
+
+                        </thead>
+                        <tbody>
+                            @foreach (var res in Model)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        @{
+                                            var viewclass = "";
+                                            switch (res.status)
+                                            {
+                                                case "Request":
+                                                    viewclass = "btn-warning";
+                                                    break;
+                                                case "Confirmed":
+                                                    viewclass = "btn-info";
+                                                    break;
+                                                case "ReConfirmed":
+                                                    viewclass = "btn-success";
+                                                    break;
+                                                case "Canceled":
+                                                    viewclass = "btn-danger";
+                                                    break;
+                                                case "Completed":
+                                                    viewclass = "btn-primary";
+                                                    break;
+                                                default:
+                                                    viewclass = "btn-warning";
+                                                    break;
+                                            }
+                                        }
+                                        <a target="_blank" href='@Url.Action("ViewReservations", "Reservations", new { id = res.ID })'><span class="btn btn-sm btn-3d @viewclass">@res.ID</span></a>
+                                    </td>
+                                    <td>
+                                        @res.Agency.AgencyName
+                                    </td>
+                                    <td>
+                                        @res.GetCustomers()
+                                    </td>
+                                    <td>
+                                        @res.Agency.Country
+                                    </td>
+                                    <td>
+                                        @res.Rhotel.Sum(d => d.Total).ToString(true)
+                                    </td>
+                                    <td>
+                                        @res.Transfers.Sum(d => d.Total).ToString(true)
+                                    </td>
+                                    <td>
+                                        @res.Tour.Sum(d => d.Total).ToString(true)
+                                    </td>
+                                    <td>
+                                        @res.price.ToString(true)
+                                    </td>
+                                    <td>
+                                        @res.checkindate.ToString("dd.MM.yyyy") - @res.balanceDate.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td>
+
+                                        <a target="_blank" href='@Url.Action("OpenVocher", "Reservations", new { id = res.ID })' class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-print"></span>
+                                        </a>
+                                        <a target="_blank" href='@Url.Action("OpenInvoice", "Reservations", new { id = res.ID })' class="btn btn-success btn-sm">
+                                            <span class="glyphicon glyphicon-file"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+                                    @(Model.Sum(d => d.price).ToString(true))
+                                </th>
+                                <th>
+
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+
+                        </tfoot>
+                    </table>
+                    <div class="text-center">
+                        @Html.PagedListPager(Model, page => Url.Action("UserFiles", new { page, query = query }))
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

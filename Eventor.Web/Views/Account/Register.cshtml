@@ -1,0 +1,79 @@
+﻿@model Line.Models.RegisterModel
+@{
+    ViewBag.Title = "CompanyMatcher.com";
+    Layout = null;
+
+    bool Registed = ViewBag.isRegisterd != null ? true : false;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | Registry</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+</head>
+@using (Html.BeginForm())
+{
+    <body class="black-bg">
+        <div class="middle-box text-center loginscreen   animated fadeInDown">
+            <div>
+                <div class="logo-background">
+                    <img width="100%" src="/Hometemplate/img/logo-4.png" alt="Alternate Text" />
+                </div>
+                <hr />
+                <h3 class="white-popup-block">Create Orginizor account to see it in action.</h3>
+                <p></p>
+                @if (Registed)
+                {
+
+                    <h3 class="alert alert-danger">
+                        @T("admin.user.exsist")
+                    </h3>
+                }
+                <form class="m-t" role="form" action="#">
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = @T("admin.firstname").ToString(), @required = "" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @placeholder = @T("admin.lastname").ToString(), @required = "" })
+                        @Html.ValidationMessageFor(model => model.LastName)
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = @T("admin.email").ToString(), @required = "", @type = "email" })
+                        @Html.ValidationMessageFor(model => model.Email)
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @required = "" })
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.AgreeTerms, new { @required = "" })
+                                @Html.ValidationMessageFor(model => model.AgreeTerms, T("required").ToString())
+
+                                <i></i> @T("admin.agreeterms")
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+                    <p class="text-muted text-center"><small>Already have an account?</small></p>
+                    <a class="btn btn-sm btn-white btn-block" href="@Url.Action("Login", "account")">Login</a>
+                </form>
+                <p class="m-t"> <small>@T("admin.copyrights")</small> </p>
+            </div>
+        </div>
+    </body>
+}
+</html>

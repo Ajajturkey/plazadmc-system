@@ -1,0 +1,132 @@
+﻿@model List<Line.Data.Agency>
+@{
+    ViewBag.Title = T("AgencyInfo").ToString();
+    var DropList = (List<SelectListItem>)ViewBag.Countries;
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>@T("Agency.Report")</h5>
+                    @Html.DropDownList("List", DropList, "Filter Countries", new { @class = "form-control chosen-select", onchange = "recall($(this).val())" })
+
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table id="datatabel" class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@T("Name")</th>
+                                    <th>@T("Country")</th>
+                                    <th>@T("Email")</th>
+                                    <th>@T("Contact")</th>
+                                    <th>@T("Tel")</th>
+                                    <th>@T("Address")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td></td>
+                                    <td><a href="@Url.Action("agency",new { AId = item.ID })">@item.AgencyName</a> </td>
+                                    <td>@item.City, @item.Country</td>
+                                    <td>@item.email</td>
+                                    <td>@item.contact</td>
+                                    <td>@item.Tel </td>
+                                    <td>@item.Adress</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+
+}
+@section Scripts {
+
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/chartjs")
+    <script src="https://cdn.datatables.net/buttons/1.5.4/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.html5.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#datatabel').DataTable({
+                "paging": false,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: false,
+                    targets: 0
+                }],
+                order: [2, 'desc'],
+                dom: 'Bfrtip',
+                buttons: [
+                    'print', 'excel', 'pdf'
+                ]
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $('.chosen-select').chosen({ width: "100%" });
+        function recall(a) {
+            window.location = "/Admin/Reports/AgenciesInfo?country=" + a;
+
+        }
+    </script>
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+
+                @{
+                    var dictinary = new Dictionary<string, string>();
+                    foreach (var item in Copuntries)
+                    {
+                        var value = @Model.FirstOrDefault(d => d.Name.ToLower() == item.ToLower() && d.Year == DateTime.Now.Year);
+                        dictinary.Add(item, value != null ? value.Sales.ToString() : "0");
+                    }
+                }
+
+                var barData = {
+                    labels: @Html.Raw(Json.Encode(Copuntries)),
+                    datasets: [
+                        {
+                            label: "@DateTime.Now.Year",
+                            backgroundColor: 'rgba(220, 220, 220, 0.5)',
+                            pointBorderColor: "#fff",
+                            data: @Html.Raw(Json.Encode(dictinary.Values.Select(d=> d)))
+                        }
+                    ]
+                };
+
+                var barOptions = {
+                    responsive: true
+                };
+
+                var ctx2 = document.getElementById("barChart").getContext("2d");
+                new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+            });
+        </script>*@
+}
+
+
+
+

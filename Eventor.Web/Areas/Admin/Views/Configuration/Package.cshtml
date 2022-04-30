@@ -1,0 +1,123 @@
+﻿@model Line.Data.DataPackage
+@{
+    ViewBag.Title = "Agency";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>
+            @T("Create.Package.header")
+        </h2>
+    </div>
+</div>
+
+
+@using (Html.BeginForm())
+{
+  
+
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        @T("Package.Info")
+                        @Html.HiddenFor(d => d.Id)
+                        @Html.HiddenFor(d => d.country)
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label for="AgencyName">@T("Package.name")</label>
+                                    @Html.TextBoxFor(d => d.name, new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="AgencyName">@T("Package.Description")</label>
+                                    @Html.TextAreaFor(d => d.description, new { @class = "form-control" })
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fax">@T("Package.city")</label>
+                                    @Html.DropDownListFor(d => d.city, (SelectList)ViewBag.Cities, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fax">@T("Package.url")</label>
+                                    @Html.TextBoxFor(d => d.url, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            
+            <div class="ibox-content">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group text-center">
+
+                            @if (Model.Id == 0)
+                            {
+                                <button type="submit" class="btn btn-success">@T("SaveChanges")</button>
+                            }
+                            else
+                            {
+
+                                <button type="submit" class="btn btn-success">@T("Update")</button>
+                            }
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+
+}
+@section Scripts {
+
+    @Scripts.Render("~/plugins/chosen")
+
+
+    @if (ViewBag.error != null)
+    {
+        <script>
+            toastr.error('@T(ViewBag.error)');
+        </script>
+    }
+    else
+    {
+        if (IsPost)
+        {
+            <script>
+            toastr.success('@T("changed.saved")');
+            </script>
+        }
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.chosen-select').chosen({ width: "100%" });
+             //Swal('@ViewBag.error')
+        });
+
+
+
+    </script>
+
+}

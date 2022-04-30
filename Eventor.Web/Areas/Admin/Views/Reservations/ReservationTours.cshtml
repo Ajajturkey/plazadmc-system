@@ -1,0 +1,438 @@
+﻿@model Line.Models.ToursViewModel
+@{
+    ViewBag.Title = "ReservationTours";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .modal-dialog {
+        width: 1000px;
+    }
+</style>
+<div class="row white-bg p-xs">
+    <div class="col-lg-2 col-xs-12">
+        <b>@T("Reservation Id")</b>
+        <p>
+            <a href='@Url.Action("OpenReservations", "Reservations", new { id = Model.RID })' class="btn btn-primary btn-xs">
+                # @Model.RID
+            </a>
+        </p>
+    </div>
+    <div class="col-lg-2 col-xs-12">
+        <b>@T("Reservation Owner")</b>
+        <p> @Model.Owner </p>
+    </div>
+    <div class="col-lg-2 col-xs-12">
+        <b>@T("Agency name")</b>
+        <p>@Model.Agency</p>
+    </div>
+    <div class="col-lg-2 col-xs-12">
+        <b>Total</b>
+        <p class="text-danger">@Model.Total €</p>
+    </div>
+    <div class="col-lg-4">
+       
+    </div>
+    @*<div class="col-lg-4 text-right">
+            <b></b><br />
+            <button>@T("Supplier")</button>
+        </div>*@
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <input type="submit" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#Create" value="@T("Add.Tour")">
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @if (Model.Tours.Count > 0)
+                            {
+                                <table id="datatabel" class="table white-bg table-bordered ">
+                                    <thead>
+                                        <tr class="">
+                                            <th width="40"> </th>
+                                            <th> </th>
+                                            <th>@T("pickup.Info")</th>
+                                            <th>@T("DropOff.Info")</th>
+                                            <th>@T("Customer.Info")</th>
+                                            <th>@T("Sell")</th>
+                                            <th>@T("buy")</th>
+                                            <th>@T("Total")</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Tours)
+                                        {
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-danger btn-xs" onclick="deleteitem(@item.ID)"><i class="fa fa-trash"></i></a>
+                                                    <a href="#" class="btn btn-info btn-xs" onclick="edit(@item.ID)"><i class="fa fa-pencil"></i></a>
+                                                </td>
+                                                <td>
+                                                    <b>[@item.pickup] [@item.date.ToString("dd.MM.yyyy")  | @item.pickuptime ] </b> <br />
+                                                    <b>[@item.name] @item.city</b>
+                                                </td>
+                                                <td>
+                                                    <b>@item.dropoff</b>
+                                                </td>
+                                                <td>
+                                                    <b>@item.Pax @T("pax") [@item.car]</b><br />
+                                                    <b>[@item.customer]</b>
+                                                </td>
+                                                <td>@item.Total.ToString(true)</td>
+                                                <td>@item.Cost.ToString(true)</td>
+                                                <td><b>@((item.Total * item.Pax).ToString(true))</b></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="text-center">
+                                    <a href='@Url.Action("OpenReservations", "Reservations", new { id = Model.RID })' class="btn btn-info btn-sm">
+                                        @T("Save.To.File")
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center">
+                                    @T("create.new.Tour")
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="Create" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("Create.Tour")</h4>
+            </div>
+            @using (Html.BeginForm("CreateTour", "Reservations"))
+            {
+                <div class="modal-body">
+
+                    @Html.HiddenFor(d => d.RID)
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="ex3">@T("City")</label>
+                            @Html.DropDownListFor(d => d.Tour.city, (SelectList)ViewBag.Cities, new { @class = "form-control ", required = "required" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">@T("name")</label>
+                            @Html.TextBoxFor(d => d.Tour.name, new { @class = "form-control", placeholder = T("Tour"), required = "required" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">@T("Pickup")</label>
+                            @Html.TextBoxFor(d => d.Tour.pickup, "", new { @class = "form-control", placeholder = "pickup", required = "required" })
+
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">@T("DropOff")</label>
+                            @Html.TextBoxFor(d => d.Tour.dropoff, "", new { @class = "form-control", placeholder = "dropoff", required = "required" })
+
+                        </div>
+                        <div class="col-md-1">
+                            <label for="ex3">@T("Pax")</label>
+                            @Html.TextBoxFor(d => d.Tour.Pax, "0", new { @class = "form-control", placeholder = "pax", required = "required", type = "number" })
+
+                        </div>
+                        <div class="col-md-1">
+                            <label for="ex3">@T("Time")</label>
+                            @Html.TextBoxFor(d => d.Tour.pickuptime, "00:00", new { @class = "form-control clockpicker", placeholder = "flightTime", required = "required" , autocomplete = "off"})
+
+                        </div>
+                        <div class="col-md-2" id="datePicker">
+                            <label for="ex3">@T("Date")</label>
+                            @Html.TextBoxFor(d => d.Tour.date, DateTime.Now.ToShortDateString(), new { @class = "form-control  date", placeholder = "01.01.0001", required = "required", autocomplete = "off" })
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ex3">@T("Sell")</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBoxFor(d => d.Tour.Total, "0", new { @class = "form-control", required = "required", type = "Number", min = "0" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ex3">@T("Buy")</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+
+                                    @Html.TextBoxFor(d => d.Tour.Cost, "0", new { @class = "form-control", required = "required", type = "Number", min = "0" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ex3">@T("Car")</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(d => d.Tour.car, "", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>@T("Names")</label>
+                                @Html.TextBoxFor(d => d.Tour.customer, "", new { @class = "form-control", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="@T("Add.reservation")">
+
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<div id="Update" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("edit.Tour")</h4>
+            </div>
+            @using (Html.BeginForm("EditTour", "Reservations"))
+            {
+                <div class="modal-body">
+
+                    @Html.Hidden("TID")
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="ex3">City</label>
+                            @Html.DropDownList("city", (SelectList)ViewBag.Cities, new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">Tour Name</label>
+                            @Html.TextBox("code", "", new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">Pickup</label>
+                            @Html.TextBox("pickup", "", new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">DropOff</label>
+                            @Html.TextBox("dropoff", "", new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="col-md-1">
+                            <label for="ex3">Pax</label>
+                            @Html.TextBox("pax", "", new { @class = "form-control", required = "required", type = "Number", min = "0" })
+
+                        </div>
+                        <div class="col-md-1">
+                            <label for="ex3">Time</label>
+                            @Html.TextBox("time", "", new { @class = "form-control clockpicker", required = "required", autocomplete = "off" })
+
+                        </div>
+                        <div class="col-md-2" id="datePicker">
+                            <label for="ex3">Date</label>
+                            @Html.TextBox("date", "", new { @class = "form-control date", required = "required", autocomplete = "off" })
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ex3">Sell</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBox("Sell", "", new { @class = "form-control", required = "required", type = "Number", min = "0" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ex3">Buy</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+
+                                    @Html.TextBox("buy", "", new { @class = "form-control", required = "required", type = "Number", min = "0" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ex3">Car</label>
+                                <div class="input-group">
+                                    @Html.TextBox("car", "", new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Names</label>
+                                @Html.TextBox("names", "", new { @class = "form-control", required = "required" })
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="@T("update.reservation")">
+                </div>}
+        </div>
+
+    </div>
+</div>
+
+@Html.Partial("_ConfirmDelete", "deletedialog")
+
+@section Styles {
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+}
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/select2")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/clockpicker")
+
+
+    <script>
+        function Showcv(e) {
+            if ($(e)[0].checked === true) {
+                $(".cv").show();
+                $(".cv-select").hide();
+            }
+            else {
+                $(".cv").hide();
+                $(".cv-select").show();
+            }
+        }
+
+        $(".js-example-tags").select2({
+            tags: true,
+            placeholder: "@T("select.tour")",
+        });
+
+        function edit(id) {
+            $.ajax({
+                url: "@Url.Action("PrepareTour", "Reservations", new { Area = "Admin" })",
+                type: "Post",
+                data: JSON.stringify({ 'id': id }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    //assign all values
+                    $("#TID").val(data.TID);
+                    $("#car").val(data.car);
+                    $("#city").val(data.City);
+                    $("#code").val(data.code);
+                    $("#pickup").val(data.pickup);
+                    $("#dropoff").val(data.dropoff);
+                    $("#pax").val(data.pax);
+                    $("#time").val(data.time);
+                    $("#date").val(data.date).change();
+                    $("#buy").val(data.buy);
+                    $("#Sell").val(data.sell);
+                    $("#names").val(data.names);
+
+                    $('#Update').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+    }
+
+        function deleteitem(id) {
+            $('#deletedialog').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+                .one('click', '#delete', function (e) {
+                    $.ajax({
+                        url: "@Url.Action("DeleteTour", "Reservations", new { Area = "Admin" })",
+                        type: "Post",
+                        data: JSON.stringify({ 'id': id }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            toastr.info("@T("deleted")")
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("An error has occured!!!");
+                        }
+                    });
+                });
+                }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.clockpicker').clockpicker({
+                autoclose: true,
+                placement: 'bottom',
+                align: 'left'
+            });
+
+            $('.date').datepicker({
+                todayBtn: "linked",
+                format: "dd.mm.yyyy",
+                startView: 1,
+                daysOfWeekHighlighted: "0,6"
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatabel').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: false,
+                    targets: 0
+                }],
+                order: [1, 'asc'],
+            });
+        });
+
+    </script>
+
+}

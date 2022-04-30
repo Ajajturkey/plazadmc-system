@@ -1,0 +1,301 @@
+﻿@model Line.Models.DashboardViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>
+                        2018 Sales Graph
+                        <small></small>
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <canvas id="lineChart" height="140"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Company Performance</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <canvas id="barChart" height="140"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Top Agencies @(DateTime.Now.Year)</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>@T("name")</th>
+                                <th>@T("Count")</th>
+                                <th>@T("Sales")</th>
+                                <th>@T("Profit")</th>
+                            </tr>
+                            @foreach (var item in Model.Agencies)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td><span class="btn btn-xs btn-info">@item.Count</span></td>
+                                    <td>@item.Sales -Euro</td>
+                                    <td>@item.Profit -Euro</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Top Agencies @(DateTime.Now.Year-1)</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>@T("name")</th>
+                                <th>@T("Count")</th>
+                                <th>@T("Sales")</th>
+                                <th>@T("Profit")</th>
+                            </tr>
+                            @foreach (var item in Model.AgenciesLastYear)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td><span class="btn btn-xs btn-info">@item.Count</span></td>
+                                    <td>@item.Sales -Euro</td>
+                                    <td>@item.Profit -Euro</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Top Country in  @(DateTime.Now.Year)</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>@T("name")</th>
+                                <th>@T("Count")</th>
+                                <th>@T("Sales")</th>
+                                <th>@T("Profit")</th>
+                            </tr>
+                            @foreach (var item in Model.Countries)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td><span class="btn btn-xs btn-info">@item.Count</span></td>
+                                    <td>@item.Sales.ToString() -Euro</td>
+                                    <td>@item.Profit.ToString() -Euro</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Top Country in  @(DateTime.Now.Year -1 )</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>@T("name")</th>
+                                <th>@T("Count")</th>
+                                <th>@T("Sales")</th>
+                                <th>@T("Profit")</th>
+                            </tr>
+                            @foreach (var item in Model.CountriesLastYear)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td><span class="btn btn-xs btn-info">@item.Count</span></td>
+                                    <td>@item.Sales.ToString() -Euro</td>
+                                    <td>@item.Profit.ToString() -Euro</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Top Hotels in  @(DateTime.Now.Year)</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>@T("name")</th>
+                                <th>@T("Count")</th>
+                            </tr>
+                            @foreach (var item in Model.Hotels)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td><span class="btn btn-xs btn-info">@item.Count</span></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Top Hotels in  @(DateTime.Now.Year-1)</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>@T("name")</th>
+                                <th>@T("Count")</th>
+                            </tr>
+                            @foreach (var item in Model.HotelsLastYear)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td><span class="btn btn-xs btn-info">@item.Count</span></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chartjs")
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var lineData = {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [
+
+                {
+                    label: "@Model.Sales[0].Year",
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    borderColor: "rgba(26,179,148,0.7)",
+                    pointBackgroundColor: "rgba(26,179,148,1)",
+                    pointBorderColor: "#fff",
+                    data: [
+                        @Model.Sales[0].Jan,
+                        @Model.Sales[0].Feb,
+                        @Model.Sales[0].Mar,
+                        @Model.Sales[0].Apr,
+                        @Model.Sales[0].Jun,
+                        @Model.Sales[0].Jul,
+                        @Model.Sales[0].Aug,
+                        @Model.Sales[0].Sep,
+                        @Model.Sales[0].Oct,
+                        @Model.Sales[0].Nov,
+                        @Model.Sales[0].Dec,
+                    ]
+                }, {
+                    label: "@Model.Sales[1].Year",
+                    backgroundColor: 'rgba(220, 220, 220, 0.5)',
+                    pointBorderColor: "#fff",
+                    data: [
+                                @Model.Sales[1].Jan,
+                                @Model.Sales[1].Feb,
+                                @Model.Sales[1].Mar,
+                                @Model.Sales[1].Apr,
+                                @Model.Sales[1].Jun,
+                                @Model.Sales[1].Jul,
+                                @Model.Sales[1].Aug,
+                                @Model.Sales[1].Sep,
+                                @Model.Sales[1].Oct,
+                                @Model.Sales[1].Nov,
+                                @Model.Sales[1].Dec,
+                    ]
+                }
+            ]
+        };
+
+        var lineOptions = {
+            responsive: true
+        };
+
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        new Chart(ctx, { type: 'line', data: lineData, options: lineOptions });
+
+            @{
+                var Years = new List<string>(Model.Years.Select(d => d.Year.ToString()));
+                var YearSales = new List<string>(Model.Years.Select(d => d.Sales.ToString().Replace(",", ".")));
+                var YearProfit = new List<string>(Model.Years.Select(d => d.Profit.ToString().Replace(",",".")));
+             }
+        var barData = {
+            labels: @Html.Raw(Json.Encode(Years)),
+            datasets: [
+                {
+                    label: "Sales",
+                    backgroundColor: 'rgba(220, 220, 220, 0.5)',
+                    pointBorderColor: "#fff",
+                    data: @Html.Raw(Json.Encode(YearSales))
+                    },
+                {
+                    label: "Profit",
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    borderColor: "rgba(26,179,148,0.7)",
+                    pointBackgroundColor: "rgba(26,179,148,1)",
+                    pointBorderColor: "#fff",
+                    data:@Html.Raw(Json.Encode(YearProfit))
+                    }
+            ]
+        };
+            var barOptions = {
+                responsive: true
+            };
+
+
+            var ctx2 = document.getElementById("barChart").getContext("2d");
+            new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+        
+    })
+
+                     </script>
+}

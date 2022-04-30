@@ -1,0 +1,191 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<Line.Models.GroupDeptViewModel>
+@{
+    /**/
+
+    ViewBag.Title = "FutureDebts";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using Line.Models
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>
+            @T("FutureDebts.header")
+        </h2>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <p>@T("Future.Depts")</p>
+                </div>
+                <div class="ibox-content">
+
+                    <table id="datatabel" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="40">
+
+                                </th>
+                                <th>
+                                    @T("Agency")
+                                </th>
+                                <th>
+                                    @T("Country")
+                                </th>
+                                <th>
+                                    @T("City")
+                                </th>
+                                <th>
+                                    @T("Dept")
+                                </th>
+                                <th>
+                                    @T("balance")
+                                </th>
+                                <th>
+                                    @T("Count")
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var res in Model)
+                            {
+
+                                <tr>
+                                    <td width="40"></td>
+                                    <td>
+                                        @res.name
+                                    </td>
+                                    <td>
+                                        @res.Country
+                                    </td>
+                                    <td>
+                                        @res.City
+                                    </td>
+                                    <td>
+                                        @res.DebtValue.ToString(true)
+                                    </td>
+                                    <td>
+                                        @res.BalanceValue.ToString(true)
+                                    </td>
+                                    <td>
+                                        @res.count
+                                    </td>
+                                    <td>
+                                        <a href='@Url.Action("agency", "Accounting", new { id = res.Id })' class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-paste"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                </th>
+                               
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+                                    @Model.Sum(d => d.DebtValue).ToString(true)
+                                </th>
+                                <th>
+                                    @Model.Sum(d => d.BalanceValue).ToString(true)
+
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+
+                        </tfoot>
+
+                    </table>
+                    <div class="text-center">
+                        @Html.PagedListPager(Model, page => Url.Action("FutureDebts", new { page }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+
+    @Html.Partial("_ConfirmDelete", "deletedialog")
+
+
+    <script>
+   function deleteEvent(id) {
+
+        $('#deletedialog').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+            .one('click', '#delete', function (e) {
+                $.ajax({
+                    url: "@Url.Action("DeleteUser", "Configuration", new { Area = "Admin" })",
+                    type: "Post",
+                    data: JSON.stringify({ 'id': id }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                              swal('@T("item.removed")')
+                            location.reload();
+                        } else {
+                            alert("Error occurs on the Database level!");
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+            });
+    }
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatabel').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: false,
+                    targets: 0
+                }],
+                order: [1, 'asc'],
+            });
+        });
+
+    </script>
+}
+

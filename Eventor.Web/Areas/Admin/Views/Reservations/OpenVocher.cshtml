@@ -1,0 +1,175 @@
+﻿@model Line.Data.Reservations
+@using Line.Models;
+@{
+    Layout = "_invoice";
+}
+<div style="width:700px;margin:auto;background-color:white">
+    <div align="center">
+        <img border="0" src="\Images\Mails\voucher.png" width="700">
+    </div>
+    <div align="center">
+        <div class=" clearfix panel-heading  btn-info">
+            <div class="col-xs-6 text-left">
+                <span id="refranceid" runat="server" style="font-weight:600;font-size:15px">	@T("reservation.Id"): @Model.ID </span>
+            </div>
+            <div class="col-xs-6 text-right">
+                <span id="datetime" runat="server" style="font-weight:600">
+                    @Model.date.Value.ToShortDateString()
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 text-center">
+            <h2 id="Span1" runat="server" style="font-weight: 600">@T("Voucher")</h2>
+            <br />
+        </div>
+        <div style="padding:15px;">
+            <table style="font-size: 11px" class="table table-hover table-condensed panel-heading ">
+                <tr>
+                    <td style="width: 150px; font-weight: 600">@T("Agency") </td>
+                    <td>
+                        <span>
+                            @Model.Agency.AgencyName
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 150px; font-weight: 600">
+                        @T("Your Ref / Voucher")
+                    </td>
+                    <td>
+                        <span id="vocher" runat="server">
+                            @Model.vocher
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 150px; font-weight: 600">@T("Guests")</td>
+                    <td>
+                        <span id="Client" runat="server">
+                            @Model.GetCustomers()
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        @if (Model.Rhotel.Count > 0 )
+        {
+            <div style="padding:15px;">
+                <table style="font-size: 11px" class=" active table table-hover table-condensed panel-heading ">
+                    <tr class="alert-info">
+                        <th width='200'>Hotel Name</th>
+                        <th>Room Category</th>
+                        <th>Acc. Type</th>
+                        <th>Check-In</th>
+                        <th>Check-Out</th>
+                        <th>Nights</th>
+                        <th>Board</th>
+                    </tr>
+
+                    @foreach (var item in Model.Rhotel)
+                    {
+                        int i = 0;
+                        foreach (var room in item.RHRoom)
+                        {
+                            <tr>
+                                @if (i == 0)
+                                {
+                                    i++;
+                                    <td>@item.name</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                <td>@room.name x @room.count 	</td>
+                                <td>@room.type	</td>
+                                <td>@room.checkin.Value.ToString("dd.MM.yyyy")  </td>
+                                <td>@room.checkout.Value.ToString("dd.MM.yyyy") </td>
+                                <td>@((room.checkout.Value - room.checkin.Value).Days) </td>
+                                <td>@room.board </td>
+                            </tr>
+
+                        }
+                    }
+
+                </table>
+            </div>
+        }
+
+            @if (Model.Transfers.Count > 0 || Model.Tour.Count > 0)
+            {
+                <div style="padding:15px;">
+                    <table style="font-size: 11px" class=" active table table-hover table-condensed panel-heading ">
+                        <tr class="alert-info">
+                            <th width='90'>Land Services</th>
+                            <th width='200'>Explanation</th>
+                            <th>Date</th>
+                            <th>Flight Details</th>
+                            <th>Pick-up</th>
+                            <th>Pax</th>
+                        </tr>
+
+                        @foreach (var item in Model.Transfers)
+                        {
+                            <tr>
+                                <td>@T("Transfer")    </td>
+                                <td>@item.city <br /> @item.pickup  /  @item.dropoff 	   </td>
+                                <td>@item.date.ToString("dd.MM.yyyy")</td>
+                                <td>@item.flightCode</td>
+                                <td>@item.flightTime</td>
+                                <td>@item.pax</td>
+                            </tr>
+                        }
+                        @foreach (var item in Model.Tour)
+                        {
+                            <tr>
+                                <td>@T("Tour")    </td>
+                                <td>@item.name 	   </td>
+                                <td>@item.date.ToString("dd.MM.yyyy")</td>
+                                <td>@item.city</td>
+                                <td>@item.pickuptime</td>
+                                <td>@item.Pax</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+            @if (Model.ExtraService.Count > 0)
+            {
+                <div style="padding:15px;">
+                    <table style="font-size: 11px" class=" active table table-hover table-condensed panel-heading ">
+                        <tr class=" alert-info">
+                            <th>Packages</th>
+                            <th>Explanation</th>
+                            <th>Dates </th>
+                            <th colspan='2'>  Guests</th>
+                            <th> Pax    </th>
+                        </tr>
+
+                        @foreach (var item in Model.ExtraService)
+                        {
+                            <tr>
+                                <td>@T("Packages")    </td>
+                                <td>@item.name 	   </td>
+                                <td>@item.date.ToString("dd.MM.yyyy") - @item.dateout.ToString("dd.MM.yyyy")</td>
+                                <td colspan="2">@item.customer</td>
+                                <td>@item.Pax</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+            <div style="width:100%;padding:15px;text-align:left">
+                <b>@T("forEmergancy.please.contact")</b> <br />
+                <b>@Model.Visitor.title</b>: @Model.Visitor.FirstName @Model.Visitor.LastName <br />
+                <b>@T("Tel")</b>: @Model.Visitor.tel <br />
+                <hr />
+            </div>
+        </div>
+    <div align="center">
+        <img border="0" src="\Images\Mails\footer.png" width="700">
+    </div>
+</div>

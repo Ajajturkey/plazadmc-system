@@ -1,0 +1,365 @@
+﻿@model List<Line.Data.Tour>
+@using Line.Models
+@{
+    ViewBag.Title = "Tours";
+
+    var Suppliers = (SelectList)ViewBag.Suppliers;
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-12">
+        <h2>
+            @T("Tours.header")
+        </h2>
+    </div>
+    <div class="col-lg-12">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+
+
+                <div class="col-lg-5" id="sandbox-container">
+                    <div class="input-daterange  input-group">
+                        <b>@T("CheckIn.from") </b> <br />
+                        @Html.TextBox("Datefrom", DateTime.Today.ToString("dd.MM.yyyy"), new { @class = "form-control date", name = "start", autocomplete = "off" })
+                        <span class="input-group-addon" style="background-color:#fff"></span>
+                        <b>@T("CheckIn.to") </b> <br />
+                        @Html.TextBox("Dateto", DateTime.Today.AddDays(9).ToString("dd.MM.yyyy"), new { @class = "form-control date", name = "end", autocomplete = "off" })
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <br />
+                    <input type="submit" class="btn  btn-info" name="name" value="@("Search")" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                @*<div class="ibox-title">
+                        <p>@T("Reservations.Today")</p>
+                    </div>*@
+                <div class="ibox-content ">
+                    <table id="datatabel" class="display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="30"></th>
+                                <th>
+                                    @T("Id")
+                                </th>
+                                <th>
+                                    @T("date")
+                                </th>
+                                <th>
+                                    @T("City")
+                                </th>
+                                <th>
+                                    @T("Tour.info")
+                                </th>
+
+                                <th>
+                                    @T("pickup.info")
+                                </th>
+                                <th>
+                                    @T("pickup.time")
+                                </th>
+                                <th>
+                                    @T("Guest")
+                                </th>
+                                <th>
+                                    @T("pax")
+                                </th>
+                                <th>
+                                    @T("agency")
+                                </th>
+                                <th>
+                                    @T("Voucher")
+                                </th>
+                                <th>
+                                    @T("Member")
+                                </th>
+                                <th>
+                                    @T("guide")
+                                </th>
+                                <th>
+                                    @T("Supplier")
+                                </th>
+                                <th>
+                                    @T("note")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td></td>
+                                <td>
+                                    @{
+                                        var viewclass = "";
+                                        switch (item.Reservations.status)
+                                        {
+                                            case "Request":
+                                                viewclass = "btn-warning";
+                                                break;
+                                            case "Confirmed":
+                                                viewclass = "btn-info";
+                                                break;
+                                            case "ReConfirmed":
+                                                viewclass = "btn-success";
+                                                break;
+                                            case "Canceled":
+                                                viewclass = "btn-danger";
+                                                break;
+                                            case "Completed":
+                                                viewclass = "btn-primary";
+                                                break;
+                                            default:
+                                                viewclass = "btn-warning";
+                                                break;
+                                        }
+                                    }
+                                    <a target="_blank" href="@Url.Action("ViewReservations", "Reservations", new { id = item.RID })"><span class="btn btn-xs btn-xs btn-3d @viewclass">@item.Reservations.ID</span></a>
+                                </td>
+                                <td>
+                                    @item.date.ToString("dd.MM.yyyy")
+                                </td>
+                                <td>
+                                    @item.city
+                                </td>
+                                <td>
+                                    @item.name
+                                </td>
+
+                                <td>
+                                    @item.pickup
+                                </td>
+                                <td>@(item.pickuptime)</td>
+                                <td>
+                                    @item.customer
+                                </td>
+                                <td>@item.Pax</td>
+
+                                <td>
+                                    @item.Reservations.Agency.AgencyName
+
+                                </td>
+                                <td>
+                                    @item.Reservations.vocher
+                                </td>
+                                <td>
+                                    @item.Reservations.Visitor.GetFullName()
+                                </td>
+                                <td>
+                                    @item.guide <a class="btn btn-warning btn-xs" onclick="SetGuide(@item.ID,'@item.guide')"><i class="fa fa-user"></i></a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success btn-xs" onclick="SetSupplier(@item.ID,@item.ref_supplier)">
+                                        <i class="fa fa-user-circle"></i>  <span id="ref_supplier-@item.ID">
+                                            @{ var supplier = item.Supplier != null ? item.Supplier.name : ""; } @supplier
+                                        </span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="btn btn-info btn-xs" onclick="SetNote(@item.ID,'@item.note')" type="button" id="note-@item.ID"><i class="fa fa-sticky-note"> </i></button> @item.note
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="guideModel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            <div class="modal-header btn-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("Update.Guide")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div class="input-group input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" id="guide" name="guide" class="form-control" required placeholder="@T("Guide.Name")" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <input type="submit" class="btn btn-info" name="confirm" value="@T("Confirm")" />
+                <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Close")" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="NoteModel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            <div class="modal-header btn-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("Update.Note")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <textarea id="note" name="note" class="form-control" required placeholder="@T("Note.placeholder")"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <input type="submit" class="btn btn-info" name="confirm" value="@T("Confirm")" />
+                <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Close")" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="SupplierModel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            <div class="modal-header btn-info">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("Supplier.Select")</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            @Html.DropDownList("SupplierList", Suppliers, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <input type="button" class="btn btn-info" data-dismiss="modal" name="confirm" id="UpdateSupplier" value="@T("Confirm")" />
+                <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Close")" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/dateRange")
+    @Scripts.Render("~/plugins/select2")
+
+    <script src="~/Scripts/plugins/dataTables/flash.min.js"></script>
+    <script src="~/Scripts/plugins/dataTables/jszip.min.js"></script>
+    <script src="~/Scripts/plugins/dataTables/vfs_fonts.js"></script>
+    <script src="~/Scripts/plugins/dataTables/html5.min.js"></script>
+
+    <script type="text/javascript">
+
+        $('#sandbox-container .input-daterange').datepicker({
+            format: "dd.mm.yyyy",
+            daysOfWeekHighlighted: "0,6"
+        });
+
+        function SetNote(id, name) {
+            $("#note").val(name);
+            $('#NoteModel').modal({
+                backdrop: 'static',
+                keyboard: false
+            }).one('click', '#UpdateNote', function (e) {
+                debugger;
+                UpdateRecordAjax(id)
+            })
+        };
+
+        function SetGuide(id, name) {
+            $("#guide").val(name);
+            $('#guideModel').modal({
+                backdrop: 'static',
+                keyboard: false
+            }).one('click', '#UpdateGuide', function (e) {
+                    debugger;
+                    UpdateRecordAjax(id)
+                })
+        };
+
+        function SetSupplier(id, Sid) {
+            $("#SupplierList").val(Sid);
+            $('#SupplierModel').modal({
+                backdrop: 'static',
+                keyboard: false
+            }).one('click', '#UpdateSupplier', function (e) {
+                debugger;
+                UpdateRecordAjax(id)
+            })
+        };
+
+        function UpdateRecordAjax(id) {
+            var guide = $("#guide").val();
+            var note = $("#note").val();
+            var Sid = $("#SupplierList").val();
+            $.ajax({
+                url: "@Url.Action("Transfer", "Operations", new { Area = "Admin" })",
+                type: "Post",
+                data: JSON.stringify({ 'id': id, 'guide': guide, 'note': note, 'Sid': Sid }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.success == true) {
+                        toastr.success('@T("record.updated")')
+                    } else {
+                        toastr.error("Error occurs on the Database level!");
+                    }
+                },
+                error: function () {
+                    toastr.error("An error has occured!!!");
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#datatabel').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: false,
+                    targets: 0
+                }],
+                order: [1, 'asc'],
+                dom: 'Bfrtip',
+                buttons: [
+                    'print', 'excel', 'pdf'
+                ]
+            });
+        });
+
+    </script>
+}

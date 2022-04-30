@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Profite";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Bar Chart Example</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <canvas id="barChart" height="140"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>@T("Countries.files") 2019 </h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <canvas id="doughnutChart" height="140"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>@T("Country.Report")</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>Regency Holyday   </th>
+                                <th>2016</th>
+                                <th>2017</th>
+                                <th>2018</th>
+                                <th>2019</th>
+                            </tr>
+                            <tr><td>   @T("Jan")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Feb")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Mar")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Apr")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Jun")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Jul")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Aug")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Sep")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Oct")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Nov")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+                            <tr><td>   @T("Dec")  </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>   </tr>
+
+                            <tr><td>              </td>         <td>64,932. €</td><td>64,932. €</td><td>64,932. €</td>    <td>64,932. €</td>    </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/plugins/chartjs")
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            var barData = {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [
+                    {
+                        label: "2018",
+                        backgroundColor: 'rgba(220, 220, 220, 0.5)',
+                        pointBorderColor: "#fff",
+                        data: [65, 59, 80, 81, 56, 55, 40]
+                    },
+                    {
+                        label: "2019",
+                        backgroundColor: 'rgba(26,179,148,0.5)',
+                        borderColor: "rgba(26,179,148,0.7)",
+                        pointBackgroundColor: "rgba(26,179,148,1)",
+                        pointBorderColor: "#fff",
+                        data: [28, 48, 40, 19, 86, 27, 90]
+                    }
+                ]
+            };
+
+            var barOptions = {
+                responsive: true
+            };
+
+
+            var ctx2 = document.getElementById("barChart").getContext("2d");
+            new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+
+
+            var doughnutData = {
+                labels: ["Requests", "Confirmerd", "Canceled"],
+                datasets: [{
+                    data: [300, 200, 100],
+                    backgroundColor: ["#ffc107", "#8cd9c9", "#ff5722"]
+                }]
+            };
+
+            var doughnutOptions = {
+                responsive: true
+            };
+
+            var ctx4 = document.getElementById("doughnutChart").getContext("2d");
+            new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+
+        });
+    </script>
+}

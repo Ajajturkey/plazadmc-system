@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="eff944a82cee47038b07974eb07603f5" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="ReservationsModel.Agency" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationsModel.Agents" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationsModel.ExtraService" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationsModel.Rhotel" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationsModel.RHRoom" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationsModel.Tour" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationsModel.Transfers" Width="1.5" PointX="5.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationsModel.Members" Width="1.5" PointX="12.125" PointY="12.625" IsExpanded="true" />
+        <AssociationConnector Association="ReservationsModel.FK_Agents_Agency" ManuallyRouted="false" />
+        <AssociationConnector Association="ReservationsModel.FK_RHRoom_Rhotel" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ReservationsModel.Coupun" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="ReservationsModel.DeadLine" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="ReservationsModel.Marketman" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="ReservationsModel.ChangeRoom" Width="1.5" PointX="5.25" PointY="21.75" />
+        <EntityTypeShape EntityType="ReservationsModel.hotelchange" Width="1.5" PointX="3" PointY="21.5" />
+        <AssociationConnector Association="ReservationsModel.FK_ChangeRoom_hotelchange" />
+        <EntityTypeShape EntityType="ReservationsModel.ininvoice" Width="1.5" PointX="9.75" PointY="23.25" />
+        <EntityTypeShape EntityType="ReservationsModel.Reservations" Width="1.5" PointX="16.375" PointY="4.375" />
+        <AssociationConnector Association="ReservationsModel.FK_Reservations_Agency" />
+        <AssociationConnector Association="ReservationsModel.FK_ExtraService_Reservations" />
+        <AssociationConnector Association="ReservationsModel.FK_hotelchange_Reservations" />
+        <AssociationConnector Association="ReservationsModel.FK_ininvoice_Reservations" />
+        <AssociationConnector Association="ReservationsModel.FK_Reservations_Members" />
+        <AssociationConnector Association="ReservationsModel.FK_Rhotel_Reservations" />
+        <AssociationConnector Association="ReservationsModel.FK_Tour_Reservations" />
+        <AssociationConnector Association="ReservationsModel.FK_Transfers_Reservations" />
+        <EntityTypeShape EntityType="ReservationsModel.Payments" Width="1.5" PointX="18.625" PointY="6.875" />
+        <AssociationConnector Association="ReservationsModel.FK_Payments_Reservations" />
+        <EntityTypeShape EntityType="ReservationsModel.uyeler" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="ReservationsModel.old" Width="1.5" PointX="14.375" PointY="13.75" />
+        <EntityTypeShape EntityType="ReservationsModel.tahsilat" Width="1.5" PointX="11.375" PointY="4.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

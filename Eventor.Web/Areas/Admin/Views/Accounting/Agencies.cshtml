@@ -1,0 +1,408 @@
+﻿@model AgencyViewModel
+@using Line.Models
+@{
+    ViewBag.Title = "Agencies";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-12">
+        <h2>
+            @T("Agency.header")
+        </h2>
+    </div>
+    <div class="col-lg-12">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-lg-4">
+                    <b>@T("agency.name") </b> <br />
+                    @Html.DropDownListFor(d => d.Id, (List<SelectListItem>)ViewBag.Agencies, T("Search.For.Agencies").ToString(), new { @class = "form-control js-data-example-ajax", required = "required" })
+                </div>
+                <div class="col-lg-2">
+                    <br />
+                    <input type="submit" class="btn  btn-info" name="name" value="@("Search")" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@if (IsPost)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5 class=""><a href="@Url.Action("agency", new {Id = Model.Agency.ID })"> @Model.Agency.AgencyName</a></h5>
+                        <div class="ibox-tools">
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Statement",new { Id = Model.Agency.ID, Statement= "A" })">Statment A</a>
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Statement",new { Id = Model.Agency.ID , Statement= "B"})">Statment B</a>
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Statement",new { Id = Model.Agency.ID, Statement= "C" })">Statment C</a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>
+                                    @T("Id")
+                                </th>
+                                <th>
+                                    @T("Voucher")
+                                </th>
+                                <th>
+                                    @T("Checkin") -  @T("Checkout")
+                                </th>
+                                <th>
+                                    @T("Customer")
+                                </th>
+
+                                <th>
+                                    @T("Debt")
+                                </th>
+                                <th>
+                                    @T("Payments")
+                                </th>
+                                <th>
+                                    @T("Balance")
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+
+                            <tr>
+
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        @Model.Files.Sum(d => d.price) 
+                                    </th>
+                                    <th>
+                                        @{ var paid = Model.Files.Sum(d => d.Payments.Sum(p => p.Payment));}
+                                        @paid 
+                                    </th>
+                                    <th>
+                                        @(Model.Files.Sum(d => d.price) - paid) 
+                                    </th>
+                                    <th class="table-inputs"></th>
+                                </tr>
+
+                            @foreach (var res in Model.Files)
+                            {
+                                <tr onclick="togglePayments(@res.ID)">
+                                    <td>
+                                        @{
+                                            var viewclass = "";
+                                            switch (res.status)
+                                            {
+                                                case "Request":
+                                                    viewclass = "btn-warning";
+                                                    break;
+                                                case "Confirmed":
+                                                    viewclass = "btn-info";
+                                                    break;
+                                                case "ReConfirmed":
+                                                    viewclass = "btn-success";
+                                                    break;
+                                                case "Canceled":
+                                                    viewclass = "btn-danger";
+                                                    break;
+                                                case "Completed":
+                                                    viewclass = "btn-primary";
+                                                    break;
+                                                default:
+                                                    viewclass = "btn-warning";
+                                                    break;
+                                            }
+                                        }
+                                        <a href="#"><span class="btn btn-3d @viewclass">@res.ID</span></a>
+                                    </td>
+                                    <td>
+                                        @res.vocher
+                                    </td>
+                                    <td>
+                                        @res.checkindate.ToFString() - @res.balanceDate.ToFString()
+                                    </td>
+                                    <td>
+                                        @res.Visitor.GetFullName()
+                                    </td>
+                                    <td>
+                                        @res.price
+                                    </td>
+                                    <td>
+                                        @res.Payments.Sum(d => d.Payment)
+                                    </td>
+                                    <td>
+                                        @{ var totalbalance = res.price - res.Payments.Sum(d => d.Payment); }
+                                        @(totalbalance)
+                                    </td>
+                                    <td>
+                                        <button type="button" onclick="location.href='@Url.Action("ViewReservations", "Reservations", new { id = res.ID })'" id="open" name="open" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                        @if (totalbalance > 0)
+                                        {
+                                            <button type="button" onclick="Payment(@res.ID,@(res.price - res.Payments.Sum(d=> d.Payment)))" class="btn btn-info btn-sm">
+                                                <span class="fa fa-usd"></span>
+                                            </button>
+                                        }
+                                        <button type="button" onclick="location.href='@Url.Action("OpenInvoice", "Reservations", new { id = res.ID })'" id="Invoice" name="Invoice" class="btn btn-success btn-sm">
+                                            <span class="glyphicon glyphicon-file"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                        <div id="File-@res.ID" hidden>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <th>@T("id")</th>
+                                                    <th>@T("type")</th>
+                                                    <th>@T("date")</th>
+                                                    <th>@T("note")</th>
+                                                    <th>@T("total")</th>
+                                                    <th>@T("balance")</th>
+                                                    <th>@T("remove")</th>
+                                                </tr>
+                                                @{ var balance = res.price; }
+                                                @foreach (var item in res.Payments)
+                                                {
+                                                    balance = balance - item.Payment;
+                                                    <tr>
+                                                        <td>@item.ID</td>
+                                                        <td>@item.type</td>
+                                                        <td>@item.date</td>
+                                                        <td>@item.note</td>
+                                                        <td>@item.Payment</td>
+                                                        <td>@balance</td>
+                                                        <td><a class="btn btn-xs" onclick="removepayment(@item.ID)"><i class="fa fa-trash"></i></a></td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div id="Payment" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            @using (Html.BeginForm("Payment", "accounting"))
+            {
+                @Html.Hidden("Id")
+                @Html.Hidden("AId")
+                <div class="modal-header btn-info">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"> <span class="glyphicon glyphicon-send"></span> @T("Insert.Payment")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>PaymentsValue: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="number" id="PaymentsValue" class="form-control " min="0" max="" name="PaymentsValue" value="0" />
+                            </div>
+                            <label>Date: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="date" class="form-control date" name="date" value="@DateTime.Today.ToString("dd.MM.yyyy")" />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Type: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <select id="type" name="type" class="form-control" onchange="Control()">
+                                    <option value="Credit Card">@T("Credit Card")</option>
+                                    <option value="Cash">@T("Cash")</option>
+                                    <option value="Bank Transfer">@T("Bank Transfer")</option>
+                                    <option value="Credit Note">@T("Credit Note")</option>
+                                    <option value="Draft">@T("Refund")</option>
+                                    <option value="Balance">@T("Balance")</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <label>Note:  </label>
+                    <div class="input-group input-group">
+                        <span class="input-group-addon"></span>
+                        <textarea rows="5" cols="20" id="description" class="form-control " name="description" value=""></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <input type="submit" class="btn btn-info" name="confirm" value="@T("Make.Payment")" />
+                    <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Close")" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_ConfirmDelete", "deletedialog")
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/wizardStepsStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/nouiSliderStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/ionRangeSlider/ionRangeStyles")
+    @Styles.Render("~/plugins/imagecropperStyles")
+    @Styles.Render("~/Content/plugins/colorpicker/colorpickerStyles")
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/tagInputsStyles")
+    @Styles.Render("~/plugins/duallistStyles")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/wizardSteps")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/ionRange")
+    @Scripts.Render("~/plugins/nouiSlider")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/knob")
+    @Scripts.Render("~/plugins/imagecropper")
+    @Scripts.Render("~/plugins/colorpicker")
+    @Scripts.Render("~/plugins/clockpicker")
+    @Scripts.Render("~/plugins/dateRange")
+    @Scripts.Render("~/plugins/select2")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/tagInputs")
+    @Scripts.Render("~/plugins/duallist")
+
+
+    <script type="text/javascript">
+
+        function toggleDate() {
+            $("#sandbox-container").toggle();
+        }
+
+        function togglePayments(Id) {
+            $("#File-" + Id).toggle();
+        }
+
+        $(".chosen-select").chosen()
+
+        $('#sandbox-container .input-daterange').datepicker({
+            format: "dd.mm.yyyy",
+            daysOfWeekHighlighted: "0,6"
+        });
+        $('.date').datepicker({
+            format: "dd.mm.yyyy",
+            daysOfWeekHighlighted: "0,6"
+        });
+
+        $('.js-data-example-ajax').select2({
+            minimumInputLength: 3,
+            ajax: {
+                url: '/Admin/Reservations/GetAgencies',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (obj) {
+                            return { id: obj.Value, text: obj.Text };
+                        })
+                    };
+                }
+            }
+        });
+
+        function Payment(id, total) {
+            $("#PaymentsValue").attr("max", total);
+            $("#AId").val(id);
+            $('#Payment').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+        }
+
+
+        $('#PaymentsValue').on('keydown keyup', function (e) {
+
+            if (parseInt($(this).val() )> $("#PaymentsValue").attr("max")
+                && e.keyCode !== 46 // keycode for delete
+                && e.keyCode !== 8 // keycode for backspace
+            ) {
+                e.preventDefault();
+                $(this).val($("#PaymentsValue").attr("max"));
+            }
+        });
+
+
+
+
+        function removepayment(id) {
+
+        $('#deletedialog').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+            .one('click', '#delete', function (e) {
+                $.ajax({
+                    url: "@Url.Action("DeletePayment", "Accounting", new { Area = "Admin" })",
+                    type: "Post",
+                    data: JSON.stringify({ 'id': id }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                              swal('@T("item.removed")')
+                            location.reload();
+                        } else {
+                            alert("Error occurs on the Database level!");
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+            });
+    }
+
+
+
+    </script>
+}

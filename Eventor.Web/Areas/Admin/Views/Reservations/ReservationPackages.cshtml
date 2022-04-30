@@ -1,0 +1,381 @@
+﻿@model Line.Models.PackagesViewModel
+@{
+    ViewBag.Title = "ReservationPackages";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .modal-dialog {
+        width: 1000px;
+    }
+</style>
+<div class="row white-bg p-xs">
+    <div class="col-lg-2">
+        <b>@T("Reservation Id")</b>
+        <p>
+            <a href='@Url.Action("OpenReservations", "Reservations", new { id = Model.RID })' class="btn btn-primary btn-xs">
+                # @Model.RID
+            </a>
+        </p>
+    </div>
+    <div class="col-lg-2">
+        <b>@T("Reservation Owner")</b>
+        <p> @Model.Owner </p>
+    </div>
+    <div class="col-lg-2">
+        <b>@T("Agency name")</b>
+        <p>@Model.Agency</p>
+    </div>
+    <div class="col-lg-2">
+        <b>Total</b>
+        <p class="text-danger">@Model.Total €</p>
+    </div>
+    <div class="col-lg-4">
+       
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <input type="submit" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#Create" value="@T("Add.package")">
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @if (Model.Packages.Count > 0)
+                            {
+                                <table id="datatabel" class="table white-bg table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th width="40"></th>
+                                            <th> </th>
+                                            <th>@T("Package Info")</th>
+                                            <th>@T("Customer Info")</th>
+                                            <th>@T("note")</th>
+                                            <th>@T("Sell")</th>
+                                            <th>@T("buy")</th>
+                                            <th>@T("Total")</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Packages)
+                                        {
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-danger btn-xs" onclick="deleteitem(@item.ID)"><i class="fa fa-trash"></i></a>
+                                                    <a href="#" class="btn btn-info btn-xs" onclick="edit(@item.ID)"><i class="fa fa-pencil"></i></a>
+                                                </td>
+                                                <td>
+                                                    <b> [@item.name]</b> <br />
+                                                    <b> [@item.date.ToShortDateString()] - [@item.dateout.ToShortDateString()]</b>
+                                                </td>
+                                                <td>
+                                                    <b>@item.Pax Pax </b><br />
+                                                    <b>[@item.customer]</b>
+                                                </td>
+                                                <td>@item.note</td>
+                                                <td>@item.Total.ToString(true) </td>
+                                                <td>@item.Cost.ToString(true) </td>
+                                                <td><b>@((item.Total * item.Pax).Value.ToString(true))</b></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="text-center">
+                                    <a  href='@Url.Action("OpenReservations", "Reservations", new { id = Model.RID})' class="btn btn-info btn-sm">
+                                        @T("Save.To.File")
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center">
+                                    @T("create.new.packages")
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="Create" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("Create.package")</h4>
+            </div>
+            @using (Html.BeginForm("CreatePackage", "Reservations"))
+            {
+                <div class="modal-body">
+
+                    @Html.HiddenFor(d => d.RID)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="ex3">@T("package")</label>
+                            @Html.TextBoxFor(d => d.Package.name, new { @class = "form-control", required = "required", autocomplete = "off" })
+                        </div>
+                        <div class="col-md-4" id="datePicker">
+                            <div class="form-group">
+                                <label>Range select</label>
+                                <div class="input-daterange  input-group" id="datepicker">
+                                    @Html.TextBox("Package.date", DateTime.Now.ToShortDateString(), new { @class = "form-control date", autocomplete = "off", required = "required" })
+                                    <span class="input-group-addon">@T("To")</span>
+                                    @Html.TextBox("Package.dateout", DateTime.Now.ToShortDateString(), new { @class = "form-control date", autocomplete = "off", required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">Pax</label>
+                            @Html.TextBoxFor(d => d.Package.Pax, "1", new { @class = "form-control", placeholder = "Pax", type = "number", required = "required", value = "1" })
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ex3">Sell</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBoxFor(d => d.Package.Total, "0", new { @class = "form-control", required = "required", type = "number", Min = "0", value = "0" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ex3">Buy</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+
+                                    @Html.TextBoxFor(d => d.Package.Cost, "0", new { @class = "form-control", required = "required", type = "number", Min = "0", value = "0" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Names</label>
+                                @Html.TextBoxFor(d => d.Package.customer, "", new { @class = "form-control", required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="ex3">note</label>
+                                @Html.TextAreaFor(d => d.Package.note, new { @class = "form-control", rows = "2" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="@T("Add.reservation")">
+
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<div id="Update" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@T("edit.package")</h4>
+            </div>
+            @using (Html.BeginForm("EditPackage", "Reservations"))
+            {
+                <div class="modal-body">
+
+                    @Html.Hidden("TID")
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="ex3">name</label>
+                            @Html.TextBox("code", "", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Range select</label>
+                                <div class="input-daterange  input-group" id="datepicker">
+                                    @Html.TextBox("date", "", new { @class = "form-control date", autocomplete = "off", required = "required" })
+                                    <span class="input-group-addon">@T("To")</span>
+                                    @Html.TextBox("dateout", "", new { @class = "form-control date", autocomplete = "off", required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ex3">Pax</label>
+                            @Html.TextBox("pax", "", new { @class = "form-control", type = "number", required = "required", value = "1", autocomplete = "off" })
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ex3">Sell</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBox("Sell", "", new { @class = "form-control", required = "required", type = "number", Min = "0", autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ex3">Buy</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    @Html.TextBox("buy", "", new { @class = "form-control", required = "required", type = "number", Min = "0", autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Names</label>
+                                @Html.TextBox("names", "", new { @class = "form-control", required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>note</label>
+                                @Html.TextArea("note", "", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="@T("update.reservation")">
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+
+
+@Html.Partial("_ConfirmDelete", "deletedialog")
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+}
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/clockpicker")
+
+
+    <script>
+        function edit(id) {
+            $.ajax({
+                url: "@Url.Action("PreparePackage", "Reservations", new { Area = "Admin" })",
+                type: "Post",
+                data: JSON.stringify({ 'id': id }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    //assign all values
+                    $("#TID").val(data.TID);
+                    $("#code").val(data.code);
+                    $("#pax").val(data.pax);
+                    $("#date").val(data.date).change();
+                    $("#dateout").val(data.dateout).change();
+                    $("#buy").val(data.buy);
+                    $("#Sell").val(data.sell);
+                    $("#names").val(data.names);
+                    $("#note").val(data.note);
+
+                    $('#Update').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+    }
+
+        function deleteitem(id) {
+            $('#deletedialog').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+                .one('click', '#delete', function (e) {
+                    $.ajax({
+                        url: "@Url.Action("DeletePackage", "Reservations", new { Area = "Admin" })",
+                        type: "Post",
+                        data: JSON.stringify({ 'id': id }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            toastr.info("@T("deleted")")
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("An error has occured!!!");
+                        }
+                    });
+                });
+                }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.clockpicker').clockpicker({
+                autoclose: true,
+                placement: 'bottom',
+                align: 'left'
+            });
+
+            $('.input-daterange').datepicker({
+                todayBtn: "linked",
+                format: "dd.mm.yyyy",
+                startView: 1,
+                daysOfWeekHighlighted: "0,6"
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatabel').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "bFilter": false,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: false,
+                    targets: 0
+                }],
+                order: [1, 'asc'],
+            });
+        });
+
+    </script>
+
+}

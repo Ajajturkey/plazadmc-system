@@ -1,0 +1,2094 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ReservationsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgencyName" Type="varchar(max)" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Market" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Zip" Type="nchar" MaxLength="10" />
+          <Property Name="Tel" Type="varchar" MaxLength="50" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="Longitude" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Latitude" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Commision" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Credit" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreditAmount" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="joindate" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Agents">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AID" Type="int" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="skype" Type="nvarchar" MaxLength="50" />
+          <Property Name="other" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="ChangeRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="board" Type="nchar" MaxLength="10" />
+          <Property Name="guset" Type="nvarchar(max)" />
+          <Property Name="checkin" Type="date" />
+          <Property Name="checkout" Type="date" />
+        </EntityType>
+        <EntityType Name="Coupun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Total" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Rate" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ExpireDate" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeadLine">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ref_file" Type="int" Nullable="false" />
+          <Property Name="Expaire" Type="date" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ExtraService">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="dateout" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" />
+          <Property Name="note" Type="nvarchar" MaxLength="250" />
+          <Property Name="Pax" Type="int" />
+        </EntityType>
+        <EntityType Name="hotelchange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="hid" Type="int" />
+          <Property Name="checkout" Type="datetime" Nullable="false" />
+          <Property Name="checkin" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="ininvoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="no" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="curency" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="url" Type="nvarchar(max)" />
+          <Property Name="currency" Type="nvarchar" MaxLength="50" />
+          <Property Name="type" Type="int" />
+          <Property Name="typeid" Type="int" />
+        </EntityType>
+        <EntityType Name="Marketman">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Country" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gsm" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="title" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="manager" Type="bit" Nullable="false" />
+          <Property Name="accountManager" Type="bit" Nullable="false" />
+          <Property Name="reservationManager" Type="bit" Nullable="false" />
+          <Property Name="reservations" Type="bit" Nullable="false" />
+          <Property Name="tel" Type="nvarchar(max)" />
+          <Property Name="emailPassword" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Livedata.dbo.old' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="old">
+          <Key>
+            <PropertyRef Name="res_id" />
+            <PropertyRef Name="reconfirm" />
+            <PropertyRef Name="confirm" />
+            <PropertyRef Name="cancel" />
+            <PropertyRef Name="onay" />
+            <PropertyRef Name="degisiklik" />
+            <PropertyRef Name="payment" />
+            <PropertyRef Name="otel" />
+            <PropertyRef Name="partlyconfirm" />
+            <PropertyRef Name="tamamdir" />
+            <PropertyRef Name="belge" />
+            <PropertyRef Name="iptal_belge" />
+            <PropertyRef Name="degisiklik_belge" />
+            <PropertyRef Name="kasahareketi" />
+            <PropertyRef Name="silinecek" />
+            <PropertyRef Name="online" />
+            <PropertyRef Name="onlineiptal" />
+            <PropertyRef Name="SENDPDF" />
+          </Key>
+          <Property Name="res_id" Type="int" Nullable="false" />
+          <Property Name="market" Type="nvarchar" MaxLength="50" />
+          <Property Name="Hoteladi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Hotelkod" Type="nvarchar" MaxLength="50" />
+          <Property Name="emailsay" Type="int" />
+          <Property Name="belgesay" Type="int" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="aciklama" Type="nvarchar(max)" />
+          <Property Name="dosyano" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rezervlist" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rezervkod" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rezervkodmu" Type="uniqueidentifier" />
+          <Property Name="Checkindate" Type="nvarchar" MaxLength="50" />
+          <Property Name="Checkoutdate" Type="nvarchar" MaxLength="50" />
+          <Property Name="Totalnights" Type="nvarchar" MaxLength="50" />
+          <Property Name="Board" Type="nvarchar" MaxLength="50" />
+          <Property Name="OdaTipi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sngfiyat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sngoda" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sngmaliyet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sngtotal" Type="nvarchar" MaxLength="50" />
+          <Property Name="Doublefiyat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Doubleoda" Type="nvarchar" MaxLength="50" />
+          <Property Name="Doublemaliyet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Doubletotal" Type="nvarchar" MaxLength="50" />
+          <Property Name="Exbedfiyat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Exbedadet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Exbedtotal" Type="nvarchar" MaxLength="50" />
+          <Property Name="Chdfreeadet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Chd50fiyat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Chd50adet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Chd50total" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rezervtotal" Type="nvarchar" MaxLength="50" />
+          <Property Name="hotelmaliyet" Type="nvarchar" MaxLength="50" />
+          <Property Name="hoteltotal" Type="float" />
+          <Property Name="maliyettotal" Type="nvarchar" MaxLength="50" />
+          <Property Name="Grandtotal" Type="nvarchar" MaxLength="50" />
+          <Property Name="Komisyontotal" Type="nvarchar" MaxLength="50" />
+          <Property Name="netpayment" Type="nvarchar" MaxLength="50" />
+          <Property Name="Info" Type="nvarchar" MaxLength="255" />
+          <Property Name="Turadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Turpaxcins" Type="nvarchar" MaxLength="50" />
+          <Property Name="Turprice" Type="nvarchar" MaxLength="50" />
+          <Property Name="Turadet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Turtotal" Type="float" />
+          <Property Name="Turmaliyet" Type="nvarchar" MaxLength="50" />
+          <Property Name="fullturtotal" Type="float" />
+          <Property Name="Turtarih" Type="nvarchar" MaxLength="50" />
+          <Property Name="TurRegion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transferadi" Type="nvarchar" MaxLength="255" />
+          <Property Name="Transferpaxcins" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transferadet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transferprice" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transfermaliyet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transfertotal" Type="int" />
+          <Property Name="fulltransfertotal" Type="int" />
+          <Property Name="Transfertarih" Type="nvarchar" MaxLength="50" />
+          <Property Name="TransferRegion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transferflightno" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transferflighttime" Type="nvarchar" MaxLength="50" />
+          <Property Name="komisyon" Type="nvarchar" MaxLength="50" />
+          <Property Name="kulladi" Type="nvarchar" MaxLength="50" />
+          <Property Name="reconfirm" Type="bit" Nullable="false" />
+          <Property Name="confirm" Type="bit" Nullable="false" />
+          <Property Name="cancel" Type="bit" Nullable="false" />
+          <Property Name="onay" Type="bit" Nullable="false" />
+          <Property Name="degisiklik" Type="bit" Nullable="false" />
+          <Property Name="payment" Type="bit" Nullable="false" />
+          <Property Name="otel" Type="bit" Nullable="false" />
+          <Property Name="otel_bilgi" Type="nvarchar" MaxLength="50" />
+          <Property Name="notlar" Type="nvarchar(max)" />
+          <Property Name="otel_tarih" Type="nvarchar" MaxLength="50" />
+          <Property Name="yedek" Type="nvarchar" MaxLength="50" />
+          <Property Name="rezervdurum" Type="nvarchar" MaxLength="50" />
+          <Property Name="yedeksayi" Type="int" />
+          <Property Name="partlyconfirm" Type="bit" Nullable="false" />
+          <Property Name="tamamdir" Type="bit" Nullable="false" />
+          <Property Name="odeme" Type="nvarchar" MaxLength="50" />
+          <Property Name="belge" Type="bit" Nullable="false" />
+          <Property Name="iptal_belge" Type="bit" Nullable="false" />
+          <Property Name="degisiklik_belge" Type="bit" Nullable="false" />
+          <Property Name="birim" Type="nvarchar" MaxLength="50" />
+          <Property Name="mudahale" Type="nvarchar" MaxLength="50" />
+          <Property Name="mudahale_tarih" Type="datetime" />
+          <Property Name="bizimkiler" Type="nvarchar" MaxLength="50" />
+          <Property Name="tarih" Type="datetime" />
+          <Property Name="ilktarih" Type="datetime" />
+          <Property Name="Rezervkodu" Type="int" />
+          <Property Name="iptal_tarih" Type="datetime" />
+          <Property Name="degisiklikfark" Type="int" />
+          <Property Name="kasa" Type="int" />
+          <Property Name="kasahareketi" Type="bit" Nullable="false" />
+          <Property Name="silinecek" Type="bit" Nullable="false" />
+          <Property Name="online" Type="bit" Nullable="false" />
+          <Property Name="onlineiptal" Type="bit" Nullable="false" />
+          <Property Name="provider" Type="nvarchar" MaxLength="50" />
+          <Property Name="onlineFilename" Type="nvarchar" MaxLength="150" />
+          <Property Name="onlineiptaltarih" Type="datetime" />
+          <Property Name="cancelationtext" Type="nvarchar" MaxLength="50" />
+          <Property Name="Triplefiyat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tripleadet" Type="nvarchar(max)" />
+          <Property Name="Tripletotal" Type="nvarchar" MaxLength="50" />
+          <Property Name="SENDMAIL" Type="nvarchar" MaxLength="255" />
+          <Property Name="SENDPDF" Type="bit" Nullable="false" />
+          <Property Name="PDFFILE" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Payment" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="Member" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Currency" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="ref_marketman" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ref_member" Type="int" Nullable="false" />
+          <Property Name="ref_agency" Type="int" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="date" Type="date" />
+          <Property Name="net" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="commision" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="discount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="discountid" Type="int" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="profit" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="priceTL" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="costTL" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="curency" Type="nchar" MaxLength="10" />
+          <Property Name="finishDate" Type="date" />
+          <Property Name="balanceDate" Type="date" Nullable="false" />
+          <Property Name="updatedate" Type="date" Nullable="false" />
+          <Property Name="updateuser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="reconfirmed" Type="bit" Nullable="false" />
+          <Property Name="vocher" Type="nvarchar" MaxLength="150" />
+          <Property Name="sendmail" Type="bit" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="agencystaff" Type="nvarchar" MaxLength="50" />
+          <Property Name="balance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="checkindate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rhotel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="hid" Type="int" />
+          <Property Name="checkout" Type="datetime" Nullable="false" />
+          <Property Name="checkin" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="SendHotel" Type="bit" Nullable="false" />
+          <Property Name="Confirmed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RHRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="board" Type="nvarchar" MaxLength="50" />
+          <Property Name="guset" Type="nvarchar(max)" />
+          <Property Name="checkin" Type="date" />
+          <Property Name="checkout" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Livedata.dbo.tahsilat' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tahsilat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="kulladi" Type="nvarchar" MaxLength="50" />
+          <Property Name="tarih" Type="datetime" />
+          <Property Name="toplam" Type="float" />
+          <Property Name="staff" Type="nvarchar" MaxLength="50" />
+          <Property Name="odeme_tipi" Type="nvarchar" MaxLength="50" />
+          <Property Name="orderid" Type="nvarchar" MaxLength="100" />
+          <Property Name="odeme_detay" Type="nvarchar" MaxLength="30" />
+          <Property Name="odeme_tarihi" Type="datetime" />
+          <Property Name="ilgilidosya" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="Pax" Type="int" Nullable="false" />
+          <Property Name="pickuptime" Type="nvarchar" MaxLength="100" />
+          <Property Name="pickup" Type="nvarchar" MaxLength="100" />
+          <Property Name="dropoff" Type="nvarchar" MaxLength="100" />
+          <Property Name="city" Type="nvarchar" MaxLength="100" />
+          <Property Name="car" Type="nvarchar" MaxLength="100" />
+          <Property Name="guide" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Transfers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RID" Type="int" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="pickup" Type="nvarchar" MaxLength="100" />
+          <Property Name="dropoff" Type="nvarchar" MaxLength="100" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="flightCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="flightTime" Type="nvarchar" MaxLength="100" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="pax" Type="int" Nullable="false" />
+          <Property Name="car" Type="nvarchar" MaxLength="100" />
+          <Property Name="guide" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Livedata.dbo.uyeler' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="uyeler">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="onay" />
+            <PropertyRef Name="gecici_kredi" />
+            <PropertyRef Name="subagent" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="kulladi" Type="nvarchar" MaxLength="255" />
+          <Property Name="sifre" Type="nvarchar" MaxLength="255" />
+          <Property Name="onay" Type="bit" Nullable="false" />
+          <Property Name="market" Type="nvarchar" MaxLength="255" />
+          <Property Name="ulke" Type="nvarchar" MaxLength="255" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" />
+          <Property Name="indirim" Type="nvarchar" MaxLength="255" />
+          <Property Name="kredi" Type="nvarchar" MaxLength="255" />
+          <Property Name="komisyon" Type="nvarchar" MaxLength="255" />
+          <Property Name="adi" Type="nvarchar" MaxLength="255" />
+          <Property Name="agent_type" Type="nvarchar" MaxLength="255" />
+          <Property Name="soyadi" Type="nvarchar" MaxLength="255" />
+          <Property Name="acente_code" Type="nvarchar" MaxLength="255" />
+          <Property Name="firma" Type="nvarchar" MaxLength="255" />
+          <Property Name="fax" Type="nvarchar" MaxLength="255" />
+          <Property Name="tel" Type="nvarchar" MaxLength="255" />
+          <Property Name="sehir" Type="nvarchar" MaxLength="255" />
+          <Property Name="uyelik_tarihi" Type="datetime" />
+          <Property Name="son_giris_tarihi" Type="datetime" />
+          <Property Name="giris_sayisi" Type="float" />
+          <Property Name="uye_ip" Type="nvarchar" MaxLength="255" />
+          <Property Name="cevap" Type="nvarchar" MaxLength="255" />
+          <Property Name="sifresoru" Type="nvarchar" MaxLength="255" />
+          <Property Name="adres" Type="nvarchar" MaxLength="255" />
+          <Property Name="IP" Type="nvarchar" MaxLength="255" />
+          <Property Name="gecici_kredi" Type="bit" Nullable="false" />
+          <Property Name="cperson" Type="nvarchar" MaxLength="50" />
+          <Property Name="remarks" Type="nvarchar(max)" />
+          <Property Name="czipcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="iata" Type="nvarchar" MaxLength="50" />
+          <Property Name="iperson" Type="nvarchar" MaxLength="50" />
+          <Property Name="iemail" Type="nvarchar" MaxLength="50" />
+          <Property Name="iadres" Type="nvarchar" MaxLength="50" />
+          <Property Name="isehir" Type="nvarchar" MaxLength="50" />
+          <Property Name="izipcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="iulke" Type="nvarchar" MaxLength="50" />
+          <Property Name="itel" Type="nvarchar" MaxLength="50" />
+          <Property Name="ifax" Type="nvarchar" MaxLength="50" />
+          <Property Name="logo" Type="nvarchar(max)" />
+          <Property Name="ceptel" Type="nvarchar" MaxLength="50" />
+          <Property Name="iceptel" Type="nvarchar" MaxLength="50" />
+          <Property Name="subagent" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Agents_Agency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Agents" Type="Self.Agents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Agents">
+              <PropertyRef Name="AID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChangeRoom_hotelchange">
+          <End Role="hotelchange" Type="Self.hotelchange" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChangeRoom" Type="Self.ChangeRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hotelchange">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ChangeRoom">
+              <PropertyRef Name="HID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExtraService_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ExtraService" Type="Self.ExtraService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExtraService">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hotelchange_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="hotelchange" Type="Self.hotelchange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hotelchange">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ininvoice_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ininvoice" Type="Self.ininvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ininvoice">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservations_Agency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="ref_agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservations_Members">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="ref_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rhotel_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rhotel" Type="Self.Rhotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rhotel">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RHRoom_Rhotel">
+          <End Role="Rhotel" Type="Self.Rhotel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RHRoom" Type="Self.RHRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rhotel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RHRoom">
+              <PropertyRef Name="HID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tour_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfers_Reservations">
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transfers" Type="Self.Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ReservationsModelStoreContainer">
+          <EntitySet Name="Agency" EntityType="Self.Agency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Agents" EntityType="Self.Agents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChangeRoom" EntityType="Self.ChangeRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Coupun" EntityType="Self.Coupun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeadLine" EntityType="Self.DeadLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExtraService" EntityType="Self.ExtraService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hotelchange" EntityType="Self.hotelchange" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ininvoice" EntityType="Self.ininvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marketman" EntityType="Self.Marketman" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rhotel" EntityType="Self.Rhotel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RHRoom" EntityType="Self.RHRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tour" EntityType="Self.Tour" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transfers" EntityType="Self.Transfers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="old" EntityType="Self.old" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [old].[res_id] AS [res_id], 
+    [old].[market] AS [market], 
+    [old].[Hoteladi] AS [Hoteladi], 
+    [old].[Hotelkod] AS [Hotelkod], 
+    [old].[emailsay] AS [emailsay], 
+    [old].[belgesay] AS [belgesay], 
+    [old].[email] AS [email], 
+    [old].[aciklama] AS [aciklama], 
+    [old].[dosyano] AS [dosyano], 
+    [old].[Rezervlist] AS [Rezervlist], 
+    [old].[Rezervkod] AS [Rezervkod], 
+    [old].[Rezervkodmu] AS [Rezervkodmu], 
+    [old].[Checkindate] AS [Checkindate], 
+    [old].[Checkoutdate] AS [Checkoutdate], 
+    [old].[Totalnights] AS [Totalnights], 
+    [old].[Board] AS [Board], 
+    [old].[OdaTipi] AS [OdaTipi], 
+    [old].[Sngfiyat] AS [Sngfiyat], 
+    [old].[Sngoda] AS [Sngoda], 
+    [old].[Sngmaliyet] AS [Sngmaliyet], 
+    [old].[Sngtotal] AS [Sngtotal], 
+    [old].[Doublefiyat] AS [Doublefiyat], 
+    [old].[Doubleoda] AS [Doubleoda], 
+    [old].[Doublemaliyet] AS [Doublemaliyet], 
+    [old].[Doubletotal] AS [Doubletotal], 
+    [old].[Exbedfiyat] AS [Exbedfiyat], 
+    [old].[Exbedadet] AS [Exbedadet], 
+    [old].[Exbedtotal] AS [Exbedtotal], 
+    [old].[Chdfreeadet] AS [Chdfreeadet], 
+    [old].[Chd50fiyat] AS [Chd50fiyat], 
+    [old].[Chd50adet] AS [Chd50adet], 
+    [old].[Chd50total] AS [Chd50total], 
+    [old].[Rezervtotal] AS [Rezervtotal], 
+    [old].[hotelmaliyet] AS [hotelmaliyet], 
+    [old].[hoteltotal] AS [hoteltotal], 
+    [old].[maliyettotal] AS [maliyettotal], 
+    [old].[Grandtotal] AS [Grandtotal], 
+    [old].[Komisyontotal] AS [Komisyontotal], 
+    [old].[netpayment] AS [netpayment], 
+    [old].[Info] AS [Info], 
+    [old].[Turadi] AS [Turadi], 
+    [old].[Turpaxcins] AS [Turpaxcins], 
+    [old].[Turprice] AS [Turprice], 
+    [old].[Turadet] AS [Turadet], 
+    [old].[Turtotal] AS [Turtotal], 
+    [old].[Turmaliyet] AS [Turmaliyet], 
+    [old].[fullturtotal] AS [fullturtotal], 
+    [old].[Turtarih] AS [Turtarih], 
+    [old].[TurRegion] AS [TurRegion], 
+    [old].[Transferadi] AS [Transferadi], 
+    [old].[Transferpaxcins] AS [Transferpaxcins], 
+    [old].[Transferadet] AS [Transferadet], 
+    [old].[Transferprice] AS [Transferprice], 
+    [old].[Transfermaliyet] AS [Transfermaliyet], 
+    [old].[Transfertotal] AS [Transfertotal], 
+    [old].[fulltransfertotal] AS [fulltransfertotal], 
+    [old].[Transfertarih] AS [Transfertarih], 
+    [old].[TransferRegion] AS [TransferRegion], 
+    [old].[Transferflightno] AS [Transferflightno], 
+    [old].[Transferflighttime] AS [Transferflighttime], 
+    [old].[komisyon] AS [komisyon], 
+    [old].[kulladi] AS [kulladi], 
+    [old].[reconfirm] AS [reconfirm], 
+    [old].[confirm] AS [confirm], 
+    [old].[cancel] AS [cancel], 
+    [old].[onay] AS [onay], 
+    [old].[degisiklik] AS [degisiklik], 
+    [old].[payment] AS [payment], 
+    [old].[otel] AS [otel], 
+    [old].[otel_bilgi] AS [otel_bilgi], 
+    [old].[notlar] AS [notlar], 
+    [old].[otel_tarih] AS [otel_tarih], 
+    [old].[yedek] AS [yedek], 
+    [old].[rezervdurum] AS [rezervdurum], 
+    [old].[yedeksayi] AS [yedeksayi], 
+    [old].[partlyconfirm] AS [partlyconfirm], 
+    [old].[tamamdir] AS [tamamdir], 
+    [old].[odeme] AS [odeme], 
+    [old].[belge] AS [belge], 
+    [old].[iptal_belge] AS [iptal_belge], 
+    [old].[degisiklik_belge] AS [degisiklik_belge], 
+    [old].[birim] AS [birim], 
+    [old].[mudahale] AS [mudahale], 
+    [old].[mudahale_tarih] AS [mudahale_tarih], 
+    [old].[bizimkiler] AS [bizimkiler], 
+    [old].[tarih] AS [tarih], 
+    [old].[ilktarih] AS [ilktarih], 
+    [old].[Rezervkodu] AS [Rezervkodu], 
+    [old].[iptal_tarih] AS [iptal_tarih], 
+    [old].[degisiklikfark] AS [degisiklikfark], 
+    [old].[kasa] AS [kasa], 
+    [old].[kasahareketi] AS [kasahareketi], 
+    [old].[silinecek] AS [silinecek], 
+    [old].[online] AS [online], 
+    [old].[onlineiptal] AS [onlineiptal], 
+    [old].[provider] AS [provider], 
+    [old].[onlineFilename] AS [onlineFilename], 
+    [old].[onlineiptaltarih] AS [onlineiptaltarih], 
+    [old].[cancelationtext] AS [cancelationtext], 
+    [old].[Triplefiyat] AS [Triplefiyat], 
+    [old].[Tripleadet] AS [Tripleadet], 
+    [old].[Tripletotal] AS [Tripletotal], 
+    [old].[SENDMAIL] AS [SENDMAIL], 
+    [old].[SENDPDF] AS [SENDPDF], 
+    [old].[PDFFILE] AS [PDFFILE]
+    FROM [dbo].[old] AS [old]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tahsilat" EntityType="Self.tahsilat" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tahsilat].[id] AS [id], 
+    [tahsilat].[kulladi] AS [kulladi], 
+    [tahsilat].[tarih] AS [tarih], 
+    [tahsilat].[toplam] AS [toplam], 
+    [tahsilat].[staff] AS [staff], 
+    [tahsilat].[odeme_tipi] AS [odeme_tipi], 
+    [tahsilat].[orderid] AS [orderid], 
+    [tahsilat].[odeme_detay] AS [odeme_detay], 
+    [tahsilat].[odeme_tarihi] AS [odeme_tarihi], 
+    [tahsilat].[ilgilidosya] AS [ilgilidosya]
+    FROM [dbo].[tahsilat] AS [tahsilat]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="uyeler" EntityType="Self.uyeler" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [uyeler].[ID] AS [ID], 
+    [uyeler].[kulladi] AS [kulladi], 
+    [uyeler].[sifre] AS [sifre], 
+    [uyeler].[onay] AS [onay], 
+    [uyeler].[market] AS [market], 
+    [uyeler].[ulke] AS [ulke], 
+    [uyeler].[email] AS [email], 
+    [uyeler].[indirim] AS [indirim], 
+    [uyeler].[kredi] AS [kredi], 
+    [uyeler].[komisyon] AS [komisyon], 
+    [uyeler].[adi] AS [adi], 
+    [uyeler].[agent_type] AS [agent_type], 
+    [uyeler].[soyadi] AS [soyadi], 
+    [uyeler].[acente_code] AS [acente_code], 
+    [uyeler].[firma] AS [firma], 
+    [uyeler].[fax] AS [fax], 
+    [uyeler].[tel] AS [tel], 
+    [uyeler].[sehir] AS [sehir], 
+    [uyeler].[uyelik_tarihi] AS [uyelik_tarihi], 
+    [uyeler].[son_giris_tarihi] AS [son_giris_tarihi], 
+    [uyeler].[giris_sayisi] AS [giris_sayisi], 
+    [uyeler].[uye_ip] AS [uye_ip], 
+    [uyeler].[cevap] AS [cevap], 
+    [uyeler].[sifresoru] AS [sifresoru], 
+    [uyeler].[adres] AS [adres], 
+    [uyeler].[IP] AS [IP], 
+    [uyeler].[gecici_kredi] AS [gecici_kredi], 
+    [uyeler].[cperson] AS [cperson], 
+    [uyeler].[remarks] AS [remarks], 
+    [uyeler].[czipcode] AS [czipcode], 
+    [uyeler].[iata] AS [iata], 
+    [uyeler].[iperson] AS [iperson], 
+    [uyeler].[iemail] AS [iemail], 
+    [uyeler].[iadres] AS [iadres], 
+    [uyeler].[isehir] AS [isehir], 
+    [uyeler].[izipcode] AS [izipcode], 
+    [uyeler].[iulke] AS [iulke], 
+    [uyeler].[itel] AS [itel], 
+    [uyeler].[ifax] AS [ifax], 
+    [uyeler].[logo] AS [logo], 
+    [uyeler].[ceptel] AS [ceptel], 
+    [uyeler].[iceptel] AS [iceptel], 
+    [uyeler].[subagent] AS [subagent]
+    FROM [dbo].[uyeler] AS [uyeler]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Agents_Agency" Association="Self.FK_Agents_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Agents" EntitySet="Agents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChangeRoom_hotelchange" Association="Self.FK_ChangeRoom_hotelchange">
+            <End Role="hotelchange" EntitySet="hotelchange" />
+            <End Role="ChangeRoom" EntitySet="ChangeRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExtraService_Reservations" Association="Self.FK_ExtraService_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="ExtraService" EntitySet="ExtraService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hotelchange_Reservations" Association="Self.FK_hotelchange_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="hotelchange" EntitySet="hotelchange" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ininvoice_Reservations" Association="Self.FK_ininvoice_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="ininvoice" EntitySet="ininvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Reservations" Association="Self.FK_Payments_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservations_Agency" Association="Self.FK_Reservations_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservations_Members" Association="Self.FK_Reservations_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rhotel_Reservations" Association="Self.FK_Rhotel_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Rhotel" EntitySet="Rhotel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RHRoom_Rhotel" Association="Self.FK_RHRoom_Rhotel">
+            <End Role="Rhotel" EntitySet="Rhotel" />
+            <End Role="RHRoom" EntitySet="RHRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tour_Reservations" Association="Self.FK_Tour_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfers_Reservations" Association="Self.FK_Transfers_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ReservationsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgencyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Market" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Agents" Relationship="Self.FK_Agents_Agency" FromRole="Agency" ToRole="Agents" />
+          <Property Name="Longitude" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Latitude" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Adress" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Commision" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Credit" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CreditAmount" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="note" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="joindate" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Reservations" Relationship="ReservationsModel.FK_Reservations_Agency" FromRole="Agency" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="Agents">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AID" Type="Int32" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="skype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="other" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Agency" Relationship="Self.FK_Agents_Agency" FromRole="Agents" ToRole="Agency" />
+        </EntityType>
+        <EntityType Name="ExtraService">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dateout" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Pax" Type="Int32" />
+          <NavigationProperty Name="Reservations" Relationship="ReservationsModel.FK_ExtraService_Reservations" FromRole="ExtraService" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="Rhotel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="hid" Type="Int32" />
+          <Property Name="checkout" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="checkin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RHRoom" Relationship="Self.FK_RHRoom_Rhotel" FromRole="Rhotel" ToRole="RHRoom" />
+          <Property Name="Confirmed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="ReservationsModel.FK_Rhotel_Reservations" FromRole="Rhotel" ToRole="Reservations" />
+          <Property Name="SendHotel" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RHRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Rhotel" Relationship="Self.FK_RHRoom_Rhotel" FromRole="RHRoom" ToRole="Rhotel" />
+          <Property Name="board" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="guset" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="checkin" Type="DateTime" Precision="0" />
+          <Property Name="checkout" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Pax" Type="Int32" Nullable="false" />
+          <Property Name="pickuptime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="pickup" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dropoff" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="car" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="guide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservations" Relationship="ReservationsModel.FK_Tour_Reservations" FromRole="Tour" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="Transfers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="customer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pax" Type="Int32" Nullable="false" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="pickup" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dropoff" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="flightCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="flightTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="car" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="guide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservations" Relationship="ReservationsModel.FK_Transfers_Reservations" FromRole="Transfers" ToRole="Reservations" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="manager" Type="Boolean" Nullable="false" />
+          <Property Name="accountManager" Type="Boolean" Nullable="false" />
+          <Property Name="reservationManager" Type="Boolean" Nullable="false" />
+          <Property Name="doreservations" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Reservations1" Relationship="ReservationsModel.FK_Reservations_Members" FromRole="Members" ToRole="Reservations" />
+          <Property Name="tel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="emailPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="reservations" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Agents_Agency">
+          <End Role="Agency" Type="Self.Agency" Multiplicity="1" />
+          <End Role="Agents" Type="Self.Agents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Agents">
+              <PropertyRef Name="AID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RHRoom_Rhotel">
+          <End Role="Rhotel" Type="Self.Rhotel" Multiplicity="1" />
+          <End Role="RHRoom" Type="Self.RHRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rhotel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RHRoom">
+              <PropertyRef Name="HID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ReservationsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agency" EntityType="Self.Agency" />
+          <EntitySet Name="Agents" EntityType="Self.Agents" />
+          <EntitySet Name="ExtraService" EntityType="Self.ExtraService" />
+          <EntitySet Name="Rhotel" EntityType="Self.Rhotel" />
+          <EntitySet Name="RHRoom" EntityType="Self.RHRoom" />
+          <EntitySet Name="Tour" EntityType="Self.Tour" />
+          <EntitySet Name="Transfers" EntityType="Self.Transfers" />
+          <EntitySet Name="Members" EntityType="Self.Members" />
+          <AssociationSet Name="FK_Agents_Agency" Association="Self.FK_Agents_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Agents" EntitySet="Agents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RHRoom_Rhotel" Association="Self.FK_RHRoom_Rhotel">
+            <End Role="Rhotel" EntitySet="Rhotel" />
+            <End Role="RHRoom" EntitySet="RHRoom" />
+          </AssociationSet>
+          <EntitySet Name="Coupun" EntityType="ReservationsModel.Coupun" />
+          <EntitySet Name="DeadLine" EntityType="ReservationsModel.DeadLine" />
+          <EntitySet Name="Marketman" EntityType="ReservationsModel.Marketman" />
+          <EntitySet Name="ChangeRoom" EntityType="ReservationsModel.ChangeRoom" />
+          <EntitySet Name="hotelchange" EntityType="ReservationsModel.hotelchange" />
+          <AssociationSet Name="FK_ChangeRoom_hotelchange" Association="ReservationsModel.FK_ChangeRoom_hotelchange">
+            <End Role="hotelchange" EntitySet="hotelchange" />
+            <End Role="ChangeRoom" EntitySet="ChangeRoom" />
+          </AssociationSet>
+          <EntitySet Name="ininvoice" EntityType="ReservationsModel.ininvoice" />
+          <EntitySet Name="Reservations" EntityType="ReservationsModel.Reservations" />
+          <AssociationSet Name="FK_Reservations_Agency" Association="ReservationsModel.FK_Reservations_Agency">
+            <End Role="Agency" EntitySet="Agency" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExtraService_Reservations" Association="ReservationsModel.FK_ExtraService_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="ExtraService" EntitySet="ExtraService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_hotelchange_Reservations" Association="ReservationsModel.FK_hotelchange_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="hotelchange" EntitySet="hotelchange" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ininvoice_Reservations" Association="ReservationsModel.FK_ininvoice_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="ininvoice" EntitySet="ininvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservations_Members" Association="ReservationsModel.FK_Reservations_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rhotel_Reservations" Association="ReservationsModel.FK_Rhotel_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Rhotel" EntitySet="Rhotel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tour_Reservations" Association="ReservationsModel.FK_Tour_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transfers_Reservations" Association="ReservationsModel.FK_Transfers_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Transfers" EntitySet="Transfers" />
+          </AssociationSet>
+          <EntitySet Name="Payments" EntityType="ReservationsModel.Payments" />
+          <AssociationSet Name="FK_Payments_Reservations" Association="ReservationsModel.FK_Payments_Reservations">
+            <End Role="Reservations" EntitySet="Reservations" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <EntitySet Name="uyeler" EntityType="ReservationsModel.uyeler" />
+          <EntitySet Name="old" EntityType="ReservationsModel.old" />
+          <EntitySet Name="tahsilat" EntityType="ReservationsModel.tahsilat" />
+          </EntityContainer>
+        <EntityType Name="Coupun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExpireDate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DeadLine">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ref_file" Type="Int32" Nullable="false" />
+          <Property Name="Expaire" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Marketman">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gsm" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ChangeRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="board" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="hotelchange" Relationship="ReservationsModel.FK_ChangeRoom_hotelchange" FromRole="ChangeRoom" ToRole="hotelchange" />
+          <Property Name="guset" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="checkin" Type="DateTime" Precision="0" />
+          <Property Name="checkout" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="hotelchange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="hid" Type="Int32" />
+          <Property Name="checkout" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="checkin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="customer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChangeRoom" Relationship="ReservationsModel.FK_ChangeRoom_hotelchange" FromRole="hotelchange" ToRole="ChangeRoom" />
+          <NavigationProperty Name="Reservations" Relationship="ReservationsModel.FK_hotelchange_Reservations" FromRole="hotelchange" ToRole="Reservations" />
+        </EntityType>
+        <Association Name="FK_ChangeRoom_hotelchange">
+          <End Type="ReservationsModel.hotelchange" Role="hotelchange" Multiplicity="1" />
+          <End Type="ReservationsModel.ChangeRoom" Role="ChangeRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hotelchange">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ChangeRoom">
+              <PropertyRef Name="HID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ininvoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="no" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="curency" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="customer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservations" Relationship="ReservationsModel.FK_ininvoice_Reservations" FromRole="ininvoice" ToRole="Reservations" />
+          <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="typeid" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ref_marketman" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ref_member" Type="Int32" Nullable="false" />
+          <Property Name="ref_agency" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="net" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="commision" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="discount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="discountid" Type="Int32" />
+          <Property Name="cost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="profit" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="priceTL" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="costTL" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="curency" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="finishDate" Type="DateTime" Precision="0" />
+          <Property Name="balanceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updatedate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updateuser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="reconfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="vocher" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="sendmail" Type="Boolean" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="agencystaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="balance" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Agency" Relationship="ReservationsModel.FK_Reservations_Agency" FromRole="Reservations" ToRole="Agency" />
+          <NavigationProperty Name="ExtraService" Relationship="ReservationsModel.FK_ExtraService_Reservations" FromRole="Reservations" ToRole="ExtraService" />
+          <NavigationProperty Name="hotelchange" Relationship="ReservationsModel.FK_hotelchange_Reservations" FromRole="Reservations" ToRole="hotelchange" />
+          <NavigationProperty Name="ininvoice" Relationship="ReservationsModel.FK_ininvoice_Reservations" FromRole="Reservations" ToRole="ininvoice" />
+          <NavigationProperty Name="Members" Relationship="ReservationsModel.FK_Reservations_Members" FromRole="Reservations" ToRole="Members" />
+          <NavigationProperty Name="Rhotel" Relationship="ReservationsModel.FK_Rhotel_Reservations" FromRole="Reservations" ToRole="Rhotel" />
+          <NavigationProperty Name="Tour" Relationship="ReservationsModel.FK_Tour_Reservations" FromRole="Reservations" ToRole="Tour" />
+          <NavigationProperty Name="Transfers" Relationship="ReservationsModel.FK_Transfers_Reservations" FromRole="Reservations" ToRole="Transfers" />
+          <NavigationProperty Name="Payments" Relationship="ReservationsModel.FK_Payments_Reservations" FromRole="Reservations" ToRole="Payments" />
+          <Property Name="checkindate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <Association Name="FK_Reservations_Agency">
+          <End Type="ReservationsModel.Agency" Role="Agency" Multiplicity="0..1" />
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agency">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="ref_agency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExtraService_Reservations">
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ReservationsModel.ExtraService" Role="ExtraService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExtraService">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_hotelchange_Reservations">
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ReservationsModel.hotelchange" Role="hotelchange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="hotelchange">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ininvoice_Reservations">
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ReservationsModel.ininvoice" Role="ininvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ininvoice">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservations_Members">
+          <End Type="ReservationsModel.Members" Role="Members" Multiplicity="1" />
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="ref_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rhotel_Reservations">
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ReservationsModel.Rhotel" Role="Rhotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rhotel">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tour_Reservations">
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ReservationsModel.Tour" Role="Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transfers_Reservations">
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ReservationsModel.Transfers" Role="Transfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transfers">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RID" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Payment" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Member" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Currency" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Reservations" Relationship="ReservationsModel.FK_Payments_Reservations" FromRole="Payments" ToRole="Reservations" />
+        </EntityType>
+        <Association Name="FK_Payments_Reservations">
+          <End Type="ReservationsModel.Reservations" Role="Reservations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ReservationsModel.Payments" Role="Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="RID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="uyeler">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="onay" />
+            <PropertyRef Name="gecici_kredi" />
+            <PropertyRef Name="subagent" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="kulladi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sifre" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="onay" Type="Boolean" Nullable="false" />
+          <Property Name="market" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ulke" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="indirim" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="kredi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="komisyon" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="adi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="agent_type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="soyadi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="acente_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="firma" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="fax" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="tel" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sehir" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="uyelik_tarihi" Type="DateTime" Precision="3" />
+          <Property Name="son_giris_tarihi" Type="DateTime" Precision="3" />
+          <Property Name="giris_sayisi" Type="Double" />
+          <Property Name="uye_ip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cevap" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sifresoru" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="adres" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="gecici_kredi" Type="Boolean" Nullable="false" />
+          <Property Name="cperson" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="czipcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iata" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iperson" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iemail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iadres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isehir" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="izipcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iulke" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="itel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ifax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ceptel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iceptel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="subagent" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="old">
+          <Key>
+            <PropertyRef Name="res_id" />
+            <PropertyRef Name="reconfirm" />
+            <PropertyRef Name="confirm" />
+            <PropertyRef Name="cancel" />
+            <PropertyRef Name="onay" />
+            <PropertyRef Name="degisiklik" />
+            <PropertyRef Name="payment" />
+            <PropertyRef Name="otel" />
+            <PropertyRef Name="partlyconfirm" />
+            <PropertyRef Name="tamamdir" />
+            <PropertyRef Name="belge" />
+            <PropertyRef Name="iptal_belge" />
+            <PropertyRef Name="degisiklik_belge" />
+            <PropertyRef Name="kasahareketi" />
+            <PropertyRef Name="silinecek" />
+            <PropertyRef Name="online" />
+            <PropertyRef Name="onlineiptal" />
+            <PropertyRef Name="SENDPDF" />
+          </Key>
+          <Property Name="res_id" Type="Int32" Nullable="false" />
+          <Property Name="market" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Hoteladi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Hotelkod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="emailsay" Type="Int32" />
+          <Property Name="belgesay" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dosyano" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rezervlist" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rezervkod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rezervkodmu" Type="Guid" />
+          <Property Name="Checkindate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Checkoutdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Totalnights" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Board" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OdaTipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sngfiyat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sngoda" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sngmaliyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sngtotal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Doublefiyat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Doubleoda" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Doublemaliyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Doubletotal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exbedfiyat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exbedadet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exbedtotal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Chdfreeadet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Chd50fiyat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Chd50adet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Chd50total" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rezervtotal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="hotelmaliyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="hoteltotal" Type="Double" />
+          <Property Name="maliyettotal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Grandtotal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Komisyontotal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="netpayment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Info" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Turadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Turpaxcins" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Turprice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Turadet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Turtotal" Type="Double" />
+          <Property Name="Turmaliyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fullturtotal" Type="Double" />
+          <Property Name="Turtarih" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TurRegion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transferadi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Transferpaxcins" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transferadet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transferprice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transfermaliyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transfertotal" Type="Int32" />
+          <Property Name="fulltransfertotal" Type="Int32" />
+          <Property Name="Transfertarih" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransferRegion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transferflightno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transferflighttime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="komisyon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kulladi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="reconfirm" Type="Boolean" Nullable="false" />
+          <Property Name="confirm" Type="Boolean" Nullable="false" />
+          <Property Name="cancel" Type="Boolean" Nullable="false" />
+          <Property Name="onay" Type="Boolean" Nullable="false" />
+          <Property Name="degisiklik" Type="Boolean" Nullable="false" />
+          <Property Name="payment" Type="Boolean" Nullable="false" />
+          <Property Name="otel" Type="Boolean" Nullable="false" />
+          <Property Name="otel_bilgi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notlar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="otel_tarih" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="yedek" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rezervdurum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="yedeksayi" Type="Int32" />
+          <Property Name="partlyconfirm" Type="Boolean" Nullable="false" />
+          <Property Name="tamamdir" Type="Boolean" Nullable="false" />
+          <Property Name="odeme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="belge" Type="Boolean" Nullable="false" />
+          <Property Name="iptal_belge" Type="Boolean" Nullable="false" />
+          <Property Name="degisiklik_belge" Type="Boolean" Nullable="false" />
+          <Property Name="birim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mudahale" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mudahale_tarih" Type="DateTime" Precision="3" />
+          <Property Name="bizimkiler" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tarih" Type="DateTime" Precision="3" />
+          <Property Name="ilktarih" Type="DateTime" Precision="3" />
+          <Property Name="Rezervkodu" Type="Int32" />
+          <Property Name="iptal_tarih" Type="DateTime" Precision="3" />
+          <Property Name="degisiklikfark" Type="Int32" />
+          <Property Name="kasa" Type="Int32" />
+          <Property Name="kasahareketi" Type="Boolean" Nullable="false" />
+          <Property Name="silinecek" Type="Boolean" Nullable="false" />
+          <Property Name="online" Type="Boolean" Nullable="false" />
+          <Property Name="onlineiptal" Type="Boolean" Nullable="false" />
+          <Property Name="provider" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="onlineFilename" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="onlineiptaltarih" Type="DateTime" Precision="3" />
+          <Property Name="cancelationtext" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Triplefiyat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tripleadet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tripletotal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SENDMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SENDPDF" Type="Boolean" Nullable="false" />
+          <Property Name="PDFFILE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tahsilat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="kulladi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tarih" Type="DateTime" Precision="3" />
+          <Property Name="toplam" Type="Double" />
+          <Property Name="staff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="odeme_tipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="orderid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="odeme_detay" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="odeme_tarihi" Type="DateTime" Precision="3" />
+          <Property Name="ilgilidosya" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ReservationsModelStoreContainer" CdmEntityContainer="ReservationsEntities">
+    <EntitySetMapping Name="Agency">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Agency)">
+        <MappingFragment StoreEntitySet="Agency">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Market" ColumnName="Market" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+          <ScalarProperty Name="Commision" ColumnName="Commision" />
+          <ScalarProperty Name="Credit" ColumnName="Credit" />
+          <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="joindate" ColumnName="joindate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Agents">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Agents)">
+        <MappingFragment StoreEntitySet="Agents">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AID" ColumnName="AID" />
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="skype" ColumnName="skype" />
+          <ScalarProperty Name="other" ColumnName="other" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExtraService">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.ExtraService)">
+        <MappingFragment StoreEntitySet="ExtraService">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="dateout" ColumnName="dateout" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rhotel">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Rhotel)">
+        <MappingFragment StoreEntitySet="Rhotel">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="hid" ColumnName="hid" />
+          <ScalarProperty Name="checkout" ColumnName="checkout" />
+          <ScalarProperty Name="checkin" ColumnName="checkin" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="SendHotel" ColumnName="SendHotel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RHRoom">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.RHRoom)">
+        <MappingFragment StoreEntitySet="RHRoom">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HID" ColumnName="HID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="board" ColumnName="board" />
+          <ScalarProperty Name="guset" ColumnName="guset" />
+          <ScalarProperty Name="checkin" ColumnName="checkin" />
+          <ScalarProperty Name="checkout" ColumnName="checkout" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tour">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Tour)">
+        <MappingFragment StoreEntitySet="Tour">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="Pax" ColumnName="Pax" />
+          <ScalarProperty Name="pickuptime" ColumnName="pickuptime" />
+          <ScalarProperty Name="pickup" ColumnName="pickup" />
+          <ScalarProperty Name="dropoff" ColumnName="dropoff" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="car" ColumnName="car" />
+          <ScalarProperty Name="guide" ColumnName="guide" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transfers">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Transfers)">
+        <MappingFragment StoreEntitySet="Transfers">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="pax" ColumnName="pax" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="pickup" ColumnName="pickup" />
+          <ScalarProperty Name="dropoff" ColumnName="dropoff" />
+          <ScalarProperty Name="flightCode" ColumnName="flightCode" />
+          <ScalarProperty Name="flightTime" ColumnName="flightTime" />
+          <ScalarProperty Name="car" ColumnName="car" />
+          <ScalarProperty Name="guide" ColumnName="guide" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Members">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Members)">
+        <MappingFragment StoreEntitySet="Members">
+          <ScalarProperty Name="reservations" ColumnName="reservations" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="manager" ColumnName="manager" />
+          <ScalarProperty Name="accountManager" ColumnName="accountManager" />
+          <ScalarProperty Name="reservationManager" ColumnName="reservationManager" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="emailPassword" ColumnName="emailPassword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Coupun">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Coupun)">
+        <MappingFragment StoreEntitySet="Coupun">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeadLine">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.DeadLine)">
+        <MappingFragment StoreEntitySet="DeadLine">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Ref_file" ColumnName="Ref_file" />
+          <ScalarProperty Name="Expaire" ColumnName="Expaire" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Marketman">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Marketman)">
+        <MappingFragment StoreEntitySet="Marketman">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Gsm" ColumnName="Gsm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChangeRoom">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.ChangeRoom)">
+        <MappingFragment StoreEntitySet="ChangeRoom">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HID" ColumnName="HID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="board" ColumnName="board" />
+          <ScalarProperty Name="guset" ColumnName="guset" />
+          <ScalarProperty Name="checkin" ColumnName="checkin" />
+          <ScalarProperty Name="checkout" ColumnName="checkout" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hotelchange">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.hotelchange)">
+        <MappingFragment StoreEntitySet="hotelchange">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="hid" ColumnName="hid" />
+          <ScalarProperty Name="checkout" ColumnName="checkout" />
+          <ScalarProperty Name="checkin" ColumnName="checkin" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="note" ColumnName="note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ininvoice">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.ininvoice)">
+        <MappingFragment StoreEntitySet="ininvoice">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="no" ColumnName="no" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="curency" ColumnName="curency" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="customer" ColumnName="customer" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="currency" ColumnName="currency" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="typeid" ColumnName="typeid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservations">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Reservations)">
+        <MappingFragment StoreEntitySet="Reservations">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ref_marketman" ColumnName="ref_marketman" />
+          <ScalarProperty Name="ref_member" ColumnName="ref_member" />
+          <ScalarProperty Name="ref_agency" ColumnName="ref_agency" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="net" ColumnName="net" />
+          <ScalarProperty Name="commision" ColumnName="commision" />
+          <ScalarProperty Name="discount" ColumnName="discount" />
+          <ScalarProperty Name="discountid" ColumnName="discountid" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="profit" ColumnName="profit" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="priceTL" ColumnName="priceTL" />
+          <ScalarProperty Name="costTL" ColumnName="costTL" />
+          <ScalarProperty Name="curency" ColumnName="curency" />
+          <ScalarProperty Name="finishDate" ColumnName="finishDate" />
+          <ScalarProperty Name="balanceDate" ColumnName="balanceDate" />
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="updateuser" ColumnName="updateuser" />
+          <ScalarProperty Name="reconfirmed" ColumnName="reconfirmed" />
+          <ScalarProperty Name="vocher" ColumnName="vocher" />
+          <ScalarProperty Name="sendmail" ColumnName="sendmail" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="agencystaff" ColumnName="agencystaff" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+          <ScalarProperty Name="checkindate" ColumnName="checkindate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payments">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.Payments)">
+        <MappingFragment StoreEntitySet="Payments">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="Member" ColumnName="Member" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uyeler">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.uyeler)">
+        <MappingFragment StoreEntitySet="uyeler">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="onay" ColumnName="onay" />
+          <ScalarProperty Name="gecici_kredi" ColumnName="gecici_kredi" />
+          <ScalarProperty Name="subagent" ColumnName="subagent" />
+          <ScalarProperty Name="kulladi" ColumnName="kulladi" />
+          <ScalarProperty Name="sifre" ColumnName="sifre" />
+          <ScalarProperty Name="market" ColumnName="market" />
+          <ScalarProperty Name="ulke" ColumnName="ulke" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="indirim" ColumnName="indirim" />
+          <ScalarProperty Name="kredi" ColumnName="kredi" />
+          <ScalarProperty Name="komisyon" ColumnName="komisyon" />
+          <ScalarProperty Name="adi" ColumnName="adi" />
+          <ScalarProperty Name="agent_type" ColumnName="agent_type" />
+          <ScalarProperty Name="soyadi" ColumnName="soyadi" />
+          <ScalarProperty Name="acente_code" ColumnName="acente_code" />
+          <ScalarProperty Name="firma" ColumnName="firma" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="tel" ColumnName="tel" />
+          <ScalarProperty Name="sehir" ColumnName="sehir" />
+          <ScalarProperty Name="uyelik_tarihi" ColumnName="uyelik_tarihi" />
+          <ScalarProperty Name="son_giris_tarihi" ColumnName="son_giris_tarihi" />
+          <ScalarProperty Name="giris_sayisi" ColumnName="giris_sayisi" />
+          <ScalarProperty Name="uye_ip" ColumnName="uye_ip" />
+          <ScalarProperty Name="cevap" ColumnName="cevap" />
+          <ScalarProperty Name="sifresoru" ColumnName="sifresoru" />
+          <ScalarProperty Name="adres" ColumnName="adres" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="cperson" ColumnName="cperson" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="czipcode" ColumnName="czipcode" />
+          <ScalarProperty Name="iata" ColumnName="iata" />
+          <ScalarProperty Name="iperson" ColumnName="iperson" />
+          <ScalarProperty Name="iemail" ColumnName="iemail" />
+          <ScalarProperty Name="iadres" ColumnName="iadres" />
+          <ScalarProperty Name="isehir" ColumnName="isehir" />
+          <ScalarProperty Name="izipcode" ColumnName="izipcode" />
+          <ScalarProperty Name="iulke" ColumnName="iulke" />
+          <ScalarProperty Name="itel" ColumnName="itel" />
+          <ScalarProperty Name="ifax" ColumnName="ifax" />
+          <ScalarProperty Name="logo" ColumnName="logo" />
+          <ScalarProperty Name="ceptel" ColumnName="ceptel" />
+          <ScalarProperty Name="iceptel" ColumnName="iceptel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="old">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.old)">
+        <MappingFragment StoreEntitySet="old">
+          <ScalarProperty Name="res_id" ColumnName="res_id" />
+          <ScalarProperty Name="reconfirm" ColumnName="reconfirm" />
+          <ScalarProperty Name="confirm" ColumnName="confirm" />
+          <ScalarProperty Name="cancel" ColumnName="cancel" />
+          <ScalarProperty Name="onay" ColumnName="onay" />
+          <ScalarProperty Name="degisiklik" ColumnName="degisiklik" />
+          <ScalarProperty Name="payment" ColumnName="payment" />
+          <ScalarProperty Name="otel" ColumnName="otel" />
+          <ScalarProperty Name="partlyconfirm" ColumnName="partlyconfirm" />
+          <ScalarProperty Name="tamamdir" ColumnName="tamamdir" />
+          <ScalarProperty Name="belge" ColumnName="belge" />
+          <ScalarProperty Name="iptal_belge" ColumnName="iptal_belge" />
+          <ScalarProperty Name="degisiklik_belge" ColumnName="degisiklik_belge" />
+          <ScalarProperty Name="kasahareketi" ColumnName="kasahareketi" />
+          <ScalarProperty Name="silinecek" ColumnName="silinecek" />
+          <ScalarProperty Name="online" ColumnName="online" />
+          <ScalarProperty Name="onlineiptal" ColumnName="onlineiptal" />
+          <ScalarProperty Name="SENDPDF" ColumnName="SENDPDF" />
+          <ScalarProperty Name="market" ColumnName="market" />
+          <ScalarProperty Name="Hoteladi" ColumnName="Hoteladi" />
+          <ScalarProperty Name="Hotelkod" ColumnName="Hotelkod" />
+          <ScalarProperty Name="emailsay" ColumnName="emailsay" />
+          <ScalarProperty Name="belgesay" ColumnName="belgesay" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="aciklama" ColumnName="aciklama" />
+          <ScalarProperty Name="dosyano" ColumnName="dosyano" />
+          <ScalarProperty Name="Rezervlist" ColumnName="Rezervlist" />
+          <ScalarProperty Name="Rezervkod" ColumnName="Rezervkod" />
+          <ScalarProperty Name="Rezervkodmu" ColumnName="Rezervkodmu" />
+          <ScalarProperty Name="Checkindate" ColumnName="Checkindate" />
+          <ScalarProperty Name="Checkoutdate" ColumnName="Checkoutdate" />
+          <ScalarProperty Name="Totalnights" ColumnName="Totalnights" />
+          <ScalarProperty Name="Board" ColumnName="Board" />
+          <ScalarProperty Name="OdaTipi" ColumnName="OdaTipi" />
+          <ScalarProperty Name="Sngfiyat" ColumnName="Sngfiyat" />
+          <ScalarProperty Name="Sngoda" ColumnName="Sngoda" />
+          <ScalarProperty Name="Sngmaliyet" ColumnName="Sngmaliyet" />
+          <ScalarProperty Name="Sngtotal" ColumnName="Sngtotal" />
+          <ScalarProperty Name="Doublefiyat" ColumnName="Doublefiyat" />
+          <ScalarProperty Name="Doubleoda" ColumnName="Doubleoda" />
+          <ScalarProperty Name="Doublemaliyet" ColumnName="Doublemaliyet" />
+          <ScalarProperty Name="Doubletotal" ColumnName="Doubletotal" />
+          <ScalarProperty Name="Exbedfiyat" ColumnName="Exbedfiyat" />
+          <ScalarProperty Name="Exbedadet" ColumnName="Exbedadet" />
+          <ScalarProperty Name="Exbedtotal" ColumnName="Exbedtotal" />
+          <ScalarProperty Name="Chdfreeadet" ColumnName="Chdfreeadet" />
+          <ScalarProperty Name="Chd50fiyat" ColumnName="Chd50fiyat" />
+          <ScalarProperty Name="Chd50adet" ColumnName="Chd50adet" />
+          <ScalarProperty Name="Chd50total" ColumnName="Chd50total" />
+          <ScalarProperty Name="Rezervtotal" ColumnName="Rezervtotal" />
+          <ScalarProperty Name="hotelmaliyet" ColumnName="hotelmaliyet" />
+          <ScalarProperty Name="hoteltotal" ColumnName="hoteltotal" />
+          <ScalarProperty Name="maliyettotal" ColumnName="maliyettotal" />
+          <ScalarProperty Name="Grandtotal" ColumnName="Grandtotal" />
+          <ScalarProperty Name="Komisyontotal" ColumnName="Komisyontotal" />
+          <ScalarProperty Name="netpayment" ColumnName="netpayment" />
+          <ScalarProperty Name="Info" ColumnName="Info" />
+          <ScalarProperty Name="Turadi" ColumnName="Turadi" />
+          <ScalarProperty Name="Turpaxcins" ColumnName="Turpaxcins" />
+          <ScalarProperty Name="Turprice" ColumnName="Turprice" />
+          <ScalarProperty Name="Turadet" ColumnName="Turadet" />
+          <ScalarProperty Name="Turtotal" ColumnName="Turtotal" />
+          <ScalarProperty Name="Turmaliyet" ColumnName="Turmaliyet" />
+          <ScalarProperty Name="fullturtotal" ColumnName="fullturtotal" />
+          <ScalarProperty Name="Turtarih" ColumnName="Turtarih" />
+          <ScalarProperty Name="TurRegion" ColumnName="TurRegion" />
+          <ScalarProperty Name="Transferadi" ColumnName="Transferadi" />
+          <ScalarProperty Name="Transferpaxcins" ColumnName="Transferpaxcins" />
+          <ScalarProperty Name="Transferadet" ColumnName="Transferadet" />
+          <ScalarProperty Name="Transferprice" ColumnName="Transferprice" />
+          <ScalarProperty Name="Transfermaliyet" ColumnName="Transfermaliyet" />
+          <ScalarProperty Name="Transfertotal" ColumnName="Transfertotal" />
+          <ScalarProperty Name="fulltransfertotal" ColumnName="fulltransfertotal" />
+          <ScalarProperty Name="Transfertarih" ColumnName="Transfertarih" />
+          <ScalarProperty Name="TransferRegion" ColumnName="TransferRegion" />
+          <ScalarProperty Name="Transferflightno" ColumnName="Transferflightno" />
+          <ScalarProperty Name="Transferflighttime" ColumnName="Transferflighttime" />
+          <ScalarProperty Name="komisyon" ColumnName="komisyon" />
+          <ScalarProperty Name="kulladi" ColumnName="kulladi" />
+          <ScalarProperty Name="otel_bilgi" ColumnName="otel_bilgi" />
+          <ScalarProperty Name="notlar" ColumnName="notlar" />
+          <ScalarProperty Name="otel_tarih" ColumnName="otel_tarih" />
+          <ScalarProperty Name="yedek" ColumnName="yedek" />
+          <ScalarProperty Name="rezervdurum" ColumnName="rezervdurum" />
+          <ScalarProperty Name="yedeksayi" ColumnName="yedeksayi" />
+          <ScalarProperty Name="odeme" ColumnName="odeme" />
+          <ScalarProperty Name="birim" ColumnName="birim" />
+          <ScalarProperty Name="mudahale" ColumnName="mudahale" />
+          <ScalarProperty Name="mudahale_tarih" ColumnName="mudahale_tarih" />
+          <ScalarProperty Name="bizimkiler" ColumnName="bizimkiler" />
+          <ScalarProperty Name="tarih" ColumnName="tarih" />
+          <ScalarProperty Name="ilktarih" ColumnName="ilktarih" />
+          <ScalarProperty Name="Rezervkodu" ColumnName="Rezervkodu" />
+          <ScalarProperty Name="iptal_tarih" ColumnName="iptal_tarih" />
+          <ScalarProperty Name="degisiklikfark" ColumnName="degisiklikfark" />
+          <ScalarProperty Name="kasa" ColumnName="kasa" />
+          <ScalarProperty Name="provider" ColumnName="provider" />
+          <ScalarProperty Name="onlineFilename" ColumnName="onlineFilename" />
+          <ScalarProperty Name="onlineiptaltarih" ColumnName="onlineiptaltarih" />
+          <ScalarProperty Name="cancelationtext" ColumnName="cancelationtext" />
+          <ScalarProperty Name="Triplefiyat" ColumnName="Triplefiyat" />
+          <ScalarProperty Name="Tripleadet" ColumnName="Tripleadet" />
+          <ScalarProperty Name="Tripletotal" ColumnName="Tripletotal" />
+          <ScalarProperty Name="SENDMAIL" ColumnName="SENDMAIL" />
+          <ScalarProperty Name="PDFFILE" ColumnName="PDFFILE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tahsilat">
+      <EntityTypeMapping TypeName="IsTypeOf(ReservationsModel.tahsilat)">
+        <MappingFragment StoreEntitySet="tahsilat">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="kulladi" ColumnName="kulladi" />
+          <ScalarProperty Name="tarih" ColumnName="tarih" />
+          <ScalarProperty Name="toplam" ColumnName="toplam" />
+          <ScalarProperty Name="staff" ColumnName="staff" />
+          <ScalarProperty Name="odeme_tipi" ColumnName="odeme_tipi" />
+          <ScalarProperty Name="orderid" ColumnName="orderid" />
+          <ScalarProperty Name="odeme_detay" ColumnName="odeme_detay" />
+          <ScalarProperty Name="odeme_tarihi" ColumnName="odeme_tarihi" />
+          <ScalarProperty Name="ilgilidosya" ColumnName="ilgilidosya" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

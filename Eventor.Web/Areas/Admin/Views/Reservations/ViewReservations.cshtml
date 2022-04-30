@@ -1,0 +1,384 @@
+﻿@model Line.Data.Reservations
+@{
+    ViewBag.Title = "Edit Reservations";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutReservation.cshtml";
+
+    <style>
+        @@media print {
+
+            *{
+                font-size:8px;
+            }
+
+            .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+                border-top: 1px solid #e7eaec;
+                line-height: 1.1857;
+                padding: 2px;
+                vertical-align: top;
+            }
+            table {
+                margin-bottom: 5px;
+            }
+            .panel-heading {
+                padding: 5px 5px;
+            }
+            .panel{
+                border:none;
+            }
+        }
+
+
+    </style>
+}
+@{
+    var viewclass = "";
+    switch (Model.status)
+    {
+        case "Request":
+            viewclass = "btn-warning";
+            break;
+        case "Confirmed":
+            viewclass = "btn-info";
+            break;
+        case "ReConfirmed":
+            viewclass = "btn-success";
+            break;
+        case "Canceled":
+            viewclass = "btn-danger";
+            break;
+        case "Completed":
+            viewclass = "btn-primary";
+            break;
+        default:
+            viewclass = "btn-warning";
+            break;
+    }
+}
+<!-- Top Navbar -->
+@Html.Partial("_TopReservationbar", Model.ID)
+
+<div class="row white-bg p-xs">
+    <div class="col-lg-2 hidden-print col-xs-3 ">
+        <b>@T("status")</b>
+        <h4>
+            <a href="#" class="btn btn-xs @viewclass">@T(Model.status)</a>
+        </h4>
+    </div>
+    <div class="col-lg-2 col-md-2 col-xs-3">
+        <b>@T("Reservation Owner")</b>
+        <h4> @Model.Visitor.FirstName @Model.Visitor.LastName </h4>
+    </div>
+    <div class="col-lg-2 col-md-3 col-xs-2">
+        <b>@T("File Date")</b>
+        <h4>@Model.date.Value.ToShortDateString()</h4>
+    </div>
+    <div class="col-lg-2 col-md-3 col-xs-2">
+        <b>@T("File Id")</b>
+        <h4># @Model.ID </h4>
+    </div>
+    <div class="col-lg-4 col-md-3 col-xs-5">
+        <b>@T("Agency name")</b>
+        <h4>@Model.Agency.AgencyName</h4>
+    </div>
+
+</div>
+<br />
+<div class="row" style="font-size: 13px">
+    <div class="col-md-8 ">
+        <div class="panel panel-primary">
+            <div class="panel-heading hidden-print">
+                <span class="panel-title h3">
+                    <span class="glyphicon glyphicon-info-sign"></span>  @T("reservation.Details")
+                </span>
+            </div>
+            <div class="panel-body">
+                <div class="visible-print">
+
+                    @{
+                        var profit = (Model.price - Model.cost).Value;
+                    }
+                    <table style="font-size: 12px;" class="active  table table-striped table-hover table-bordered table-condensed panel-heading panel-info">
+                        <tr>
+                            <th width="25%" class="text-center">Total</th>
+                            <th width="25%" class="text-center">Cost</th>
+                            <th width="25%" class="text-center">Profit</th>
+                            <th width="25%" class="text-center">Profit Rate</th>
+                        </tr>
+                        <tr>
+                            <td width="" class="text-center">@Model.price.ToString(true)</td>
+                            <td width="" class="text-center">@Model.cost.Value.ToString(true)</td>
+                            <td width="" class="text-center">@profit.ToString(true)</td>
+                            @if (profit == 0)
+                            {
+                                <td class="text-center"><b>@((0).ToString("0.00")) % </b></td>
+                            }
+                            else
+                            {
+                                if (Model.cost.HasValue && Model.cost.Value > 0)
+                                {
+                                    <td class="text-center"><b>@(((profit / Model.cost).Value * 100).ToString("0.00")) % </b></td>
+                                }
+                                else
+                                {
+                                    <td class="text-center"><b>@((0).ToString("0.00")) % </b></td>
+                                }
+                            }
+                        </tr>
+                    </table>
+                </div>
+
+
+
+                <div id="ContentPlaceHolder1_hotels">
+
+                    @if (Model.Rhotel.Count > 0)
+                    {
+                        <table style="font-size: 12px" class=" active table-bordered  table-striped table table-hover table-condensed panel-heading panel-info">
+                            <tbody>
+                                <tr class="">
+                                    <th>Hotels</th>
+                                    <th class="text-center" width="80">Checkin </th>
+                                    <th class="text-center" width="80">Checkout </th>
+                                    <th width="60">Rate</th>
+                                    <th width="90">Total Price</th>
+                                    <th width="90">Total Cost</th>
+                                </tr>
+                                @foreach (var item in Model.Rhotel)
+                                {
+                                    foreach (var room in item.RHRoom)
+                                    {
+                                        var nights = ((room.checkout.Value - room.checkin.Value).Days);
+                                        <tr>
+                                            <td>
+                                                <b>
+                                                    @room.Rhotel.name
+                                                    @if (item.IsCash)
+                                                    {
+                                                        <b> [Cash : @(item.CashDate.HasValue ? item.CashDate.Value.ToShortDateString() : "?") ]</b>
+                                                    }
+                                                </b> <br />@room.count x @room.type (@room.name) - @room.board  ( @nights Nights )
+                                                <br />@room.guset 
+                                            </td>
+                                        <td class="text-center">@room.checkin.Value.ToShortDateString()</td>
+                                        <td class="text-center">  @room.checkout.Value.ToShortDateString()</td>
+                                        <td class="text-center">@room.price.ToString(true)</td>
+                                        <td class="text-center">@((room.price * room.count * @nights).ToString(true))  </td>
+                                        <td class="text-center">@((room.cost * room.count * @nights).ToString(true))</td>
+                                    </tr>
+                                }
+                            }
+
+                            </tbody>
+                        </table>
+                    }
+                    @if (Model.Tour.Count > 0)
+                    {
+                        <table style="font-size: 12px" class=" active table-bordered  table-striped table table-hover table-condensed panel-heading panel-info">
+                            <tbody>
+                                <tr class="">
+                                    <th>Tours</th>
+                                    <th class="text-center" width="80">Checkin </th>
+                                    <th class="text-center" width="80">pax </th>
+                                    <th width="60">Rate</th>
+                                    <th width="90">Total Price</th>
+                                    <th width="90">Total Cost</th>
+                                </tr>
+                                @foreach (var item in Model.Tour)
+                                {
+                                    <tr>
+                                        <td> <b>@item.name</b> @*<br />@item.pickup  -  @item.dropoff*@ </td>
+                                        <td class="text-center">@item.date.ToShortDateString()</td>
+                                        <td class="text-center">  @item.Pax</td>
+                                        <td class="text-center">@item.Total.ToString(true)</td>
+                                        <td class="text-center">@((item.Total * item.Pax).ToString(true))  </td>
+                                        <td class="text-center">@((item.Cost * item.Pax).ToString(true))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                    @if (Model.Transfers.Count > 0)
+                    {
+                        <table style="font-size: 12px" class=" active table-bordered  table-striped table table-hover table-condensed panel-heading panel-info">
+                            <tbody>
+                                <tr class="">
+                                    <th>Transfers</th>
+                                    <th class="text-center" width="80">Checkin </th>
+                                    <th class="text-center" width="80">pax </th>
+                                    <th width="60">Rate</th>
+                                    <th width="90">Total Price</th>
+                                    <th width="90">Total Cost</th>
+                                </tr>
+                                @foreach (var item in Model.Transfers)
+                                {
+                                    <tr>
+                                        <td> <b>@item.city - @item.pickup</b> <br /> @item.dropoff</td>
+                                        <td class="text-center">@item.date.ToShortDateString()</td>
+                                        <td class="text-center">  @item.pax</td>
+                                        <td class="text-center">@item.Total.ToString(true)</td>
+                                        <td class="text-center">@((item.Total).ToString(true))  </td>
+                                        <td class="text-center">@((item.Cost).ToString(true))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                    @if (Model.ExtraService.Count > 0)
+                    {
+                        <table style="font-size: 12px" class=" active table-bordered  table-striped table table-hover table-condensed panel-heading panel-info">
+                            <tbody>
+                                <tr class="">
+                                    <th>Package / Extra Services</th>
+                                    <th class="text-center" width="80">Checkin </th>
+                                    <th class="text-center" width="80">Checkout </th>
+                                    <th width="60">Rate</th>
+                                    <th width="90">Total Price</th>
+                                    <th width="90">Total Cost</th>
+                                </tr>
+                                @foreach (var item in Model.ExtraService)
+                                {
+
+                                    <tr>
+                                        <td> <b>@item.name </b></td>
+                                        <td class="text-center">@item.date.ToShortDateString()</td>
+                                        <td class="text-center">@item.date.ToShortDateString()</td>
+                                        <td class="text-center">@item.Total.ToString(true)</td>
+                                        <td class="text-center">@((item.Total * item.Pax).Value.ToString(true))  </td>
+                                        <td class="text-center">@((item.Cost * item.Pax).Value.ToString(true))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="panel-title h3">
+                    <span class="glyphicon glyphicon-folder-open"></span>  Payments
+                </span>
+            </div>
+            <div class="panel-body">
+                <div id="ContentPlaceHolder1_invoices">
+
+                    <div id="ContentPlaceHolder1_Payments" class="">
+                        <table style="font-size: 12px" class="table table-bordered table-condensed table-striped ">
+                            <tbody>
+                                <tr>
+                                    <th class=" " style="width:80px;font-weight: bolder">No</th>
+                                    <th class=" " style="width:80px;font-weight: bolder">date</th>
+                                    <th class=" " style="font-weight: bolder">description</th>
+                                    <th class=" " style="width:120px;font-weight: bolder">Total</th>
+                                    <th class=" text-right " style="width:120px;font-weight: bolder">Total price</th>
+                                </tr>
+                                @foreach (var item in Model.Payments)
+                                {
+                                    <tr>
+                                        <th style="font-weight: bolder">@Model.ID/@item.ID</th>
+                                        <th style="font-weight: bolder">@item.date.ToShortDateString()</th>
+                                        <th style="font-weight: bolder">@item.type @item.note</th>
+                                        <th class="bg-success" style="font-weight: bolder">@item.TotalPrice .-TL (@item.Currency)</th>
+                                        <th class="  text-right " style="font-weight: bolder">@item.Payment.ToString(true)</th>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="success  text-right">@Model.Payments.Sum(d => d.Payment).ToString(true)</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    <div class="col-md-4 hidden-print">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    @T("OverView")
+                </h3>
+            </div>
+            <div class="panel-body">
+
+                <table class="table table-striped table-total">
+                    <tr class="warning">
+                        <td>@T("Service")</td>
+                        <td>@T("Price")</td>
+                        <td>@T("Cost")</td>
+                    </tr>
+                    <tr class="hidden-print">
+                        <td>@T("hotel")</td>
+                        <td>@Model.Rhotel.Sum(d => d.Total).ToString(true) </td>
+                        <td>@Model.Rhotel.Sum(d => d.Cost).ToString(true) </td>
+                    </tr>
+                    <tr class="hidden-print">
+                        <td>@T("Tours")</td>
+                        <td>@Model.Tour.Sum(d => d.Total * d.Pax).ToString(true) </td>
+                        <td>@Model.Tour.Sum(d => d.Cost * d.Pax).ToString(true) </td>
+                    </tr>
+                    <tr class="hidden-print">
+                        <td>@T("Flights")</td>
+                        <td>@Model.Flight.Sum(d => d.Total * d.Pax).Value.ToString(true) </td>
+                        <td>@Model.Flight.Sum(d => d.Cost * d.Pax).Value.ToString(true) </td>
+                    </tr>
+                    <tr class="hidden-print">
+                        <td>@T("Packages")</td>
+                        <td>@Model.ExtraService.Sum(d => d.Total * d.Pax).Value.ToString(true) </td>
+                        <td>@Model.ExtraService.Sum(d => d.Cost * d.Pax).Value.ToString(true) </td>
+                    </tr>
+                    <tr class="hidden-print">
+                        <td>@T("Transfers")</td>
+                        <td>@Model.Transfers.Sum(d => d.Total).ToString(true) </td>
+                        <td>@Model.Transfers.Sum(d => d.Cost).ToString(true) </td>
+                    </tr>
+                    <tr class="success">
+                        <td>@T("Total")</td>
+                        <td><b>@Model.price.ToString(true) </b></td>
+                        <td><b>@Model.cost.Value.ToString(true) </b></td>
+                    </tr>
+
+
+                    <tr class="danger">
+                        <td>@T("profit")</td>
+                        <td><b>@((Model.price - Model.cost).Value.ToString(true)) </b></td>
+                        @if (Model.cost.HasValue && Model.cost.Value > 0)
+                        {
+                            <td><b>@(((profit / Model.cost).Value * 100 ).ToString("0.00")) % </b></td>
+                        }
+                        else
+                        {
+                            <td><b>@((0).ToString("0.00")) % </b></td>
+                        }
+                    </tr>
+
+
+                </table>
+                <hr>
+
+                <div class=" text-capitalize text-center hidden-print" style="font-size: larger">
+                    <span id="ContentPlaceHolder1_invoice">
+                        <a class="btn btn-xs btn-primary" href="@Url.Action("OpenInvoice",new {Id= Model.ID })" target="_blank">
+                            [ @T("Invoice") ]
+                        </a>
+                        <a class="btn btn-xs btn-primary" href="@Url.Action("OpenVocher",new {Id= Model.ID })" target="_blank"> [ @T("Voucher") ]</a>
+                        <a class="btn btn-xs btn-primary" href="@Url.Action("OpenReservations",new { Id= Model.ID})"> [ @T("Edit") ]</a><br>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

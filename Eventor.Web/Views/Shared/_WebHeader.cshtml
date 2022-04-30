@@ -1,0 +1,129 @@
+﻿@using Autofac;
+@using Line.Models;
+@using Line.Data;
+@{
+    var _workcontext = DependencyManager.Scope.Resolve<Line.Services.IWorkContext>();
+}
+<!-- TOP BAR -->
+<div class="top">
+
+    <div class="container">
+
+        <div class="top__tagline"> @Html.Action("LanguageSelector", "Common")</div>
+
+        <nav class="top__menu">
+            <ul class="top-navigation js-dropdown">
+                @if (_workcontext.CurrentVisitor.IsInCustomerRole(SystemVisitorTypeNames.Members))
+                {
+                    <li>
+                        @Html.ActionLink(T("controlpanal").ToString(), "dashboard", "shipments", new { area = "admin" }, null)
+                    </li>
+                    <li>
+                        <a href="~/Account/logout">@T("Logoff")  </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="~/Account/login"  target="_blank">@T("home.login")</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+    </div><!-- /.container -->
+
+</div>
+<!-- /.top -->
+<!-- HEADER -->
+<div class="header__container">
+
+    <div class="container">
+
+        <header class="header">
+
+            <div class="header__logo">
+                <a href="/">
+                    <img class="img-responsive" width="100" srcset="/images/home/logo-2.png" alt="Smartship" src="@T("logo.url")">
+                </a>
+                <button data-target="#cargopress-navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                  
+                    <span class="navbar-toggle__icon-bar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </span>
+                </button>
+            </div><!-- /.header__logo -->
+
+            <div class="header__navigation">
+                <nav class="collapse navbar-collapse" id="cargopress-navbar-collapse">
+                    <ul class="main-navigation js-main-nav js-dropdown">
+                        <li class="current-menu-item ">
+                            <a href="/">@T("Home")</a>
+                        </li>
+                        <li class="current-menu-item ">
+                            <a href="/home/express">@T("Home.express")</a>
+                        </li>
+                        <li class="current-menu-item ">
+                            <a href="/home/doortodoor">@T("Home.doortodoor")</a>
+                        </li>
+                        <li class="current-menu-item ">
+                            <a href="/home/aboutus">@T("Home.aboutUs")</a>
+                        </li>
+                        <li class="current-menu-item ">
+                            <a href="/home/contactus">@T("Home.callus")</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- /.header__navigation -->
+
+            <div class="header__widgets">
+
+                <div class="widget-icon-box">
+
+                    <div class="icon-box">
+                        <i class="fa fa-headphones"></i>
+                        <h4 class="icon-box__title">@T("home.callusanytime")</h4>
+                        <span class="icon-box__subtitle">@T("home.callusanytime.value")</span>
+                    </div>
+
+                </div>
+
+                <div class="widget-icon-box">
+
+                    <div class="icon-box">
+                        <i class="fa fa-clock-o"></i>
+                        <h4 class="icon-box__title">@T("home.opentime")</h4>
+                        <span class="icon-box__subtitle">@T("home.opentime.value")</span>
+                    </div>
+
+                </div>
+
+                <div class="widget-icon-box">
+
+                    <div class="icon-box">
+                        <i class="fa fa-envelope-o"></i>
+                        <h4 class="icon-box__title">@T("home.emailus")</h4>
+                        <span class="icon-box__subtitle">@T("home.emailus.value")</span>
+                    </div>
+
+                </div>
+
+                <a href="/home/track" target="_self" class="btn btn-info" id="button_requestQuote">@T("home.track")</a>
+
+            </div><!-- /.header__widgets -->
+
+            <div class="header__navigation-widgets">
+                <a target="_blank" href="@T("facebook")" class="social-icons__link"><i class="fa fa-facebook"></i></a>
+                <a target="_blank" href="@T("Twitter")" class="social-icons__link"><i class="fa fa-twitter"></i></a>
+                <a target="_blank" href="@T("instagram")" class="social-icons__link"><i class="fa fa-instagram"></i></a>
+            </div>
+
+        </header>
+
+    </div><!-- /.container -->
+
+</div>
+<!-- /.header__container -->

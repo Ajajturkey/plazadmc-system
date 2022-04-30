@@ -1,0 +1,521 @@
+﻿@model List<Line.Data.Reservations>
+@using Line.Models
+
+@{
+    /**/
+
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+    var Names = Model.GroupBy(d => d.ref_member).Select(group => new { Id = group.Key, Name = group.FirstOrDefault().Visitor.FirstName + " " + group.FirstOrDefault().Visitor.LastName });
+
+    var Locked = (List<Line.Data.Reservations>)ViewBag.LockedRes;
+    var totaldash = (Line.Models.DashTotal)ViewBag.dashtotal;
+
+}
+<style>
+    .col-lg-3{
+        width:20%;
+    }
+    p {
+        margin: 0 0 0px;
+        font-size: 12px;
+    }
+
+    .h-name {
+        text-align: left;
+        background: #f3f3f4;
+        padding: 10px;
+        font-weight:800;
+    }
+    hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    .larg-font 
+    {
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .widget a{
+        color:white;
+    }
+</style>
+
+
+<div class="row">
+    <div class=" hidden-sm hidden-xs">
+        <div class="col-lg-3">
+            <div class="widget style1  btn-warning">
+                <a target="_blank" href="@Url.Action("UserFiles",new { query = ReservationStatus.Request, page = 1})">
+                    <div class="row vertical-align">
+                        <div class="col-md-5">
+                            <p class="">Total</p>
+                            <p>Requests</p>
+                        </div>
+                        <div class="col-md-7 text-right">
+                            <h2 class="font-bold">@totaldash.Request</h2>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="widget style1 btn-info">
+                <a target="_blank" href="@Url.Action("UserFiles",new { query = ReservationStatus.Confirmed, page = 1})">
+                    <div class="row vertical-align">
+                        <div class="col-md-5">
+                            <p class="">Total</p>
+                            <p class="">Confirmed</p>
+                        </div>
+                        <div class="col-md-7 text-right">
+                            <h2 class="font-bold">@totaldash.Confirmed</h2>
+                        </div>
+                    </div>
+                    </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="widget style1 btn-success">
+                <a target="_blank" href="@Url.Action("UserFiles",new { query = ReservationStatus.ReConfirmed, page = 1})">
+                    <div class="row vertical-align">
+                        <div class="col-md-5">
+                            <p class="">Total</p>
+                            <p class="">ReConfirmed</p>
+                        </div>
+                        <div class="col-md-7 text-right">
+                            <h2 class="font-bold">@totaldash.Reconfirmed</h2>
+                        </div>
+                    </div>
+                    </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="widget style1 btn-danger">
+                <a target="_blank" href="@Url.Action("UserFiles",new { query = ReservationStatus.Canceled, page = 1})">
+                    <div class="row vertical-align">
+                        <div class="col-md-5">
+                            <p class="">Total</p>
+                            <p class="">Canceled</p>
+                        </div>
+                        <div class="col-md-7 text-right">
+                            <h2 class="font-bold">@totaldash.Canceled</h2>
+                        </div>
+                    </div>
+                    </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="widget style1 btn-primary">
+                <a target="_blank" href="@Url.Action("UserFiles",new { query = "", page = 1})">
+                    <div class="row vertical-align">
+                        <div class="col-md-5">
+                            <p class="">Total</p>
+                            <p class="">Reservation</p>
+                        </div>
+                        <div class="col-md-7 text-right">
+                            <h2 class="font-bold">@totaldash.Total</h2>
+                        </div>
+                    </div>
+                    </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12"><hr /></div>
+    <div class="col-lg-6">
+        <div class="alert alert-info larg-font">
+            @{ var Confs = Model.Where(d => d.status == ReservationStatus.Confirmed.ToString() || d.status == ReservationStatus.ReConfirmed.ToString() || d.status == ReservationStatus.Request.ToString()); }
+            Total Confirmed files (@(Confs.Count())) : @(Confs.Sum(d => d.price).ToString(true))
+        </div>
+        @if (ViewBag.onlyEngin)
+        {
+            <div class="alert alert-success larg-font">
+                Total profits  : @(Confs.Sum(d => d.price - d.cost.Value).ToString(true))
+            </div>
+        }
+    </div>
+        <div class="col-lg-6">
+            <div class="alert alert-danger larg-font">
+                Total Canceled files (@Model.Where(d => d.status == ReservationStatus.Canceled.ToString()).Count()) :  @Model.Where(d => d.status == ReservationStatus.Canceled.ToString()).Sum(d => d.price).ToString(true)
+            </div>
+        </div>
+    </div>
+
+ 
+
+    <div class="animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <p>@T("Reservations.Today")</p>
+                    </div>
+                    <div class="ibox-content">
+
+                        @foreach (var item in Names)
+                        {
+                            <h4 class="h-name"> @item.Name</h4>
+                            <table class="datatabel2 table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>
+                                            @T("Id")
+                                        </th>
+                                        <th>
+                                            @T("Agency")
+                                        </th>
+                                        <th>
+                                            @T("Total")
+                                        </th>
+                                        <th>
+                                            @T("Customer")
+                                        </th>
+                                        <th>
+                                            @T("Country")
+                                        </th>
+                                        <th>
+                                            @T("hotel")
+                                        </th>
+                                        <th>
+                                            @T("transfer")
+                                        </th>
+                                        <th>
+                                            @T("tour")
+                                        </th>
+                                        <th>
+                                            @T("Checkin") -  @T("Checkout")
+                                        </th>
+                                        <th class="table-inputs"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var res in Model.Where(d => d.ref_member == item.Id))
+                                    {
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            @{
+                                                var viewclass = "";
+                                                switch (res.status)
+                                                {
+                                                    case "Request":
+                                                        viewclass = "btn-warning";
+                                                        break;
+                                                    case "Confirmed":
+                                                        viewclass = "btn-info";
+                                                        break;
+                                                    case "ReConfirmed":
+                                                        viewclass = "btn-success";
+                                                        break;
+                                                    case "Canceled":
+                                                        viewclass = "btn-danger";
+                                                        break;
+                                                    case "Completed":
+                                                        viewclass = "btn-primary";
+                                                        break;
+                                                    default:
+                                                        viewclass = "btn-warning";
+                                                        break;
+                                                }
+                                            }
+                                            <a target="_blank" href='@Url.Action("ViewReservations", "Reservations", new { id = res.ID })'><span class="btn btn-sm btn-3d @viewclass">@res.ID</span></a>
+                                        </td>
+                                        <td>
+                                            @res.Agency.AgencyName
+                                        </td>
+                                        <td>
+                                            @res.price.ToString(true)
+                                        </td>
+                                        <td>
+                                            @res.GetCustomers()
+                                        </td>
+                                        <td>
+                                            @res.Agency.Country
+                                        </td>
+                                        <td>
+                                            @res.Rhotel.Sum(d => d.Total).ToString(true)
+                                        </td>
+                                        <td>
+                                            @res.Transfers.Sum(d => d.Total).ToString(true)
+                                        </td>
+                                        <td>
+                                            @res.Tour.Sum(d => d.Total).ToString(true)
+                                        </td>
+                                        <td>
+                                            @res.checkindate.ToString("dd.MM.yyyy") - @res.balanceDate.ToString("dd.MM.yyyy")
+                                        </td>
+                                        <td>
+
+                                            <a target="_blank" href='@Url.Action("OpenVocher", "Reservations", new { id = res.ID })' class="btn btn-info btn-sm">
+                                                <span class="glyphicon glyphicon-print"></span>
+                                            </a>
+                                            <a target="_blank" href='@Url.Action("OpenInvoice", "Reservations", new { id = res.ID })' class="btn btn-success btn-sm">
+                                                <span class="glyphicon glyphicon-file"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+                                            @(Model.Where(d => d.ref_member == item.Id && d.status != ReservationStatus.Canceled.ToString()).Sum(d => d.price).ToString(true))
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+
+                                        </th>
+
+                                        <th>
+
+                                        </th>
+                                        <th class="table-inputs"></th>
+                                    </tr>
+
+                                </tfoot>
+                            </table>
+                        }
+                    </div>
+                </div>
+
+            </div>
+            
+
+            <div class="col-lg-12">
+                @if (Locked != null && Locked.Count> 0)
+                {
+                    var LockedNames = Locked.GroupBy(d => d.ref_member).Select(group => new { Id = group.Key, Name = group.FirstOrDefault().Visitor.FirstName + " " + group.FirstOrDefault().Visitor.LastName });
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <p>@T("Reservations.Locked")</p>
+                        </div>
+                        <div class="ibox-content">
+                            @foreach (var item in LockedNames)
+                            {
+                                <h4> @item.Name</h4>
+                                <table class="datatabel2 table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                @T("Id")
+                                            </th>
+                                            <th>
+                                                @T("Agency")
+                                            </th>
+                                            <th>
+                                                @T("Country")
+                                            </th>
+                                            <th>
+                                                @T("Total")
+                                            </th>
+                                            <th>
+                                                @T("Checkin") -  @T("Checkout")
+                                            </th>
+                                            <th class="table-inputs"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var res in Locked.Where(d => d.ref_member == item.Id))
+                                        {
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <a target="_blank" href='@Url.Action("ViewReservations", "Reservations", new { id = res.ID })'><span class="btn btn-sm btn-3d btn-locked">@res.ID</span></a>
+                                                </td>
+                                                <td>
+                                                    @res.Agency.AgencyName <br />
+                                                    @res.note
+                                                </td>
+                                                <td>
+                                                    @res.Agency.Country
+                                                </td>
+                                                <td>
+                                                    @res.price.ToString(true)
+                                                </td>
+                                                <td>
+                                                    @res.checkindate.ToString("dd.MM.yyyy") - @res.balanceDate.ToString("dd.MM.yyyy")
+                                                </td>
+                                                <td>
+                                                    @if ((bool)ViewBag.Locked)
+                                                    {
+                                                        <a target="_blank" href='@Url.Action("Agency", "Accounting", new { id = res.ref_agency.Value })' class="btn btn-info btn-sm">
+                                                            <span class="glyphicon glyphicon-eur"></span>
+                                                        </a>
+                                                        <a onclick="Unlock(@res.ID)" class="btn btn-locked btn-sm">
+                                                            <span class="glyphicon glyphicon-lock"></span>
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+
+                                </table>
+                            }
+                        </div>
+                    </div>
+                }
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal inmodal" id="UnlockModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeIn">
+                <div class="modal-body">
+                    <div class="row">
+                        <h3 class="text-center">@T("Confirm.Unlock")</h3>
+                        <hr />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">@T("Close")</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-success" id="Unlockbtn">@T("Unlock")</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts {
+
+        @Html.Partial("_ConfirmDelete", "deletedialog")
+
+        <script>
+   function Unlock(id) {
+
+       $('#UnlockModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+            .one('click', '#Unlockbtn', function (e) {
+                $.ajax({
+                    url: "@Url.Action("unlock", "Reservations", new { Area = "Admin" })",
+                    type: "Post",
+                    data: JSON.stringify({ 'id': id }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                              swal('@T("item.Unlocked")')
+                            location.reload();
+                        } else {
+                            alert("Error occurs on the Database level!");
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+            });
+    }
+
+
+        </script>
+
+
+        <script>
+   function deleteEvent(id) {
+
+        $('#deletedialog').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+            .one('click', '#delete', function (e) {
+                $.ajax({
+                    url: "@Url.Action("DeleteUser", "Configuration", new { Area = "Admin" })",
+                    type: "Post",
+                    data: JSON.stringify({ 'id': id }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                              swal('@T("item.removed")')
+                            location.reload();
+                        } else {
+                            alert("Error occurs on the Database level!");
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+            });
+    }
+
+
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#datatabel').DataTable({
+                    "paging": false,
+                    "ordering": false,
+                    "info": false,
+                    "bFilter": false,
+                    responsive: {
+                        details: {
+                            type: 'column',
+                            target: 'tr'
+                        }
+                    },
+                    columnDefs: [{
+                        className: 'control',
+                        orderable: false,
+                        targets: 0
+                    }],
+                    order: [1, 'asc'],
+                });
+
+                $('.datatabel2').DataTable({
+                    "paging": false,
+                    "ordering": false,
+                    "info": false,
+                    "bFilter": false,
+                    responsive: {
+                        details: {
+                            type: 'column',
+                            target: 'tr'
+                        }
+                    },
+                    columnDefs: [{
+                        className: 'control',
+                        orderable: false,
+                        targets: 0
+                    }],
+                    order: [1, 'asc'],
+                });
+            });
+
+        </script>
+
+    }
+

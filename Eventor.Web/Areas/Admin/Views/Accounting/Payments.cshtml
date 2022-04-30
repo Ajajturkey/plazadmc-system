@@ -1,0 +1,316 @@
+﻿@model PagedList.PagedList<Line.Data.Payments>
+@{
+    /**/
+
+    ViewBag.Title = "Payments";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var Filter = (GenerecSearchModel)ViewBag.Filter;
+    int Id = ViewBag.AgencyId != null  ? (int)ViewBag.AgencyId : 0;
+}
+@using Line.Models;
+@using PagedList.Mvc;
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-12">
+        <h2>
+            @T("Advance.Payment.header")
+        </h2>
+    </div>
+    <div class="col-lg-12">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <b></b>
+                </div>
+                <div class="col-lg-4">
+       
+                        <b>@T("agency.name") </b> <br />
+                        @Html.DropDownList("Id", (List<SelectListItem>)ViewBag.Agencies, T("Search.For.Agencies").ToString(), new { @class = "form-control js-data-example-ajax", required = "required" })
+                </div>
+                <div class="col-lg-5" id="sandbox-container">
+                    <div class="input-daterange  input-group">
+                        <b>@T("Checkout.from") </b> <br />
+                        @Html.TextBox("from", Filter.Datefrom.ToShortDateString(), new { @class = "form-control date", autocomplete = "off" })
+                        <span class="input-group-addon" style="background-color:#fff"></span>
+                        <b>@T("Checkout.to") </b> <br />
+                        @Html.TextBox("to", Filter.Dateto.ToShortDateString(), new { @class = "form-control date", autocomplete = "off" })
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <br />
+                    @Html.Hidden("Datefrom", Filter.Datefrom)
+                    @Html.Hidden("DateTo", Filter.Dateto)
+                    <input type="submit" class="btn  btn-info" name="name" value="@("Search")" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @ViewBag.Agency
+                </div>
+                <div class="ibox-content">
+                    <table id="datatabel" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @T("Id")
+                                </th>
+                                <th>
+                                    @T("Date")
+                                </th>
+                                <th>
+                                    @T("Type")
+                                </th>
+                                <th>
+                                    @T("Desc")
+                                </th>
+                          
+                                <th>
+                                    @T("Payments")
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var res in Model)
+                            {
+                            <tr>
+                                <td>
+                                    <a target="_blank" href='@Url.Action("ViewReservations", "Reservations", new { id = res.RID })'><span class="btn btn-xs btn-3d btn-warning">@res.ID</span></a>
+                                </td>
+                                <td>
+                                    @res.date.ToShortDateString()
+                                </td>
+                                <td>
+                                    @res.type
+
+                                </td>
+                                <td>@res.note</td>
+
+                                <td>
+                                    @res.Payment.ToString(true)
+                                </td>
+                                <td>
+                                    @*<a type="button" href='@Url.Action("DeleteAdvance", "Reservations", new { id = res.ID })' class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-file"></span>
+            </a>*@
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                       
+                        <tfoot>
+                            <tr>
+
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+                                <th>
+
+                                </th>
+          
+                                <th>
+
+                                </th>
+                                <th>
+                                    @Model.Sum(d => d.Payment).ToString(true)
+                                </th>
+                                <th class="table-inputs"></th>
+                            </tr>
+
+                        </tfoot>
+                    </table>
+                    <div class="text-center">
+                        @Html.PagedListPager(Model, page => Url.Action("Payments", new { page , Filter.Datefrom, Filter.Dateto, Id}))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="Payment" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            @using (Html.BeginForm("Payment", "accounting", FormMethod.Post, new { Id = Id }))
+            {
+                @Html.Hidden("Id", Id)
+                <div class="modal-header btn-info">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"> <span class="glyphicon glyphicon-send"></span> @T("Insert.AdvancePayment")</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>PaymentsValue: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="number" id="PaymentsValue" class="form-control " min="0" max="" name="PaymentsValue" value="0" />
+                            </div>
+                            <label>Date: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="date" class="form-control date" name="date" value="@DateTime.Today.ToString("dd.MM.yyyy")" />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Type: </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <select id="type" name="type" class="form-control" onchange="Control()">
+                                    <option value="Credit Card">@T("Credit Card")</option>
+                                    <option value="Cash">@T("Cash")</option>
+                                    <option value="Bank Transfer">@T("Bank Transfer")</option>
+                                    <option value="Credit Note">@T("Credit Note")</option>
+                                    <option value="Draft">@T("Refund")</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <label>Note:  </label>
+                    <div class="input-group input-group">
+                        <span class="input-group-addon"></span>
+                        <textarea rows="5" cols="20" id="description" class="form-control " name="description" value=""></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <input type="submit" class="btn btn-info" name="confirm" value="@T("Make.Payment")" />
+                    <input type="button" class="btn btn-danger" name="cancel" data-dismiss="modal" value="@T("Close")" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_ConfirmDelete", "deletedialog")
+@section Styles {
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/select2Styles")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/dateRange")
+    @Scripts.Render("~/plugins/select2")
+
+    <script>
+
+        $('.js-data-example-ajax').select2({
+            minimumInputLength: 3,
+            ajax: {
+                url: '/Admin/Reservations/GetAgencies',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (obj) {
+                            return { id: obj.Value, text: obj.Text };
+                        })
+                    };
+                }
+            }
+        });
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#Datefrom").val($("#from").val());
+            $("#DateTo").val($("#to").val());
+
+            $("#from").change(function () {
+                $("#Datefrom").val($("#from").val());
+            });
+            $("#to").change(function () {
+                $("#DateTo").val($("#to").val());
+            });
+        });
+
+        function togglePayments(Id) {
+            $("#File-" + Id).toggle();
+        }
+
+
+        $('#sandbox-container .input-daterange').datepicker({
+            format: "dd.mm.yyyy",
+            daysOfWeekHighlighted: "0,6"
+        });
+
+
+
+        function Payment(id, total) {
+            $('#Payment').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+        }
+
+
+        //$('#PaymentsValue').on('keydown keyup', function (e) {
+
+        //    if (parseInt($(this).val() )> $("#PaymentsValue").attr("max")
+        //        && e.keyCode !== 46 // keycode for delete
+        //        && e.keyCode !== 8 // keycode for backspace
+        //    ) {
+        //        e.preventDefault();
+        //        $(this).val($("#PaymentsValue").attr("max"));
+        //    }
+        //});
+
+
+
+
+        function removepayment(id) {
+
+        $('#deletedialog').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+            .one('click', '#delete', function (e) {
+                $.ajax({
+                    url: "@Url.Action("DeleteAdvancePayment", "Accounting", new { Area = "Admin" })",
+                    type: "Post",
+                    data: JSON.stringify({ 'id': id }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                              swal('@T("item.removed")')
+                            location.reload();
+                        } else {
+                            alert("Error occurs on the Database level!");
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+            });
+    }
+    </script>
+
+}
+
+
+

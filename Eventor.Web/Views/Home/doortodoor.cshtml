@@ -1,0 +1,127 @@
+﻿@model Line.Models.DoorModel
+@{
+    ViewBag.Title = T("express").ToString();
+}
+<!-- MAIN TITLE -->
+<div class="main-title">
+    <div class="container">
+        <h1 class="main-title__primary">@T("Door")</h1>
+        <h3 class="main-title__secondary">@T("Door.subtitle")</h3>
+    </div>
+</div><!-- /.main-title -->
+<!-- BREADCRUMBS -->
+<div class="breadcrumbs margin-bottom-0">
+    <div class="container">
+        <span>
+            <a class="home" href="/" title="Go to Homepage." rel="v:url">@T("home")</a>
+        </span>
+        <span>
+            <span>@T("Door")</span>
+        </span>
+    </div>
+</div><!-- /.breadcrumbs -->
+
+<div class="container">
+
+    <div class="row margin-top-15 margin-bottom-30">
+
+        <div class="col-sm-6">
+            <p>@T("Door.desc1")</p>
+            <p>@T("Door.desc2")</p>
+            <p>@T("Door.desc3")</p>
+            <h3>@T("express.calculate")</h3>
+            <form id="myform" class="validateDontSubmit">
+                <div style="display:none"><input type="text" name="maximus" value=""></div>
+
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            @Html.DropDownListFor(d => d.Country, (List<SelectListItem>)ViewBag.countries, new { })
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <input id="@Html.IdFor(d=> d.wieght)" type="text" placeholder="@T("express.weight")" aria-invalid="false" aria-required="true" size="40" value="0" required>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <input type="button" class="btn btn-primary" onclick="
+        getprice();" value="@T("express.calculate")">
+                        <input type="submit" hidden />
+                        <img class="ajax-loader" id="loader" src="images/ajax-loader.gif" alt="Sending ..." style="display: none;">
+                    </div>
+                </div>
+                <div class="success" id="result" style="display:none"><span id="resulttext"></span> </div>
+                <div class="response error">@T("express.fail")</div>
+            </form>
+
+
+
+
+        </div><!-- /.col -->
+
+        <div class="col-sm-6">
+
+            <p>
+                <a href="/images/home/dtd848x480.png">
+                    <img alt="placeholder" src="/images/home/dtd848x480.png" class="alignnone">
+                </a>
+            </p>
+            <p>
+                <a href="/images/home/dtd2.png">
+                    <img alt="placeholder" src="/images/home/dtd2.png" class="alignnone">
+                </a>
+            </p>
+
+        </div><!-- /.col -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<script>
+
+    function getprice() {
+
+        var x = $('#myform')[0];
+
+        if (x.checkValidity()) {
+               var kg = $("#@Html.IdFor(d => d.wieght)").val();
+               var country = $("#@Html.IdFor(d => d.Country)").val();
+                $.ajax({
+                    url: "@Url.Action("DoorToDoor", "Home")",
+                    type: "Post",
+                    data: JSON.stringify({
+                        'x': kg,
+                        'country': country,
+                    }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.success == true) {
+                            $("#resulttext").text(data.responseText + " USD")
+                            $("#result").show();
+                        } else {
+                            $("#resulttext").text("@T("check.error")")
+                            $("#result").show();
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
+                    }
+                });
+        }
+        else {
+            $('#myform').find(':submit').click();
+        }
+    };
+</script>

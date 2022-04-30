@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Line.Models.AccountingReport>
+@{
+    ViewBag.Title = "DebtsCounbtries";
+
+
+    var value = Request.QueryString["name"] == null ? "" : Request.QueryString["name"];
+
+    //var Countires = Model.Select(d => d.Country).Distinct();
+    //var List = new SelectList(Countires, value);
+
+    var DropList = (List<SelectListItem>)ViewBag.Countries;
+
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox  hidden-print">
+                <div class="ibox-content row">
+                    <div class="col-lg-6">
+                        @if (string.IsNullOrEmpty(value))
+                        {
+                            <label>@T("Select.Country")</label>
+                            @Html.DropDownList("List", DropList, "Filter Countries", new { @class = "form-control", onchange = "recall($(this).val())" })
+                        }
+                        else
+                        {
+                            @Html.DropDownList("List", DropList, "Filter Countries", new { @class = "form-control", onchange = "recall($(this).val())" })
+                        }
+                    </div>
+                    <div class="col-lg-6">
+                        <label>@T("Download Attachments")</label> <br />
+                        <a class="btn btn-success" target="_blank" href="@Url.Action("DownloadExcel")"><i class="fa fa-file-excel-o"></i> @T("Excel")</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox row ">
+                <div class="ibox-title">
+                    <h5>@T("Country.Report")</h5>
+                </div>
+                <div class="ibox-content ">
+                    <div class="">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>@T("Agency Name")</th>
+                                    <th>@T("Country")</th>
+                                    <th>@T("balance")</th>
+                                    <th>@T("balance.before")</th>
+                                    <th>@T("balance.current")</th>
+                                    <th>@T("balance.late30")</th>
+                                    <th>@T("balance.late60")</th>
+                                    <th>@T("balance.late90")</th>
+                                    <th>@T("balance.late120")</th>
+                                    <th>@T("balance.Future")</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr class="alert-danger">
+                                    <td> @T("Total")</td>
+                                    <td></td>
+                                    <td>@Model.Sum(d => d.Balance).ToString(true)</td>
+                                    <td>@Model.Sum(d => d.LastBalance).ToString(true)</td>
+                                    <td>@Model.Sum(d => d.CurrentBalance).ToString(true)</td>
+                                    <td>@Model.Sum(d => d.LateBalance30).ToString(true)</td>
+                                    <td>@Model.Sum(d => d.LateBalance60).ToString(true)</td>
+                                    <td>@Model.Sum(d => d.LateBalance90).ToString(true)</td>
+                                    <td>@Model.Sum(d => d.LateBalance120).ToString(true)</td>
+                                    <td>@Model.Sum(d => d.Future).ToString(true)</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OrderByDescending(d => d.Balance))
+                                {
+                                    <tr>
+                                        <td>
+                                           @item.AgencyName <br />
+                                            @{ var country = DropList.FirstOrDefault(d => d.Value == item.Country); }
+                                       
+                                    </td>
+                                        <td>
+                                            <b>@(country != null ? country.Text : item.Country)</b>
+                                        </td>
+                                    <td>
+                                        @item.Balance.ToString(true)
+                                    </td>
+                                    <td>@item.LastBalance.ToString(true)</td>
+                                    <td>@item.CurrentBalance.ToString(true)</td>
+                                    <td>@item.LateBalance30.ToString(true)</td>
+                                    <td>@item.LateBalance60.ToString(true)</td>
+                                    <td>@item.LateBalance90.ToString(true)</td>
+                                    <td>@item.LateBalance120.ToString(true)</td>
+                                    <td>@item.Future.ToString(true)</td>
+                                </tr>
+                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        function recall(a) {
+            window.location = "/Admin/Accounting/Report?name=" + a;
+
+        }
+    </script>
+}
+

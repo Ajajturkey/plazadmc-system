@@ -1,0 +1,305 @@
+﻿@model Line.Models.SettingViewModel
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>
+            @T("Settings.header")
+        </h2>
+    </div>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(d=> d.Id)
+    <div class="wrapper wrapper-content">
+        <div class="row">
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="email-tab" data-toggle="tab" href="#email" role="tab" aria-controls="home"
+                       aria-selected="true">@T("email.settings")</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="logo-tab" data-toggle="tab" href="#logo" role="tab" aria-controls="logo"
+                       aria-selected="false">@T("logo.settings")</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="Hotels-tab" data-toggle="tab" href="#Hotels" role="tab" aria-controls="Hotels"
+                       aria-selected="false">@T("Hotels.settings")</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="bank"
+                       aria-selected="false">@T("bank.settings")</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade" id="email" role="tabpanel" aria-labelledby="email-tab">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                @T("Email.Settings")
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="EmailSMTP">@T("EmailSMTP")</label>
+                                            <div class="col-lg-3">
+                                                @Html.EditorFor(d => d.EmailSMTP, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="EmailPort">@T("EmailPort")</label>
+                                            <div class="col-lg-3">
+                                                @Html.EditorFor(d => d.EmailPort, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="EmailDefaultUser">@T("EmailDefaultUser")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.EmailDefaultUser, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="EmailDefaultPass">@T("EmailDefaultPass")</label>
+                                            <div class="col-lg-9">
+                                                @Html.TextBoxFor(d => d.EmailDefaultPass, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="EmailUseCredentials">@T("EmailUseCredentials")</label>
+                                            <div class="col-lg-1">
+                                                @Html.CheckBoxFor(d => d.EmailUseCredentials, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="EmailUseSSL">@T("EmailUseSSL")</label>
+                                            <div class="col-lg-1">
+                                                @Html.CheckBoxFor(d => d.EmailUseSSL, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                @T("Logo.İnvoice")
+                            </div>
+                            <div class="ibox-content">
+
+                                <div class="row">
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("Logo")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.Logo, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("InvoiceHeader")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.InvoiceHeader, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("InvoiceFooter")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.InvoiceFooter, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("VoucherHeader")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.VoucherHeader, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("VoucherFooter")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.VoucherFooter, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="Hotels" role="tabpanel" aria-labelledby="Hotels-tab">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                @T("Hotel")
+                            </div>
+                            <div class="ibox-content">
+
+                                <div class="row">
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("HotelRequest")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.HotelRequest, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("HotelChange")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.HotelChange, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("HotelCancel")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.HotelCancel, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3" for="AgencyName">@T("HotelFooter")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.HotelFooter, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="bank" role="tabpanel" aria-labelledby="bank-tab">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                @T("Email.Settings")
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="AccountingName">@T("AccountingName")</label>
+                                            <div class="col-lg-3">
+                                                @Html.EditorFor(d => d.AccountingName, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="AccountingTitle">@T("AccountingTitle")</label>
+                                            <div class="col-lg-3">
+                                                @Html.EditorFor(d => d.AccountingTitle, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="BackIBAN">@T("BackIBAN")</label>
+                                            <div class="col-lg-9">
+                                                @Html.EditorFor(d => d.BackIBAN, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="BankAccount">@T("BankAccount")</label>
+                                            <div class="col-lg-9">
+                                                @Html.TextBoxFor(d => d.BankAccount, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="BankAccountNo">@T("BankAccountNo")</label>
+                                            <div class="col-lg-9">
+                                                @Html.TextBoxFor(d => d.BankAccountNo, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="BankName">@T("BankName")</label>
+                                            <div class="col-lg-9">
+                                                @Html.TextBoxFor(d => d.BankName, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="BankAddress">@T("BankAddress")</label>
+                                            <div class="col-lg-9">
+                                                @Html.TextBoxFor(d => d.BankAddress, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="BankSwift">@T("BankSwift")</label>
+                                            <div class="col-lg-9">
+                                                @Html.TextBoxFor(d => d.BankSwift, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-success">@T("SaveChanges")</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+
+}
+@section Scripts {
+
+    @Scripts.Render("~/plugins/chosen")
+
+
+    @if (ViewBag.error != null)
+    {
+        <script>
+            toastr.error('@T(ViewBag.error)');
+        </script>
+    }
+    else
+    {
+        if (IsPost)
+        {
+            <script>
+            toastr.success('@T("changed.saved")');
+            </script>
+        }
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.chosen-select').chosen({ width: "100%" });
+             //Swal('@ViewBag.error')
+        });
+
+
+
+    </script>
+
+}
+

@@ -1,0 +1,18 @@
+﻿@model string
+<div class="modal inmodal" id="@Model" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-body">
+                <div class="row">
+                    <h3 class="text-center">@T("Confirm.delete")</h3>
+                    <hr />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">@T("Close")</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger" id="delete">@T("delete")</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

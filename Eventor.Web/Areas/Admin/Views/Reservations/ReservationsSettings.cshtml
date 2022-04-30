@@ -1,0 +1,217 @@
+﻿@model Line.Data.Reservations
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutReservation.cshtml";
+}
+@{
+    var viewclass = "";
+    switch (Model.status)
+    {
+        case "Request":
+            viewclass = "btn-warning";
+            break;
+        case "Confirmed":
+            viewclass = "btn-info";
+            break;
+        case "ReConfirmed":
+            viewclass = "btn-success";
+            break;
+        case "Canceled":
+            viewclass = "btn-danger";
+            break;
+        case "Completed":
+            viewclass = "btn-primary";
+            break;
+        default:
+            viewclass = "btn-warning";
+            break;
+    }
+}
+<!-- Top Navbar -->
+@Html.Partial("_TopReservationbar", Model.ID)
+
+<div class="row white-bg p-xs">
+    <div class="col-lg-2">
+        <b>@T("status")</b>
+        <p>
+
+            <a href="#" class="btn btn-xs @viewclass">@Model.status</a>
+        </p>
+        <b>@T("change Request")</b>
+        <p>
+
+            @if (Model.status == "Confirmed")
+            {
+                <button type="button" data-toggle="modal" data-target="#reconfirm" class="btn btn-xs btn-success">ReConfirm</button>
+            }
+            else
+            {
+                <button type="button" data-toggle="modal" data-target="#confirm" class="btn btn-xs btn-info">Confirm</button>
+            }
+        </p>
+    </div>
+    <div class="col-lg-3">
+        <b>@T("Reservation Id")</b>
+        <p># @Model.ID </p>
+        <b>@T("Agency name")</b>
+        <p>@Model.ref_agency</p>
+    </div>
+    <div class="col-lg-2">
+        <b>@T("Reservation Owner")</b>
+        <p> @Model.Visitor.FirstName @Model.Visitor.LastName </p>
+        <b>@T("Reservation Date")</b>
+        <p>@Model.date</p>
+    </div>
+    <div class="col-lg-5">
+        <b>@T("Add items To Reservation")</b>
+        <p>
+            <div class="resitem">
+                <a href="@Url.Action("ReservationHotels",new { id = Model.ID})">
+                    <img src="~/Images/steps/icon2.png" width="100%" />
+                </a>
+            </div>
+            <div class="resitem">
+                <a href="@Url.Action("ReservationTransfers",new { id = Model.ID})">
+                    <img src="~/Images/steps/icon1.png" width="100%" />
+                </a>
+            </div>
+            <div class="resitem">
+                <a href="@Url.Action("ReservationTours",new { id = Model.ID})">
+                    <img src="~/Images/steps/icon3.png" width="100%" />
+                </a>
+            </div>
+            <div class="resitem">
+                <a href="@Url.Action("ReservationPackages",new { id = Model.ID})">
+                    <img src="~/Images/steps/icon4.png" width="100%" />
+                </a>
+            </div>
+
+        </p>
+    </div>
+</div>
+<br />
+<h2>Settings</h2>
+
+<div class="">
+
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#Deadline">Deadline Date</a></li>
+        <li><a data-toggle="tab" href="#Note">File Note </a></li>
+        <li><a data-toggle="tab" href="#Agency">Who to Contact </a></li>
+        <li><a data-toggle="tab" href="#Fowner">File Owner</a></li>
+
+    </ul>
+
+
+    <div class="tab-content">
+        <div id="Deadline" class="tab-pane fade in active">
+            <div class="col-lg-12">
+                <label>Deadline date: </label>
+                <div class="input-group input-group">
+                    <span class="input-group-addon"></span>
+                    <div id="sandbox-container">
+                        <div class="input-daterange input-group" id="datepicker">
+                            <input type="text" class="input-sm form-control" name="start" runat="server" id="checkin" />
+                        </div>
+                    </div>
+                </div>
+                <label>Category: </label>
+                <div class="input-group input-group">
+
+                    <span class="input-group-addon"></span>
+                    <asp:DropDownList CssClass="form-control" ID="Dcategory" runat="server">
+                        <asp:ListItem Selected="True" Text="Reconfirmation" />
+                        <asp:ListItem Text="Payment" />
+                        <asp:ListItem Text="Cancellation" />
+
+                    </asp:DropDownList>
+                </div>
+                <label>Note:  </label>
+                <div class="input-group input-group">
+                    <span class="input-group-addon"></span>
+                    <textarea rows="5" cols="20" id="DReason" style="height: 100px" runat="server" class="form-control " name="name" value="" />
+                    <asp:Button Text="Add" OnClick="AddExpireDate" class="form-control  btn-success" name="name" runat="server" />
+
+                </div>
+            </div>
+
+        </div>
+        <div id="Note" class="tab-pane fade">
+            <div class="col-lg-12">
+
+                <%--<label>Representative change: </label>
+                <div class="input-group">
+                    <span class="input-group-addon"></span>
+                    <select class="form-control" id="marketman" runat="server"></select>
+
+                </div>--%>
+                <label>File note: </label>
+                <div class="input-group input-group">
+                    <span class="input-group-addon"></span>
+                    <textarea rows="5" cols="20" id="filenote" style="height: 100px" runat="server" class="form-control " />
+                    <asp:Button Text="Update" OnClick="UpdateNote" class="form-control btn-success" name="name" runat="server" />
+
+                </div>
+
+            </div>
+
+        </div>
+        <div id="Agency" class="tab-pane fade">
+            <div class="col-lg-12">
+                <label></label>
+                <h5>Here you can save this file Agency staff name that you comunicate with. </h5>
+                <h5>On file creation its recommended to add it. </h5>
+                <h5>The system will use this name when confirm and reconfirm file. </h5>
+
+                <div class="input-group">
+                    <span class="input-group-addon">Staff Name</span>
+                    <input type="text" class="input-sm form-control" runat="server" id="Agencystaff" />
+
+                </div>
+                <div class="input-group" runat="server" id="AgencyOwnerdialog" visible="false">
+                    <span class="input-group-addon">File Agency</span>
+                    <select class=" form-control SelectAgencyOwner" runat="server" id="SelectAgencyOwner"> </select>
+                    <asp:Button Text="Update" OnClick="UpdateAgencyOwner" class="form-control btn-success" name="name" runat="server" />
+                </div>
+                <hr />
+                <asp:Button Text="Update" OnClick="UpdateAgencyName" class="form-control btn-success" name="name" runat="server" />
+
+
+
+            </div>
+
+        </div>
+        <div id="Fowner" class="tab-pane fade">
+            <div class="col-lg-12">
+                <label></label>
+                <div class="input-group">
+                    <span class="input-group-addon">File Owner</span>
+                    <select class=" form-control txtowner" runat="server" id="txtowner"> </select>
+
+
+
+                </div>
+                <div id="Needpass" runat="server">
+
+
+                    <h5>After change the Owner. You will need to enter <span id="oldowner" runat="server"></span> password. </h5>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Password</span>
+                        <input type="password" class="input-sm form-control" runat="server" id="txtownerpass" />
+
+                    </div>
+                </div>
+                <h5>On success you can see the new file owner in reservation page. </h5>
+
+                <hr />
+                <asp:Button Text="Update" OnClick="UpdateOwner" class="form-control btn-success" name="UpdateOwner" runat="server" />
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

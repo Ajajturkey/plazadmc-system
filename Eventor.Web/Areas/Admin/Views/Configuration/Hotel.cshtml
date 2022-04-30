@@ -1,0 +1,188 @@
+﻿@model Line.Data.DataHotel
+@{
+    ViewBag.Title = "Hotel";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>
+            @T("Create.Hotel.header")
+        </h2>
+    </div>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        @T("Hotel.Info")
+                        @Html.HiddenFor(d => d.Id)
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label for="AgencyName">@T("Hotel.name")</label>
+                                    @Html.TextBoxFor(d => d.name, new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="AgencyName">@T("Hotel.Description")</label>
+                                    @Html.TextAreaFor(d => d.desc, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fax">@T("Hotel.country")</label>
+                                    @Html.DropDownListFor(d => d.country, (SelectList)ViewBag.Countries, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fax">@T("Hotel.city")</label>
+                                    @Html.DropDownListFor(d => d.city, (SelectList)ViewBag.Cities, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fax">@T("Hotel.url")</label>
+                                    @Html.TextBoxFor(d => d.url_booking, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        @T("Contact.Info")
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="rate">@T("Hotel.Resposible")</label>
+                                    @Html.TextBoxFor(d => d.rname, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="Email">@T("Hotel.Email")</label>
+                                    @Html.TextBoxFor(d => d.Email, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="Tel">@T("Hotel.Tel")</label>
+                                    @Html.TextBoxFor(d => d.Tel, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="Fax">@T("Hotel.Fax")</label>
+                                    @Html.TextBoxFor(d => d.Fax, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="rate">@T("Hotel.rate")</label>
+                                    @Html.TextBoxFor(d => d.rate, new { @class = "form-control", @type = "number", min = "0", max = "5" })
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        @T("Other.Info")
+                      
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="photo">@T("Hotel.photo")</label>
+                                    @Html.EditorFor(d => d.photo, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="url_booking">@T("Hotel.url_booking")</label>
+                                    @Html.TextBoxFor(d => d.url_booking, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="minrate">@T("Hotel.minrate")</label>
+                                    @Html.TextBoxFor(d => d.minrate, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="maxrate">@T("Hotel.maxrate")</label>
+                                    @Html.TextBoxFor(d => d.maxrate, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group text-center">
+
+                            @if (Model.Id == 0)
+                            {
+                                <button type="submit" class="btn btn-success">@T("SaveChanges")</button>
+                            }
+                            else
+                            {
+
+                                <button type="submit" class="btn btn-success">@T("Update")</button>
+                            }
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+
+}
+@section Scripts {
+
+    @Scripts.Render("~/plugins/chosen")
+
+
+    @if (ViewBag.error != null)
+    {
+        <script>
+            toastr.error('@T(ViewBag.error)');
+        </script>
+    }
+    else
+    {
+        if (IsPost)
+        {
+            <script>
+            toastr.success('@T("changed.saved")');
+            </script>
+        }
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.chosen-select').chosen({ width: "100%" });
+             //Swal('@ViewBag.error')
+        });
+
+
+
+    </script>
+
+}

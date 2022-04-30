@@ -1,0 +1,210 @@
+﻿@model List<Line.Models.MonthSales>
+@{
+    ViewBag.Title = "Charjs";
+
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>@T("sales.last.two.years")</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <canvas id="barChart" height="140"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>@T("Files.In") @DateTime.Now.Year </h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <canvas id="doughnutChart" height="140"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>@T("sales.Confirmed.Report") @DateTime.Now.Year</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table id="datatabel" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>@T("Jan")</th>
+                                    <th>@T("Feb")</th>
+                                    <th>@T("Mar")</th>
+                                    <th>@T("Apr")</th>
+                                    <th>@T("May")</th>
+                                    <th>@T("Jun")</th>
+                                    <th>@T("Jul")</th>
+                                    <th>@T("Aug")</th>
+                                    <th>@T("Sep")</th>
+                                    <th>@T("Oct")</th>
+                                    <th>@T("Nov")</th>
+                                    <th>@T("Dec")</th>
+                                    <th>@T("Total")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td></td>
+                                    <td>@item.Year</td>
+                                    <td>@item.Jan.ToString(true)</td>
+                                    <td>@item.Feb.ToString(true)</td>
+                                    <td>@item.Mar.ToString(true)</td>
+                                    <td>@item.Apr.ToString(true)</td>
+                                    <td>@item.May.ToString(true)</td>
+                                    <td>@item.Jun.ToString(true)</td>
+                                    <td>@item.Jul.ToString(true)</td>
+                                    <td>@item.Aug.ToString(true)</td>
+                                    <td>@item.Sep.ToString(true)</td>
+                                    <td>@item.Oct.ToString(true)</td>
+                                    <td>@item.Nov.ToString(true)</td>
+                                    <td>@item.Dec.ToString(true)</td>
+                                    <td>@item.Total.ToString(true)</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/plugins/chartjs")
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+
+    <script type="text/javascript">
+        $('body').addClass("mini-navbar");
+        $(document).ready(function () {
+            $(document).ready(function () {
+                $('#datatabel').DataTable({
+                    "paging": false,
+                    "info": false,
+                    responsive: {
+                        details: {
+                            type: 'column',
+                            target: 'tr'
+                        }
+                    },
+                    columnDefs: [{
+                        className: 'control',
+                        orderable: false,
+                        targets: 0
+                    }],
+                    order: [1, 'asc'],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print', 'excel', 'pdf'
+                    ]
+                });
+            });
+             @{
+                 var gmodel = (List<Line.Models.MonthSales>)ViewBag.SalesChart;
+             }
+            var barData = {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [
+                {
+                                label: "@gmodel[0].Year",
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    pointBorderColor: "#fff",
+                    data: [
+                        @gmodel[0].Jan,
+                        @gmodel[0].Feb,
+                        @gmodel[0].Mar,
+                        @gmodel[0].Apr,
+                        @gmodel[0].May,
+                        @gmodel[0].Jun,
+                        @gmodel[0].Jul,
+                        @gmodel[0].Aug,
+                        @gmodel[0].Sep,
+                        @gmodel[0].Oct,
+                        @gmodel[0].Nov,
+                        @gmodel[0].Dec,
+                    ]
+                    },
+                {
+                    label: "@gmodel[1].Year",
+                    backgroundColor: 'rgb(255, 193, 7)',
+                    borderColor: "rgba(26,179,148,0.7)",
+                    pointBackgroundColor: "rgba(26,179,148,1)",
+                    pointBorderColor: "#fff",
+                    data:[
+                                @gmodel[1].Jan,
+                                @gmodel[1].Feb,
+                                @gmodel[1].Mar,
+                                @gmodel[1].Apr,
+                                @gmodel[1].Jun,
+                                @gmodel[1].Jul,
+                                @gmodel[1].Aug,
+                                @gmodel[1].Sep,
+                                @gmodel[1].Oct,
+                                @gmodel[1].Nov,
+                                @gmodel[1].Dec,
+                    ]
+                    }
+            ]
+        };
+            var barOptions = {
+                responsive: true
+            };
+
+
+            var ctx2 = document.getElementById("barChart").getContext("2d");
+            new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+
+
+
+
+            @{
+                var cmodel = (Line.Models.FileCounters)ViewBag.CountChart;
+            }
+
+            var doughnutData = {
+                labels: ["@T("Confirmed")", "@T("Canceled")", "@T("Requests")"],
+                datasets: [{
+                    data: [@cmodel.Confirmed, @cmodel.Canceled, @cmodel.Requests],
+                    backgroundColor: ["#a3e1d4", "#f44336", "#ffc107"]
+                }]
+            };
+
+            var doughnutOptions = {
+                responsive: true
+            };
+
+            var ctx4 = document.getElementById("doughnutChart").getContext("2d");
+            new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+
+
+
+        });
+    </script>
+}
+
+

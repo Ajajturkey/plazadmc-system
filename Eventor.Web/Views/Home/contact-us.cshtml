@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewBag.Title = T("ContactUs").ToString();
+}
+
+
+<!-- MAIN TITLE -->
+<div class="main-title">
+    <div class="container">
+        <h1 class="main-title__primary">@T("ContactUs")</h1>
+        <h3 class="main-title__secondary">@T("contact.subtitle")</h3>
+    </div>
+</div><!-- /.main-title -->
+<!-- BREADCRUMBS -->
+<div class="breadcrumbs margin-bottom-0">
+    <div class="container">
+        <span>
+            <a class="home" href="/" title="Go to Homepage." rel="v:url">@T("home")</a>
+        </span>
+        <span>
+            <span>@T("ContactUs")</span>
+        </span>
+    </div>
+</div><!-- /.breadcrumbs -->
+<!-- MAP -->
+@*<div class="map margin-bottom-60">
+
+    <div data-type="roadmap" data-zoom="11" data-markers='[{"id":"1","title":"@T("home.title")","address":"@T("home.adress")","custompinimage":"\/cargopress\/html\/images\/pin.png"}]' class="simple-map js-where-we-are"></div>
+
+</div>*@<!-- /.map -->
+
+<div class="container">
+
+    <div class="row margin-top-15 margin-bottom-30">
+
+        <div class="col-sm-3 hentry">
+
+            <div class="widget_black-studio-tinymce">
+                <div class="featured-widget">
+                    <h3 class="widget-title">
+                        <span class="widget-title__inline">@T("contact.header")</span>
+                    </h3>
+                    <p>
+                        <strong>@T("contact.CompanyName")</strong><br>   
+                        <a href="@T("contact.CompanyAdress")"> 
+                        @T("contact.CompanyAdress.text")</a>
+                    </p>
+                    <p>
+                        @T("contact.tel")
+                        <br />
+                        @T("contact.tel2")
+                        <a href="mailto:"+"@T("contact.email")">@T("contact.email")</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="widget_pw_opening_time">
+
+                <div class="featured-widget">
+                    <h3>
+                        <span class="icon icons-ornament-left"></span>
+                        @T("week.time.table")
+                        <span class="icon icons-ornament-right"></span>
+                    </h3>
+                    <dl class="week-day ">
+                        <dt>@T("Monday")</dt>
+                        <dd>@T("Week.time")</dd>
+                    </dl>
+                    <dl class="week-day  light-bg">
+                        <dt>@T("Tuesday")</dt>
+                        <dd>@T("Week.time")</dd>
+                    </dl>
+                    <dl class="week-day ">
+                        <dt>@T("Wednesday")</dt>
+                        <dd>@T("Week.time")</dd>
+                    </dl>
+                    <dl class="week-day  light-bg">
+                        <dt>@T("Thursday")</dt>
+                        <dd>@T("Week.time")</dd>
+                    </dl>
+                    <dl class="week-day ">
+                        <dt>@T("Friday")</dt>
+                        <dd>@T("Week.time")</dd>
+                    </dl>
+                    <dl class="week-day  light-bg">
+                        <dt>@T("Saturday")</dt>
+                        <dd>@T("Week.sat.time")</dd>
+                    </dl>
+                    <dl class="week-day  closed today">
+                        <dt>@T("Sunday")</dt>
+                        <dd>@T("Week.sun.time")</dd>
+                    </dl>
+                </div><!-- /.featured-widget -->
+
+            </div><!-- /.widget_pw_opening_time -->
+
+        </div><!-- /.col -->
+
+        <div class="col-sm-9">
+            <h3 class="widget-title margin-top-0">
+              @T("email.header")
+            </h3>
+            <p>
+                @T("email.description")
+            </p>
+
+            @using (Html.BeginForm())
+            {
+                <div style="display:none"><input type="text" name="maximus" value=""></div>
+                <input type="hidden" name="theSubject" value="CargoPress: Contact Request">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <input type="text" placeholder="First Name*" aria-invalid="false" aria-required="true" size="40" value="" name="your-name" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <input type="text" placeholder="Last Name*" aria-invalid="false" aria-required="true" size="40" value="" name="last-name" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <input type="email" placeholder="E-mail address*" aria-invalid="false" aria-required="true" size="40" value="" name="your-email" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <input type="tel" placeholder="Phone Number" aria-invalid="false" aria-required="true" size="40" value="" name="your-phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-8">
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject*" aria-invalid="false" size="40" value="" name="your-subject" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <textarea placeholder="Message*" aria-invalid="false" rows="10" cols="40" name="your-message" required></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="@T("message.send")">
+                        <img class="ajax-loader" id="loader" src="images/ajax-loader.gif" alt="Sending ..." style="display: none;">
+                    </div>
+                </div>
+                <div class="response success">@T("email.success")</div>
+                <div class="response error">@T("email.fail")</div>
+            }
+
+        </div><!-- /.col -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+

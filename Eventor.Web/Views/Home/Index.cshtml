@@ -1,0 +1,8 @@
+﻿@model  string
+
+@using Autofac;
+@using Line.Services;
+@{
+    var _service = DependencyManager.Scope.Resolve<IUploadService>();
+    var active = "active";
+}
