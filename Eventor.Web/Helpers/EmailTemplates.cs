@@ -699,9 +699,7 @@ namespace Line.Helpers
                 if (ME != "")
                 {
                     mail.CC.Add(ME);
-
                 }
-
                 var _Settings = DependencyManager.Scope.Resolve<IConfiqurationService>();
                 var settings = _Settings.GetSettings();
                 SmtpClient client = new SmtpClient();
@@ -729,7 +727,7 @@ namespace Line.Helpers
                     }
                     catch (Exception exc)
                     {
-                        SendUsingGmail(Email, Body, CC, ME, Subject);
+                        SendUsingGmail(Email, Body, CC, ME, member.email, Subject);
                     }
 
                     //return true;
@@ -755,14 +753,14 @@ namespace Line.Helpers
 
         }
 
-        private static void SendUsingGmail(string email, string mbody, string cC, string mE, string msubject)
+        private static void SendUsingGmail(string email, string mbody, string cC, string mE, string bcc, string msubject)
         {
             string smtpAddress = "smtp.gmail.com";
             int portNumber = 587;
             bool enableSSL = true;
 
-            string emailFrom = "ahmadturkey88@gmail.com";
-            string password = "1Blacklove!";
+            string emailFrom = "sender.plazadmc@gmail.com"; //password
+            string password = "kyizbpiowtcyswke";
             string emailTo = email;
             string subject = msubject;
             string body = mbody;
