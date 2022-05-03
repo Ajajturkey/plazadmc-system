@@ -681,6 +681,7 @@ namespace Line.Helpers
                 string From = member.email;//"Register@plazatur.com";
                 string Password = member.emailPassword; //"PLaZa-5858";
 
+
                 System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
                 mail.To.Add(Email);
                 mail.From = new MailAddress(From, member.GetFullName() + "/ PlazaDMC", System.Text.Encoding.UTF8);
@@ -690,6 +691,7 @@ namespace Line.Helpers
                 mail.BodyEncoding = System.Text.Encoding.UTF8;
                 mail.IsBodyHtml = true;
                 mail.Priority = MailPriority.High;
+
 
                 if (CC != "")
                 {
@@ -712,6 +714,11 @@ namespace Line.Helpers
                 client.Port = Convert.ToInt32(settings.EmailPort);// 587; // Gmail works on this port
                 client.Host = settings.EmailSMTP; //"smtp.office365.com";//"smtp.gmail.com"; 
                 client.EnableSsl = settings.EmailUseSSL; //true; //Gmail works on Server Secured Layer  "QQaa8840"
+                //client.TargetName = "STARTTLS/smtp.office365.com";
+
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
                 try
                 {
                     client.Send(mail);
@@ -723,24 +730,13 @@ namespace Line.Helpers
                     try
                     {
                         client.Send(mail);
-
                     }
-                    catch (Exception exc)
+                    catch 
                     {
                         SendUsingGmail(Email, Body, CC, ME, member.email, Subject);
                     }
 
-                    //return true;
-
-
-                    Exception ex2 = ex;
-                    string errorMessage = string.Empty;
-                    while (ex2 != null)
-                    {
-                        errorMessage += ex2.ToString();
-                        ex2 = ex2.InnerException;
-                    }
-                    HttpContext.Current.Response.Write(errorMessage);
+                    HttpContext.Current.Response.Write(ex.Message + ex.StackTrace);
                     return false;
                 }
 
