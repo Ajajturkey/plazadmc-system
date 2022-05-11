@@ -513,7 +513,28 @@
                                 </span>
                                 <input type="text" class="form-control" disabled="disabled" value="@T("send.confirmation.email.to.agency")" />
                             </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Include Invoice </label>
+                                    <div class="input-group input-group">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox"  id="cSendInvoice" class="" value="true" name="cSendInvoice" />
+                                        </span>
+                                        <input type="text" class="form-control" disabled="disabled" value="@T("Invoice")" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Include Voucher </label>
+                                    <div class="input-group input-group">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox"  id="cSendVoucher" class="" value="true" name="cSendVoucher" />
+                                        </span>
+                                        <input type="text" class="form-control" disabled="disabled" value="@T("Voucher")" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="col-lg-12">
                             <label>@T("Note.To.include.in.email"):  </label>
                             <div class="input-group input-group">
@@ -573,6 +594,14 @@
                                 <input type="text" id="rcvocher" class="form-control" required name="rcvocher" value="" />
                             </div>
                         </div>
+                        <div class="col-lg-12">
+                            <label>@T("HCN"):  </label>
+                            <div class="input-group input-group">
+                                <span class="input-group-addon"></span>
+                                <textarea rows="2" cols="20" id="rcHcn" name="rcHcn" class="form-control"></textarea>
+                            </div>
+                        </div>
+
                         <div class="col-lg-12">
                             <label>@T("Note.To.include.in.email"):  </label>
                             <div class="input-group input-group">
@@ -671,6 +700,13 @@
                             <div class="input-group">
                                 <span class="input-group-addon"></span>
                                 <input type="text" id="hfax" class="form-control " name="hfax" value="" />
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <label>CC Emails:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"></span>
+                                <input type="text" id="hcc" class="form-control " name="hcc" value="" />
                             </div>
                         </div>
                     </div>

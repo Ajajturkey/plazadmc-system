@@ -459,6 +459,7 @@
           <Property Name="checkindate" Type="date" Nullable="false" />
           <Property Name="IsB2B" Type="bit" Nullable="false" />
           <Property Name="Ref_CustomerId" Type="int" Nullable="false" />
+          <Property Name="HCN" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Rhotel">
           <Key>
@@ -1702,6 +1703,7 @@
           <Property Name="IsB2B" Type="Boolean" Nullable="false" />
           <Property Name="Ref_CustomerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="hotelchange" Relationship="Eventor.Data.Reservationshotelchange" FromRole="Reservations" ToRole="hotelchange" />
+          <Property Name="HCN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Payments">
           <Key>
@@ -2730,7 +2732,8 @@
     <EntitySetMapping Name="Reservations">
       <EntityTypeMapping TypeName="IsTypeOf(Eventor.Data.Reservations)">
         <MappingFragment StoreEntitySet="Reservations">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HCN" ColumnName="HCN" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="ref_marketman" ColumnName="ref_marketman" />
           <ScalarProperty Name="ref_member" ColumnName="ref_member" />

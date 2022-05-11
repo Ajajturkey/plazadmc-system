@@ -161,6 +161,25 @@
                                     </td>
                                     <td>
                                         @res.checkindate.ToShortDateString() - @res.balanceDate.ToShortDateString()
+                                        @foreach (var item in res.Rhotel)
+                                        {
+                                            foreach (var room in item.RHRoom)
+                                            {
+                                               <br /> <b> @room.checkin.Value.ToShortDateString() - @room.checkout.Value.ToShortDateString() </b>
+                                            }
+                                        }
+                                        @foreach (var item in res.Tour)
+                                        {
+                                    <br /> <b> @item.date.ToShortDateString()</b>
+                                        }
+                                        @foreach (var item in res.Transfers)
+                                        {
+                                    <br />  <b> @item.date.ToShortDateString()</b>
+                                        }
+                                        @foreach (var item in res.ExtraService)
+                                        {
+                                    <br />  <b> @item.date.ToShortDateString() - @item.date.ToShortDateString()</b>
+                                        }
                                     </td>
                                     <td>
 
@@ -169,6 +188,7 @@
                                         </a>
                                     </td>
                                 </tr>
+
                             }
                         </tbody>
                         <tfoot>

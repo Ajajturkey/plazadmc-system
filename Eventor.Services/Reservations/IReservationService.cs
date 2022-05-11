@@ -13,6 +13,7 @@ namespace Line.Services
 
         List<Reservations> SearchReservations(int FileId);
         List<Reservations> SearchReservations(ReservationSearchModel model, bool onlyConfirmed);
+        List<Reservations> SearchRooms(ReservationSearchModel model, bool onlyConfirmed);
         void CalculateReservation(int Id, bool ChangeStats = true);
         void GetReservationDate(Reservations r, out DateTime icheckout, out DateTime icheckin);
         Reservations GetReservationById(int id);

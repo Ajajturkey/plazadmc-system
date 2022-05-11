@@ -279,7 +279,7 @@ namespace Line.Helpers
         public static string bodyend = "</td></tr></tbody></table></td></tr></tbody></table>	";
 
 
-        public static int SendMailToHotel(MailType type, string HotelName, string email, string Note, string name, string member, string title, string MemberEmail, Rhotel Hotel, string id)
+        public static int SendMailToHotel(MailType type, string HotelName, string email, string Note, string name, string member, string title, string MemberEmail, Rhotel Hotel, string id,List<string> ccList)
         {
             var _Settings = DependencyManager.Scope.Resolve<IConfiqurationService>();
             var _Upload = DependencyManager.Scope.Resolve<Line.Services.IUploadService>();
@@ -499,7 +499,7 @@ namespace Line.Helpers
                     break;
             }
 
-            SendMessage(email, Body, "", ME, Subject);
+            SendMessage(email, Body, ccList, ME, Subject, Hotel.RID);
 
             return 0;
         }
@@ -671,7 +671,7 @@ namespace Line.Helpers
             "</style> ";
         }
 
-        public static bool SendMessage(string Email, string Body, string CC, string ME, string Subject)
+        public static bool SendMessage(string Email, string Body, List<string> CC, string ME, string Subject, int fileId)
         {
             var _WorkContext = DependencyManager.Scope.Resolve<IWorkContext>();
             var member = _WorkContext.CurrentVisitor;
@@ -680,7 +680,6 @@ namespace Line.Helpers
             {
                 string From = member.email;//"Register@plazatur.com";
                 string Password = member.emailPassword; //"PLaZa-5858";
-
 
                 System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
                 mail.To.Add(Email);
@@ -692,24 +691,26 @@ namespace Line.Helpers
                 mail.IsBodyHtml = true;
                 mail.Priority = MailPriority.High;
 
-
-                if (CC != "")
-                {
-                    mail.CC.Add(CC);
-
+				foreach (var item in CC)
+				{
+                    mail.CC.Add(item);
                 }
+                
                 if (ME != "")
                 {
                     mail.CC.Add(ME);
+
                 }
+
                 var _Settings = DependencyManager.Scope.Resolve<IConfiqurationService>();
                 var settings = _Settings.GetSettings();
                 SmtpClient client = new SmtpClient();
 
                 if (settings.EmailUseCredentials)
                 {
-                client.Credentials = new System.Net.NetworkCredential(From, Password, From);
+                    client.Credentials = new System.Net.NetworkCredential(From, Password, From);
                 }
+
 
                 client.Port = Convert.ToInt32(settings.EmailPort);// 587; // Gmail works on this port
                 client.Host = settings.EmailSMTP; //"smtp.office365.com";//"smtp.gmail.com"; 
@@ -717,7 +718,7 @@ namespace Line.Helpers
                 //client.TargetName = "STARTTLS/smtp.office365.com";
 
                 ServicePointManager.Expect100Continue = true;
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
                 try
                 {
@@ -726,18 +727,43 @@ namespace Line.Helpers
                 }
                 catch (Exception ex)
                 {
-                    client.Credentials = new System.Net.NetworkCredential(settings.EmailDefaultUser, settings.EmailDefaultPass, settings.EmailDefaultUser);
+                    using (var db = new DBEntities())
+                    {
+                        db.SystemLog.Add(new SystemLog { EntityName = "Send Email Member: "+ From, Error = ex.InnerException + " --- trace ---"+ ex.StackTrace ,EntityID = fileId });
+                        db.SaveChanges();
+                    }
                     try
                     {
+                        client.Credentials = new System.Net.NetworkCredential(settings.EmailDefaultUser, settings.EmailDefaultPass, settings.EmailDefaultUser);
                         client.Send(mail);
+                        return true;
                     }
-                    catch 
+                    catch (Exception exc)
                     {
-                        SendUsingGmail(Email, Body, CC, ME, member.email, Subject);
+                        using (var db = new DBEntities())
+                        {
+                            db.SystemLog.Add(new SystemLog { EntityName = "Send Email Default", Error = exc.InnerException + " --- trace ---" + exc.StackTrace, EntityID = fileId });
+                            db.SaveChanges();
+                        }
+                        
+                        try
+                        {
+                            SendUsingGmail(Email, Body, CC, ME, Subject);
+                            return true;
+
+                        }
+                        catch (Exception exg)
+                        {
+                            using (var db = new DBEntities())
+                            {
+                                db.SystemLog.Add(new SystemLog { EntityName = "Send Email Gmail", Error = exg.InnerException + " --- trace ---" + exg.StackTrace, EntityID = fileId });
+                                db.SaveChanges();
+                            }
+                            return false;
+                        }
                     }
 
-                    HttpContext.Current.Response.Write(ex.Message + ex.StackTrace);
-                    return false;
+                    
                 }
 
             }
@@ -749,7 +775,7 @@ namespace Line.Helpers
 
         }
 
-        private static void SendUsingGmail(string email, string mbody, string cC, string mE, string bcc, string msubject)
+        private static void SendUsingGmail(string email, string mbody, List<string> cC, string mE, string msubject)
         {
             string smtpAddress = "smtp.gmail.com";
             int portNumber = 587;
@@ -770,10 +796,9 @@ namespace Line.Helpers
                 mail.IsBodyHtml = true;
                 // Can set to false, if you are sending pure text.
 
-                if (!string.IsNullOrEmpty(cC))
-                {
-                    mail.CC.Add(cC);
-
+				foreach (var item in cC)
+				{
+                    mail.CC.Add(item);
                 }
 
                 mail.CC.Add(mE);
@@ -790,7 +815,7 @@ namespace Line.Helpers
             }
         }
 
-        public static void SendMailToAgency(string Agency, string rsponsiple, string Email, string Note, string CC, string agencyName, string name, string title, string Memail, Reservations reservation, string vocher = "")
+        public static void SendMailToAgency(string Agency, string rsponsiple, string Email, string Note, List<string> CC, string agencyName, string name, string title, string Memail, Reservations reservation, string vocher = "", bool includeInvoice = false, bool includeVoucher = false)
         {
             var _Settings = DependencyManager.Scope.Resolve<IConfiqurationService>();
             var _Upload = DependencyManager.Scope.Resolve<Line.Services.IUploadService>();
@@ -830,7 +855,22 @@ namespace Line.Helpers
 
             Body += BuildMailConfirmation(reservation);
 
-            //CreateReservation(reservation);
+            //temp solutıon
+            var url = "https://login.plazadmc.com/";//HttpContext.Current.Request.Url.Host
+			if (includeInvoice)
+			{
+                Body += "<br/><p>You may check your reservation details on web browser from ";//"<div style=\"width:600px\">";
+
+                Body += "<a _blank' href='" + url + "out/invoice/" + reservation.ID + "?eref=" + reservation.Agency.ID + "'>here</a></p>";
+            }
+
+            if (includeVoucher)
+            {
+                Body += "<br/><p>You may check your reservation voucher on web browser from ";
+
+                Body += "<a  href='" + url + "out/voucher/" + reservation.ID + "?eref=" + reservation.Agency.ID + "'>here</a></p>";
+            }
+
 
             Body +=
                 "                                                                                                                    " +
@@ -870,7 +910,7 @@ namespace Line.Helpers
             }
 
 
-            SendMessage(Email, Body, CC, Memail, Subject);
+            SendMessage(Email, Body, CC, Memail, Subject,reservation.ID);
 
         }
 
@@ -1190,11 +1230,6 @@ namespace Line.Helpers
             }
 
             body += WriteTotalTable(res);
-
-            body += "<br/><p>You may check your reservation details on web browser from ";//"<div style=\"width:600px\">";
-
-            body += "<a href='" + HttpContext.Current.Request.Url.Host + "/out/invoice/" + res.ID + "?eref=" + res.Agency.ID + "'>here</a></p>";
-
 
             return body;
 

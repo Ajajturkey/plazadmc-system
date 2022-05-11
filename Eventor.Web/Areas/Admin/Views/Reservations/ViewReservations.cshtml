@@ -124,10 +124,14 @@
                                 }
                             }
                         </tr>
+                        @if (!string.IsNullOrEmpty(Model.note))
+                        {
+                            <tr>
+                                <td colspan="4">@Model.note</td>
+                            </tr>
+                        }
                     </table>
                 </div>
-
-
 
                 <div id="ContentPlaceHolder1_hotels">
 
@@ -186,7 +190,7 @@
                                 @foreach (var item in Model.Tour)
                                 {
                                     <tr>
-                                        <td> <b>@item.name</b> @*<br />@item.pickup  -  @item.dropoff*@ </td>
+                                        <td> <b>@item.name</b> (@item.customer)@* -  @item.dropoff*@ </td>
                                         <td class="text-center">@item.date.ToShortDateString()</td>
                                         <td class="text-center">  @item.Pax</td>
                                         <td class="text-center">@item.Total.ToString(true)</td>
@@ -213,9 +217,9 @@
                                 @foreach (var item in Model.Transfers)
                                 {
                                     <tr>
-                                        <td> <b>@item.city - @item.pickup</b> <br /> @item.dropoff</td>
+                                        <td> <b>@item.city - @item.pickup</b> <br /> @item.dropoff (@item.customer)</td>
                                         <td class="text-center">@item.date.ToShortDateString()</td>
-                                        <td class="text-center">  @item.pax</td>
+                                        <td class="text-center">  @item.pax </td>
                                         <td class="text-center">@item.Total.ToString(true)</td>
                                         <td class="text-center">@((item.Total).ToString(true))  </td>
                                         <td class="text-center">@((item.Cost).ToString(true))</td>
@@ -241,7 +245,7 @@
                                 {
 
                                     <tr>
-                                        <td> <b>@item.name </b></td>
+                                        <td> <b>@item.name   </b> (@item.customer)</td>
                                         <td class="text-center">@item.date.ToShortDateString()</td>
                                         <td class="text-center">@item.date.ToShortDateString()</td>
                                         <td class="text-center">@item.Total.ToString(true)</td>
@@ -368,7 +372,14 @@
 
                 </table>
                 <hr>
-
+                @if (!string.IsNullOrEmpty(Model.note))
+                {
+                    <b>Note</b>
+                    <div>
+                        @Model.note
+                    </div>
+                    <hr />
+                }
                 <div class=" text-capitalize text-center hidden-print" style="font-size: larger">
                     <span id="ContentPlaceHolder1_invoice">
                         <a class="btn btn-xs btn-primary" href="@Url.Action("OpenInvoice",new {Id= Model.ID })" target="_blank">

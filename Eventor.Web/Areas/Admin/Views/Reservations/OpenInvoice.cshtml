@@ -52,14 +52,14 @@
                     </span>
                 </td>
             </tr>
-            <tr>
+            @*<tr>
                 <td style="width: 150px; font-weight: 600">Client Name</td>
                 <td>
                     <span id="Client" runat="server">
                         @Model.GetCustomers()
                     </span>
                 </td>
-            </tr>
+            </tr>*@
 
         </table>
 
@@ -68,43 +68,35 @@
 
 
         <div runat="server" id="hotels">
+
+            @foreach (var item in Model.Rhotel)
+            {
             <table style="font-size: 11px" class=" active table table-hover table-condensed panel-heading ">
                 <tr class="alert-info">
-                    <th>Hotel Name</th>
+                    <th>@item.name</th>
                     <th>Check IN</th>
                     <th>Check Out</th>
                     <th>Board</th>
                     <th>Room</th>
                     <th width='70'>Rate</th>
                 </tr>
-                @foreach (var item in Model.Rhotel)
+                @foreach (var room in item.RHRoom)
                 {
-                    int i = 0;
-                    foreach (var room in item.RHRoom)
-                    {
-                        <tr>
-                            @if (i == 0)
-                            {
-                                i++;
-                                <td>@item.name</td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
+                <tr>
+                    <td>@room.guset</td>
+                    <td>@room.checkin.Value.ToString("dd.MM.yyyy")  </td>
+                    <td>@room.checkout.Value.ToString("dd.MM.yyyy") </td>
+                    <td>@room.board </td>
+                    <td>@room.name x @room.count 	</td>
+                    <td>@((room.price * room.count * (room.checkout.Value - room.checkin.Value).Days).ToString(true)) </td>
+                </tr>
 
-                            <td>@room.checkin.Value.ToString("dd.MM.yyyy")  </td>
-                            <td>@room.checkout.Value.ToString("dd.MM.yyyy") </td>
-                            <td>@room.board </td>
-                            <td>@room.name x @room.count 	</td>
-                            <td>@((room.price * room.count * (room.checkout.Value - room.checkin.Value).Days).ToString(true)) </td>
-                        </tr>
-
-                    }
                 }
                 <tr></tr>
             </table>
-        </div>
+            }
+                  
+            </div>
 
         @if (Model.Transfers.Count > 0 || Model.Tour.Count > 0 || Model.ExtraService.Count > 0)
         {

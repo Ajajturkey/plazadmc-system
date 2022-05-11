@@ -59,6 +59,7 @@ namespace Line.Data
         public System.DateTime checkindate { get; set; }
         public bool IsB2B { get; set; }
         public int Ref_CustomerId { get; set; }
+        public string HCN { get; set; }
     
         public virtual Agency Agency { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

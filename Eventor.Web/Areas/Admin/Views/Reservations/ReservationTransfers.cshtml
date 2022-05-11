@@ -140,22 +140,22 @@
                             @Html.TextBoxFor(d => d.Transfer.flightCode, "", new { @class = "form-control", placeholder = "code", required = "required" })
                         </div>
                         <div class="col-md-2">
-                            <label for="ex3">@T("pickup")</label>
-                            @Html.TextBoxFor(d => d.Transfer.pickup, "", new { @class = "form-control", placeholder = "pickup", required = "required" })
+                            <label for="ex3">@T("Pick up")</label>
+                            @Html.TextBoxFor(d => d.Transfer.pickup, "", new { @class = "form-control", placeholder = "pick up", required = "required" })
 
                         </div>
                         <div class="col-md-2">
-                            <label for="ex3">@T("dropOff")</label>
-                            @Html.TextBoxFor(d => d.Transfer.dropoff, "", new { @class = "form-control", placeholder = "dropoff", required = "required" })
+                            <label for="ex3">@T("Drop Off")</label>
+                            @Html.TextBoxFor(d => d.Transfer.dropoff, "", new { @class = "form-control", placeholder = "drop off", required = "required" })
 
                         </div>
                         <div class="col-md-1">
-                            <label for="ex3">@T("pax")</label>
+                            <label for="ex3">@T("Pax")</label>
                             @Html.TextBoxFor(d => d.Transfer.pax, "0", new { @class = "form-control touchspin", placeholder = "pax", required = "required", type = "number", min = "0" })
 
                         </div>
                         <div class="col-md-1">
-                            <label for="ex3">@T("Time")</label>
+                            <label for="ex3">@T("Flight Time")</label>
                             @Html.TextBoxFor(d => d.Transfer.flightTime, "00:00", new { @class = "form-control clockpicker", placeholder = "flightTime", required = "required", autocomplete = "off" })
 
                         </div>

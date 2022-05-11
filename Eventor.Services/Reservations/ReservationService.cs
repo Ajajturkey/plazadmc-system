@@ -617,8 +617,8 @@ namespace Line.Services
             if (model.OnlyUnpaidFiles) // for file not yet closed
             {
                 reservations = reservations.Where(d => d.balance  != 0);
-            }else
-            if (model.OnlyPaidFiles) // for file not yet closed
+            }
+            else if (model.OnlyPaidFiles) // for file not yet closed
             {
                 reservations = reservations.Where(d => d.balance == 0);
             }
@@ -662,6 +662,143 @@ namespace Line.Services
 
             return reservations.OrderBy(d => d.checkindate).ToList();
 
+        }
+
+        public List<Reservations> SearchRooms(ReservationSearchModel model, bool onlyConfirmed = false)
+        {
+
+            var reservations = new List<Reservations>();
+
+            var rooms = _Repository.RHRoom.AsNoTracking().AsQueryable();
+
+            // filter checkin
+            if (model.CheckinDatefrom != new DateTime() && model.CheckinDateto != new DateTime())
+            {
+                rooms = rooms.Where(d => d.checkin >= model.CheckinDatefrom && d.checkout <= model.CheckinDateto);
+            }
+            // filter checkout
+            if (model.CheckoutDatefrom != new DateTime() && model.CheckoutDateto != new DateTime())
+            {
+                rooms = rooms.Where(d => d.checkout >= model.CheckoutDatefrom && d.checkout <= model.CheckoutDateto);
+            }
+
+            var OrderedReservations = rooms.OrderBy(d => d.checkin);
+
+            reservations.AddRange(OrderedReservations.Select(d => d.Rhotel.Reservations));
+
+            //tours
+            var tours = _Repository.Tour.AsNoTracking().AsQueryable();
+
+            // filter checkin
+            if (model.CheckinDatefrom != new DateTime() && model.CheckinDateto != new DateTime())
+            {
+                tours = tours.Where(d => d.date >= model.CheckinDatefrom && d.date <= model.CheckinDateto);
+            }
+            // filter checkout
+            if (model.CheckoutDatefrom != new DateTime() && model.CheckoutDateto != new DateTime())
+            {
+                tours = tours.Where(d => d.date >= model.CheckoutDatefrom && d.date <= model.CheckoutDateto);
+            }
+
+            reservations.AddRange(tours.Select(d => d.Reservations));
+
+            //transfer
+            var transfers = _Repository.Transfers.AsNoTracking().AsQueryable();
+
+            // filter checkin
+            if (model.CheckinDatefrom != new DateTime() && model.CheckinDateto != new DateTime())
+            {
+                transfers = transfers.Where(d => d.date >= model.CheckinDatefrom && d.date <= model.CheckinDateto);
+            }
+            // filter checkout
+            if (model.CheckoutDatefrom != new DateTime() && model.CheckoutDateto != new DateTime())
+            {
+                transfers = transfers.Where(d => d.date >= model.CheckoutDatefrom && d.date <= model.CheckoutDateto);
+            }
+            reservations.AddRange(transfers.Select(d => d.Reservations));
+
+            //extra
+            var extras = _Repository.ExtraService.AsNoTracking().AsQueryable();
+
+            // filter checkin
+            if (model.CheckinDatefrom != new DateTime() && model.CheckinDateto != new DateTime())
+            {
+                extras = extras.Where(d => d.date >= model.CheckinDatefrom && d.date <= model.CheckinDateto);
+            }
+            // filter checkout
+            if (model.CheckoutDatefrom != new DateTime() && model.CheckoutDateto != new DateTime())
+            {
+                extras = extras.Where(d => d.dateout >= model.CheckoutDatefrom && d.dateout <= model.CheckoutDateto);
+            }
+            reservations.AddRange(extras.Select(d => d.Reservations));
+
+            var query = reservations.Distinct(new ItemEqualityComparer()).AsQueryable();
+
+            if (onlyConfirmed)
+            {
+                query = query.Where(d => d.status == ReservationStatus.Confirmed.ToString() || d.status == ReservationStatus.ReConfirmed.ToString());
+            }
+
+            if (model.Status.Count > 0)
+            {
+                query = query.Where(d => model.Status.Contains(d.status));
+            }
+
+            if (model.OnlyUnpaidFiles) // for file not yet closed
+            {
+                query = query.Where(d => d.balance != 0);
+            }
+            else
+            if (model.OnlyPaidFiles) // for file not yet closed
+            {
+                query = query.Where(d => d.balance == 0);
+            }
+
+            if (model.CreatedBy.Count > 0)
+            {
+                query = query.Where(d => model.CreatedBy.Contains(d.ref_member));
+            }
+
+            //filter date
+            if (model.CreateDate != new DateTime() && model.CreateDateTo != new DateTime())
+            {
+                query = query.Where(d => d.date >= model.CreateDate && d.date <= model.CreateDateTo);
+            }
+
+            // filter agency
+            if (model.AgencyId.Count > 0)
+            {
+                query = query.Where(d => model.AgencyId.Contains(d.ref_agency.Value));
+            }
+            
+            // filter Country
+            if (model.Country != null)
+            {
+                query = query.Where(d => d.Agency.Country == model.Country);
+            }
+
+            // filter Customers
+            //if (model.Customer != null)
+            //{
+            //    query = query.Where(x => x.Rhotel.Any(.ToLower().Contains(model.Customer));
+            //}
+
+            return query.OrderBy(d => d.checkindate).ToList();
+
+        }
+
+        class ItemEqualityComparer : IEqualityComparer<Reservations>
+        {
+            public bool Equals(Reservations x, Reservations y)
+            {
+                // Two items are equal if their keys are equal.
+                return x.ID == y.ID;
+            }
+
+            public int GetHashCode(Reservations obj)
+            {
+                return obj.ID.GetHashCode();
+            }
         }
 
         public List<ChangeRoom> SearchRoomChanges(int HotelId)

@@ -177,8 +177,9 @@ namespace Line.Controllers
             var email = form["cemail"];
             var cc = form["cemailcc"];
             var send = form["cSend"];
-
-
+            var cSendInvoice = form["cSendInvoice"];
+            var cSendVoucher = form["cSendVoucher"];
+            
             var res = _reservationService.GetReservationById(cId);
             if (res == null)
             {
@@ -194,11 +195,16 @@ namespace Line.Controllers
                 shortMessage = "File Confirmed by " + _workContext.CurrentVisitor.GetFullName()
             });
 
+            var ccList = new List<string>();
+            if (cc != null)
+            {
+                ccList = cc.Split(';').Where(d => !string.IsNullOrEmpty(d)).ToList();
+            }
 
             if (!string.IsNullOrEmpty(send))
             {
-                Mailing.SendMailToAgency(res.Agency.AgencyName, res.agencystaff, email, note, cc,
-                    res.Agency.AgencyName, _workContext.CurrentVisitor.GetFullName(), _workContext.CurrentVisitor.title, _workContext.CurrentVisitor.email, res);
+                Mailing.SendMailToAgency(res.Agency.AgencyName, res.agencystaff, email, note, ccList,
+                    res.Agency.AgencyName, _workContext.CurrentVisitor.GetFullName(), _workContext.CurrentVisitor.title, _workContext.CurrentVisitor.email, res, "",!string.IsNullOrEmpty(cSendInvoice), !string.IsNullOrEmpty(cSendVoucher));
             }
 
             return RedirectToAction("OpenReservations", new { Id = cId });
@@ -210,19 +216,32 @@ namespace Line.Controllers
             var cc = form["rcemailcc"];
             var send = form["rcSend"];
             var voucher = form["rcvocher"];
+            var rcHcn = form["rcHcn"];
             var res = _reservationService.GetReservationById(rcId);
             if (res == null)
             {
                 return PageNotFound();
             }
             res.vocher = Request.Form["rcvocher"];
-
+            res.HCN = rcHcn;
             res.status = ReservationStatus.ReConfirmed.ToString();
             _reservationService.UpdateReservation(res);
 
+
+            if (!string.IsNullOrEmpty(rcHcn))
+            {
+                voucher = voucher + ", HCN: " + rcHcn;
+            }
+
+            var ccList = new List<string>();
+            if (cc != null)
+            {
+                ccList = cc.Split(';').Where(d => !string.IsNullOrEmpty(d)).ToList();
+            }
+
             if (!string.IsNullOrEmpty(send))
             {
-                Mailing.SendMailToAgency(res.Agency.AgencyName, res.agencystaff, email, note, cc,
+                Mailing.SendMailToAgency(res.Agency.AgencyName, res.agencystaff, email, note, ccList,
                 res.Agency.AgencyName, _workContext.CurrentVisitor.GetFullName(), _workContext.CurrentVisitor.title, _workContext.CurrentVisitor.email, res, voucher);
 
                 _reservationService.InsertFileNote(new Filelog { Action = "File Sent ", ref_file = res.ID, ref_member = _workContext.CurrentVisitor.Id, shortMessage = "File ReConfirmed And sent to Agency by " + _workContext.CurrentVisitor.GetFullName() });
@@ -403,7 +422,13 @@ namespace Line.Controllers
             var contact = form["hcontact"];
             var email = form["hemail"];
             var name = form["hname"];
+            var hcc = form["hcc"];
             var request = Convert.ToInt32(form["request"]);
+            var ccList = new List<string>();
+			if (hcc != null)
+			{
+                ccList = hcc.Split(';').Where(d => !string.IsNullOrEmpty(d)).ToList();
+			}
 
             var hotel = _reservationService.GetHotelById(Id);
             if (hotel == null)
@@ -424,7 +449,7 @@ namespace Line.Controllers
             Mailing.SendMailToHotel(
                 (MailType)request, name, email, note, contact, _workContext.CurrentVisitor.GetFullName()
                 , _workContext.CurrentVisitor.title, _workContext.CurrentVisitor.email,
-                hotel, hotel.RID.ToString());
+                hotel, hotel.RID.ToString(), ccList);
 
             hotel.SendHotel = true;
             hotel.Confirmed = false;
@@ -693,24 +718,30 @@ namespace Line.Controllers
             
             //update files date
             var paymentdatetype = Request.Form["FileDate"];
-            if (paymentdatetype == "Checkin")
+
+            if (paymentdatetype == "Checkin" || paymentdatetype == "Checkout")
             {
-                Model.CheckinDatefrom = Model.CreateDate;
-                Model.CheckinDateto = Model.CreateDateTo;
-                Model.CreateDate = Model.CreateDateTo = new DateTime();
+                if (paymentdatetype == "Checkin")
+                {
+                    Model.CheckinDatefrom = Model.CreateDate;
+                    Model.CheckinDateto = Model.CreateDateTo;
+                    Model.CreateDate = Model.CreateDateTo = new DateTime();
+                }
+                else if (paymentdatetype == "Checkout")
+                {
+                    Model.CheckoutDatefrom = Model.CreateDate;
+                    Model.CheckoutDateto = Model.CreateDateTo;
+                    Model.CreateDate = Model.CreateDateTo = new DateTime();
+                }
+
+                var cResult = _reservationService.SearchRooms(Model, false);
+                ViewBag.Reseult = cResult;
+                return View(Model);
             }
-            else if (paymentdatetype == "Checkout")
-            {
-                Model.CheckoutDatefrom = Model.CreateDate;
-                Model.CheckoutDateto = Model.CreateDateTo;
-                Model.CreateDate = Model.CreateDateTo = new DateTime();
-            }
+            
 
             var Result = _reservationService.SearchReservations(Model, false);
             ViewBag.Reseult = Result;
-
-  
-
             return View(Model);
         }
 
