@@ -529,9 +529,11 @@
           <Property Name="BankName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BankAccount" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BankSwift" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="BackIBAN" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BankIBAN" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BankBranch" Type="nvarchar(max)" />
           <Property Name="BankAccountNo" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BankAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OfficeAddress" Type="nvarchar(max)" />
           <Property Name="DefaultCurrency" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplierPaymentSet">
@@ -2337,10 +2339,12 @@
           <Property Name="BankName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BankAccount" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BankSwift" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BackIBAN" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BankAccountNo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BankAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DefaultCurrency" Type="Int32" Nullable="false" />
+          <Property Name="OfficeAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BankIBAN" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BankBranch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="DataHotelRhotel">
           <End Type="Eventor.Data.DataHotel" Role="DataHotel" Multiplicity="0..1" />
@@ -3042,10 +3046,12 @@
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="Eventor.Data.Settings">
               <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="BankBranch" ColumnName="BankBranch" />
+                <ScalarProperty Name="BankIBAN" ColumnName="BankIBAN" />
+                <ScalarProperty Name="OfficeAddress" ColumnName="OfficeAddress" />
                 <ScalarProperty Name="DefaultCurrency" ColumnName="DefaultCurrency" />
                 <ScalarProperty Name="BankAddress" ColumnName="BankAddress" />
                 <ScalarProperty Name="BankAccountNo" ColumnName="BankAccountNo" />
-                <ScalarProperty Name="BackIBAN" ColumnName="BackIBAN" />
                 <ScalarProperty Name="BankSwift" ColumnName="BankSwift" />
                 <ScalarProperty Name="BankAccount" ColumnName="BankAccount" />
                 <ScalarProperty Name="BankName" ColumnName="BankName" />

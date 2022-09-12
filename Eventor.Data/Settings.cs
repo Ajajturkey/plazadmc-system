@@ -35,9 +35,11 @@ namespace Line.Data
         public string BankName { get; set; }
         public string BankAccount { get; set; }
         public string BankSwift { get; set; }
-        public string BackIBAN { get; set; }
         public string BankAccountNo { get; set; }
         public string BankAddress { get; set; }
         public int DefaultCurrency { get; set; }
+        public string OfficeAddress { get; set; }
+        public string BankIBAN { get; set; }
+        public string BankBranch { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 @model Line.Data.Reservations
 @{
     Layout = "_invoice";
+    var settings = (Line.Data.Settings)ViewBag.Settings;
 }
 <div style="width:700px;margin:auto;background-color:white">
     <div align="center">
@@ -177,30 +178,28 @@
             </tr>
             <tr>
                 <td style="font-weight: 600">ACCOUNT NAME		</td>
-                <td colspan="3"> PLAZADMC SEYAHAT ACENTASI SAN. VE TIC. AS.</td>
-
-            </tr>
-
-            <tr>
+                <td> PLAZADMC SEYAHAT ACENTASI SAN. VE TIC. AS.</td>
                 <td style="font-weight: 600">BANK NAME</td>
-                <td> @T("BankName")</td>
-                <td style="font-weight: 600">BANK SWIFT CODE </td>
-                <td>@T("BankSwift")</td>
+                <td> @settings.BankName</td>
             </tr>
+
             <tr>
-                <td style="font-weight: 600">BRANCH </td>
-                <td> @T("Branch") </td>
                 <td style="font-weight: 600">IBAN CODE</td>
-                <td>@T("BackIBAN")</td>
-
-
+                <td>@settings.BankIBAN</td>
+                <td style="font-weight: 600">BANK SWIFT CODE </td>
+                <td>@settings.BankSwift</td>
             </tr>
             <tr>
-                <td style="font-weight: 600">BANK ADRESS </td>
-                <td> @T("BankAddress") </td>
                 <td style="font-weight: 600">ACCOUNT NO</td>
-                <td> @T("BankAccountNo") </td>
-
+                <td> @settings.BankAccountNo </td>
+                <td style="font-weight: 600">BRANCH </td>
+                <td> @settings.BankBranch </td>
+            </tr>
+            <tr>
+                <td style="font-weight: 600">ADRESS </td>
+                <td> @settings.OfficeAddress </td>
+                <td style="font-weight: 600">BANK ADRESS </td>
+                <td> @settings.BankAddress </td>
             </tr>
             <tr>
                 <td colspan="4" style="font-weight: 600" class="active">

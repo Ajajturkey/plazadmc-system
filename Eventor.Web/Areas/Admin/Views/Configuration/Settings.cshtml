@@ -190,56 +190,68 @@
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                @T("Email.Settings")
+                                @T("Account.Settings")
                             </div>
                             <div class="ibox-content">
                                 <div class="row">
                                     <div>
                                         <div class="form-group col-md-12">
-                                            <label class="col-md-3" for="AccountingName">@T("AccountingName")</label>
-                                            <div class="col-lg-3">
+                                            <label class="col-md-3" for="AccountingName">Accounting Name</label>
+                                            <div class="col-lg-9">
                                                 @Html.EditorFor(d => d.AccountingName, new { @class = "form-control" })
                                             </div>
                                         </div>
 
                                         <div class="form-group col-md-12">
-                                            <label class="col-md-3" for="AccountingTitle">@T("AccountingTitle")</label>
-                                            <div class="col-lg-3">
+                                            <label class="col-md-3" for="AccountingTitle">Accounting Title</label>
+                                            <div class="col-lg-9">
                                                 @Html.EditorFor(d => d.AccountingTitle, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label class="col-md-3" for="BackIBAN">@T("BackIBAN")</label>
+                                            <label class="col-md-3" for="BackIBAN">Bank IBAN</label>
                                             <div class="col-lg-9">
-                                                @Html.EditorFor(d => d.BackIBAN, new { @class = "form-control" })
+                                                @Html.EditorFor(d => d.BankIBAN, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label class="col-md-3" for="BankAccount">@T("BankAccount")</label>
+                                            <label class="col-md-3" for="BankAccount">Bank Account</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(d => d.BankAccount, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label class="col-md-3" for="BankAccountNo">@T("BankAccountNo")</label>
+                                            <label class="col-md-3" for="BankAccount">Bank Branch</label>
+                                            <div class="col-lg-9">
+                                                @Html.TextBoxFor(d => d.BankBranch, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="BankAccountNo">Bank AccountNo</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(d => d.BankAccountNo, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label class="col-md-3" for="BankName">@T("BankName")</label>
+                                            <label class="col-md-3" for="BankName">Bank Name</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(d => d.BankName, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label class="col-md-3" for="BankAddress">@T("BankAddress")</label>
+                                            <label class="col-md-3" for="BankAddress">Bank Address</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(d => d.BankAddress, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <label class="col-md-3" for="BankSwift">@T("BankSwift")</label>
+                                            <label class="col-md-3" for="OfficeAddress">Office Address</label>
+                                            <div class="col-lg-9">
+                                                @Html.TextBoxFor(d => d.OfficeAddress, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-3" for="BankSwift">Bank Swift</label>
                                             <div class="col-lg-9">
                                                 @Html.TextBoxFor(d => d.BankSwift, new { @class = "form-control" })
                                             </div>

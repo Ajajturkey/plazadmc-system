@@ -276,6 +276,7 @@ namespace Line.Controllers
             var setting = _configurationService.GetSettings();
             ViewBag.header = _uploadService.GetPicture(setting.InvoiceHeader);
             ViewBag.footer = _uploadService.GetPicture(setting.InvoiceFooter);
+            ViewBag.Settings = (setting);
 
             var res = _reservationService.GetReservationById(Id);
             if (res == null)
