@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Line.Data", "Eventor.Data\Line.Data.csproj", "{C51CAE89-D635-41AC-8107-1C22A041328C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plaza.Data", "Plaza.Data\Plaza.Data.csproj", "{C51CAE89-D635-41AC-8107-1C22A041328C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Line.Services", "Eventor.Services\Line.Services.csproj", "{C01F0C78-7263-4623-875C-98AFC996EEE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plaza.Services", "Plaza.Services\Plaza.Services.csproj", "{C01F0C78-7263-4623-875C-98AFC996EEE7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C51CAE89-D635-41AC-8107-1C22A041328C} = {C51CAE89-D635-41AC-8107-1C22A041328C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Line.Web", "Eventor.Web\Line.Web.csproj", "{A5859E0E-3C08-4045-B8DC-B3FB13655B00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plaza.Web", "Plaza.Web\Plaza.Web.csproj", "{A5859E0E-3C08-4045-B8DC-B3FB13655B00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -283,9 +283,8 @@ namespace Line.Controllers
             {
                 return PageNotFound();
             }
-            if (res.Agency.Country.ToLower().Contains("kuwait") 
-                || res.Agency.Country.ToLower().Contains("kw")
-                || res.Agency.Country.ToLower().Contains("lebanon")
+            if  (
+                   res.Agency.Country.ToLower().Contains("lebanon")
                 || res.Agency.Country.ToLower().Contains("lb")
 
                 

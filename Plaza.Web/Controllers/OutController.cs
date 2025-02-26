@@ -43,6 +43,7 @@ namespace Line.Web.Controllers
                 var setting = _configurationService.GetSettings();
                 ViewBag.header = _uploadService.GetPicture(setting.InvoiceHeader);
                 ViewBag.footer = _uploadService.GetPicture(setting.InvoiceFooter);
+                ViewBag.Settings = (setting);
                 return View(res);
             }
             else

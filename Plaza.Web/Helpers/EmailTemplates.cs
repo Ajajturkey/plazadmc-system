@@ -318,9 +318,6 @@ namespace Line.Helpers
                 "        <span style='color:#57a2ce' >ÖNEMLİ NOT:</span><br />                                              " +
                 "        Tarafımıza fatura etmenizi,                                                                       " +
                 "        <br />                                                                                                      " +
-                "        Yabancı acente voucherının check-in anında istenmesini,                                                     " +
-                "        <br />                                                                                                      " +
-                "        Aslının veya kopyasının faturanız ile birlikte mutlaka tarafımıza gönderilmesini<br />                      " +
                 "        Önemle rica ederiz.                                                                                        " +
                 "    </p>                                                                                                            ";
 
@@ -458,9 +455,6 @@ namespace Line.Helpers
         "        <span style='color:#57a2ce' >ÖNEMLİ NOT:</span><br />                                              " +
         "        Tarafımıza fatura etmenizi,                                                                       " +
         "        <br />                                                                                                      " +
-        "        Yabancı acente voucherının check-in anında istenmesini,                                                     " +
-        "        <br />                                                                                                      " +
-        "        Aslının veya kopyasının faturanız ile birlikte mutlaka tarafımıza gönderilmesini<br />                      " +
         "        Önemle rica ederiz.                                                                                        " +
         "    </p>                                                                                                            ";
 

@@ -114,9 +114,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Eventor.Data\Line.Data.csproj">
+    <ProjectReference Include="..\Plaza.Data\Plaza.Data.csproj">
       <Project>{c51cae89-d635-41ac-8107-1c22a041328c}</Project>
-      <Name>Line.Data</Name>
+      <Name>Plaza.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

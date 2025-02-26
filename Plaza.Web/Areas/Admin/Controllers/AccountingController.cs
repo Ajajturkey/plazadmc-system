@@ -144,8 +144,7 @@ namespace Line.Controllers
 
             }
 
-            if (agency.Country.ToLower().Contains("kuwait") || agency.Country.ToLower().Contains("kw")
-                || agency.Country.ToLower().Contains("lebanon")
+            if (agency.Country.ToLower().Contains("lebanon")
                 || agency.Country.ToLower().Contains("lb")
 
                 )

@@ -1897,13 +1897,13 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Eventor.Data\Line.Data.csproj">
+    <ProjectReference Include="..\Plaza.Data\Plaza.Data.csproj">
       <Project>{c51cae89-d635-41ac-8107-1c22a041328c}</Project>
-      <Name>Line.Data</Name>
+      <Name>Plaza.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Eventor.Services\Line.Services.csproj">
+    <ProjectReference Include="..\Plaza.Services\Plaza.Services.csproj">
       <Project>{c01f0c78-7263-4623-875c-98afc996eee7}</Project>
-      <Name>Line.Services</Name>
+      <Name>Plaza.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
